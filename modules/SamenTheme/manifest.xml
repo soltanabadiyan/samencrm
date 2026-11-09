@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<module>
+	<name>SamenTheme</name>
+	<label>Samen Theme</label>
+	<parent>Tools</parent>
+	<type>extension</type>
+	<version>1.0.0</version>
+	<dependencies>
+		<vtiger_version>8.0.0</vtiger_version>
+		<vtiger_max_version>8.*</vtiger_max_version>
+	</dependencies>
+	<license>
+		<inline><![CDATA[SamenStudent theme for Vtiger CRM (custom skin "samen", Persian RTL, brand login page).
+Brand artwork (logos, cloud illustration, shamseh) belongs to Samen / samencloud.ir.
+Skin CSS is compiled from Vtiger's LESS sources (VPL 1.1). Font: Shabnam (SIL OFL 1.1 / Bitstream Vera).]]></inline>
+	</license>
+</module>

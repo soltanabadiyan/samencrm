@@ -37,6 +37,34 @@ If the server cannot reach SourceForge, download `vtigercrm8.4.0.tar.gz` on your
 `VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz ./run_all.sh install`.
 Server needs `python3` (for the importer).
 
+## Persian UI, Shamsi calendar and the Samen theme  (`./run_all.sh persian`)
+All three are standard Vtiger packages (Settings > Module Management can also import the zips by hand):
+
+| package | what | source |
+|---|---|---|
+| `Persian_fa_ir.zip` (language) | full fa_ir pack: 4,047 strings + labels of the custom student fields/picklists; default language | `i18n/` (`fa/*.txt` = translations, `build_langpack.py` validates placeholders/HTML) |
+| `PersianCalendar.zip` (extension) | Jalali dates everywhere in the UI, Jalali date picker on every date field, Shamsi FullCalendar (RTL, week starts Saturday). Dates stay Gregorian in the DB. | `modules/PersianCalendar/` (`tests/convert.test.js`) |
+| `SamenTheme.zip` (extension) | **Vtiger 8 custom skin `samen`** (`layouts/v7/custom_skins/samen`): Vtiger's own LESS recompiled with the samencloud.ir palette (teal `#13606F`, brown `#7D4F2E`, copper `#D99058`), design tokens, Shabnam font, complete RTL (mirrored automatically + hand fixes for the app menu/sub-menus and dropdowns). Brand login page, favicon and company logo. | `modules/SamenTheme/` |
+
+* The login page preselects the `samen` skin (Vtiger keeps the choice in the session). Vtiger has no hook for the login
+  page, so the installer adds one marked block to `layouts/v7/modules/Users/Login.tpl`; it is re-applied on update and removed
+  when SamenTheme is disabled.
+* Rebuild the skin after changing colours/CSS: `npm i -g less@4`, then `modules/SamenTheme/build.sh`
+  (palette: `tools/source_less/samen/variables.less`; theme: `resources/theme.css`; RTL fixes: `resources/rtl.css`).
+  After a Vtiger upgrade refresh `tools/source_less` and `tools/source_css` from the server and rebuild.
+* `tools/sync_theme.sh` copies theme/calendar files straight to the server while developing;
+  `tools/get_session.sh` + `tools/ui_shot.mjs` take headless screenshots (needs `ssh -D 19080 hashemz_crm`).
+* Data labels are Persian too (groups `مقطع - …`, filters, tags, task/event subjects, list names) – see `data/fa_labels.py`.
+
+## City / country  (`./run_all.sh locations`)
+`data/location.py` fills the standard address fields from what the sheets contain – nothing is guessed:
+* **Mailing (home)**: country from the nationality column, else the phone country code (+964 Iraq, +93 Afghanistan, …;
+  Iranian +98 numbers are ignored), else the visa city; city = visa city (only 18 students have one).
+  "Country Source" (منبع تعیین کشور) says which rule was used. Result: 3,402 Iraq, 193 Afghanistan, 2 other, 2,398 unknown
+  (no phone or only an Iranian number).
+* **Other (study)**: city of the university + ایران (4,204 students; the rest have no university in the sheets).
+Only empty fields are filled, so manual edits in the CRM are kept.
+
 ## What gets imported
 * **Contacts: 5,995** (9,536 source rows from 23 files / 36 sheets; 8 byte-identical duplicate sheets dropped, rows for the
   same person merged by passport number, then full name (3+ words), then phone). Names stay Persian/Arabic.
@@ -80,6 +108,10 @@ vtiger/make_schema.py         dataset -> schema.json (picklists, groups, filters
 vtiger/setup_vtiger.php       runs in the container: fields, groups, filters
 vtiger/import_to_vtiger.py    REST importer (resumable)
 vtiger/tag_contacts.php       Level/Major tags on contacts
+data/fa_labels.py, location.py Persian data labels; city/country rules
+i18n/                         fa_ir language pack + install_persian.php
+modules/PersianCalendar       Jalali calendar extension
+modules/SamenTheme            custom skin + brand (samencloud.ir)
 tools/direct_proxy.py         SSH ProxyCommand that bypasses the VPN
 deploy/                       docker-compose, Dockerfile (php-apache + MariaDB + cron), install.sh, auto_install.sh, post_install.sh
 output/                       generated dataset, students.csv, report.txt, raw_archive.json

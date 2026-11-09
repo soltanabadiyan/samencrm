@@ -3,7 +3,7 @@
 // Node's built-in WebSocket.  Usage:
 //   SESSION=<PHPSESSID> node tools/ui_shot.mjs out_dir "index.php?module=Contacts&view=List" ...
 // Env: BASE (default http://212.33.206.241:9081/), PROXY (default socks5://127.0.0.1:19080), W/H viewport,
-//      EVAL (optional JS to run after load, result printed).
+//      EVAL (optional JS to run after load, e.g. open a menu; result printed), POSTWAIT ms before the shot.
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -51,6 +51,7 @@ try {
     if (process.env.EVAL) {
       const r = await send('Runtime.evaluate', { expression: process.env.EVAL, returnByValue: true, awaitPromise: true });
       console.log(p, '=>', JSON.stringify(r.result?.result?.value ?? r.result));
+      await sleep(+(process.env.POSTWAIT || 800));
     }
     const shot = await send('Page.captureScreenshot', { format: 'png' });
     const name = p.replace(/[^a-z0-9]+/gi, '_').slice(0, 80) + '.png';

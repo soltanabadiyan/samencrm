@@ -5,7 +5,8 @@
 #   ./run_all.sh install    # 2) copy kit to server, install docker stack in /opt/vtiger  (then finish web wizard)
 #   ./run_all.sh import     # 3) after the wizard: push data, create fields/groups/filters, import everything
 #   ./run_all.sh import --limit 20   # test import of first 20 contacts
-#   ./run_all.sh persian    # build + install fa_ir language pack and PersianCalendar (Jalali + RTL), all users -> Persian
+#   ./run_all.sh locations  # fill city/country (+ Country Source) on imported contacts
+#   ./run_all.sh persian    # build + install fa_ir pack, PersianCalendar (Jalali) and SamenTheme (skin/RTL/login), users -> Persian
 #
 # Env overrides:  SSH_TARGET=root@212.33.206.241  SSH_PORT=9080  DIRECT_IF=auto|wlp5s0|none   XLS_DIR=...   VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz
 set -euo pipefail
@@ -76,10 +77,11 @@ case "$cmd" in
   persian)
     python3 "$HERE/i18n/build_langpack.py" --strict
     bash "$HERE/modules/PersianCalendar/build.sh"
+    bash "$HERE/modules/SamenTheme/build.sh"
     ssh "$SSH_TARGET" "mkdir -p $REMOTE_KIT/ss"
-    scp -q "$HERE/i18n/dist/Persian_fa_ir.zip" "$HERE/modules/PersianCalendar/dist/PersianCalendar.zip" \
+    scp -q "$HERE/i18n/dist/Persian_fa_ir.zip" "$HERE/modules/PersianCalendar/dist/PersianCalendar.zip" "$HERE/modules/SamenTheme/dist/SamenTheme.zip" \
         "$HERE/i18n/install_persian.php" "$SSH_TARGET:$REMOTE_KIT/ss/"
-    ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss && $SUDO cp $REMOTE_KIT/ss/Persian_fa_ir.zip $REMOTE_KIT/ss/PersianCalendar.zip $REMOTE_KIT/ss/install_persian.php /opt/vtiger/ss/ && cd /opt/vtiger && $SUDO docker compose exec -T web sh -c 'php /opt/ss/install_persian.php /opt/ss/Persian_fa_ir.zip /opt/ss/PersianCalendar.zip ${PERSIAN_ARGS:---all-users} && chown -R www-data:www-data /var/www/html/languages /var/www/html/modules/PersianCalendar /var/www/html/layouts/v7/modules/PersianCalendar /var/www/html/user_privileges /var/www/html/config.inc.php'" ;;
+    ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss && $SUDO cp $REMOTE_KIT/ss/Persian_fa_ir.zip $REMOTE_KIT/ss/PersianCalendar.zip $REMOTE_KIT/ss/SamenTheme.zip $REMOTE_KIT/ss/install_persian.php /opt/vtiger/ss/ && cd /opt/vtiger && $SUDO docker compose exec -T web sh -c 'php /opt/ss/install_persian.php /opt/ss/Persian_fa_ir.zip /opt/ss/PersianCalendar.zip /opt/ss/SamenTheme.zip ${PERSIAN_ARGS:---all-users} && chown -R www-data:www-data /var/www/html/languages /var/www/html/modules/PersianCalendar /var/www/html/layouts/v7/modules/PersianCalendar /var/www/html/modules/SamenTheme /var/www/html/layouts/v7/modules/SamenTheme /var/www/html/layouts/v7/custom_skins /var/www/html/layouts/v7/modules/Users/Login.tpl /var/www/html/test/logo /var/www/html/test/templates_c /var/www/html/user_privileges /var/www/html/config.inc.php'" ;;
   migrate-fa)
     # one-time: rename English labels of the 2026-11-10 import to Persian (needs output/dataset.en_labels.json)
     ssh "$SSH_TARGET" "cat /opt/vtiger/ss/import_state.json" > "$OUT/import_state.json"
@@ -88,5 +90,14 @@ case "$cmd" in
     ssh "$SSH_TARGET" "$SUDO cp $REMOTE_KIT/ss/persianize.sql $REMOTE_KIT/ss/dataset.json $REMOTE_KIT/ss/schema.json $REMOTE_KIT/ss/tag_contacts.php /opt/vtiger/ss/ && cd /opt/vtiger && set -a && . ./.env && set +a && \
       docker compose exec -T db mariadb-dump -uroot -p\$DB_ROOT_PASSWORD --single-transaction \$DB_NAME | gzip > backups/pre_migrate_fa_\$(date +%F_%H%M).sql.gz && \
       docker compose exec -T db mariadb --default-character-set=utf8 -u\$DB_USER -p\$DB_PASSWORD \$DB_NAME < ss/persianize.sql && echo migrated" ;;
-  *) sed -n '2,11p' "$0" ;;
+  locations)
+    # fill city/country + Country Source on already-imported contacts (adds the custom field first)
+    [ -s "$OUT/dataset.json" ] || build
+    "$0" import --skip-activities >/dev/null      # pushes dataset/schema, creates the new field, skips existing records
+    ssh "$SSH_TARGET" "cat /opt/vtiger/ss/import_state.json" > "$OUT/import_state.json"
+    python3 "$HERE/vtiger/apply_location.py" "$OUT/dataset.json" "$OUT/import_state.json" > "$OUT/location.sql"
+    scp -q "$OUT/location.sql" "$SSH_TARGET:$REMOTE_KIT/ss/"
+    ssh "$SSH_TARGET" "$SUDO cp $REMOTE_KIT/ss/location.sql /opt/vtiger/ss/ && cd /opt/vtiger && set -a && . ./.env && set +a && \
+      docker compose exec -T db mariadb --default-character-set=utf8 -u\$DB_USER -p\$DB_PASSWORD \$DB_NAME < ss/location.sql && echo 'locations applied'" ;;
+  *) sed -n '2,12p' "$0" ;;
 esac

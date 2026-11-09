@@ -73,7 +73,8 @@
       "Afghanistan": "افغانستان",
       "iraq": "عراق",
       "syria": "سوریه",
-      "Withdrawn": "انصرافی"
+      "Withdrawn": "انصرافی",
+      "Country Source": "منبع تعیین کشور"
     }
   },
   "Vtiger.php": {

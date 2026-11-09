@@ -93,6 +93,10 @@ def contact_element(c, admin_id, groups):
         "phone": c.get("phone", ""),
         "email": c.get("email", ""),
         "department": F.get("major", "")[:30],
+        "mailingcity": c.get("mailingcity", ""),
+        "mailingcountry": c.get("mailingcountry", ""),
+        "othercity": c.get("othercity", ""),
+        "othercountry": c.get("othercountry", ""),
         "description": c.get("description", ""),
         "assigned_user_id": owner,
     }

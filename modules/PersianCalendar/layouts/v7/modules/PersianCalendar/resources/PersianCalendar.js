@@ -381,22 +381,50 @@
 			$(this).find('.fc-list-heading-main').text(PC.WEEKDAYS[dt.getDay()] + ' ' + PC.faDigits(j.jd) + ' ' + PC.MONTHS[j.jm - 1] + ' ' + PC.faDigits(j.jy));
 		});
 	}
-	function patchCalendar() {
-		var C = window.Calendar_Calendar_Js;
-		if (!C || !C.prototype || !C.prototype.getCalendarConfigs || C.prototype._pcPatched) { return; }
-		var orig = C.prototype.getCalendarConfigs;
-		C.prototype.getCalendarConfigs = function () {
-			var cfg = orig.apply(this, arguments);
-			cfg.isRTL = true;
-			cfg.firstDay = 6;                       // Saturday
-			cfg.dayNames = PC.WEEKDAYS.slice();
-			cfg.dayNamesShort = PC.WEEKDAYS.slice();
-			var vr = cfg.viewRender, ar = cfg.eventAfterAllRender;
-			cfg.viewRender = function (view, element) { if (vr) { vr.apply(this, arguments); } jalaliizeCalendar(view, element); };
-			cfg.eventAfterAllRender = function (view) { if (ar) { ar.apply(this, arguments); } jalaliizeCalendar(view, view.el); };
-			return cfg;
+	/* Vtiger's class system copies parent methods into subclasses when they are defined, so patching
+	   Calendar_Calendar_Js.prototype does not reach Calendar_SharedCalendar_Js etc. Instead the
+	   FullCalendar plugin itself is wrapped: every calendar initialised with an options object gets
+	   RTL, Saturday as first day, Persian weekday names and the Jalali relabelling. */
+	function jalaliOptions(cfg) {
+		cfg = $.extend({}, cfg);
+		cfg.isRTL = true;
+		cfg.firstDay = 6;
+		cfg.dayNames = PC.WEEKDAYS.slice();
+		cfg.dayNamesShort = PC.WEEKDAYS.slice();
+		cfg.eventLimitText = function (n) { return '+' + PC.faDigits(n) + ' مورد دیگر'; };
+		var vr = cfg.viewRender, ar = cfg.eventAfterAllRender;
+		cfg.viewRender = function (view, element) { if (vr) { vr.apply(this, arguments); } jalaliizeCalendar(view, element); };
+		cfg.eventAfterAllRender = function (view) { if (ar) { ar.apply(this, arguments); } jalaliizeCalendar(view, view.el); };
+		return cfg;
+	}
+	function wrapFullCalendar(orig) {
+		if (!orig || orig._pcPatched) { return orig; }
+		var wrapped = function (opt) {
+			var args = Array.prototype.slice.call(arguments);
+			if (opt && typeof opt === 'object' && active()) {
+				if (!fmt) { setupFormat(document.body.getAttribute('data-user-dateformat')); }
+				args[0] = jalaliOptions(opt);
+			}
+			return orig.apply(this, args);
 		};
-		C.prototype._pcPatched = true;
+		$.extend(wrapped, orig);
+		wrapped._pcPatched = true;
+		return wrapped;
+	}
+	/* fullcalendar.js is loaded after this file and Vtiger initialises the calendar before
+	   document-ready, so trap the moment the plugin is defined on $.fn. */
+	function patchCalendar() {
+		if (!$ || !$.fn) { return; }
+		var desc = Object.getOwnPropertyDescriptor($.fn, 'fullCalendar');
+		if (desc && desc.get) { return; }                       // trap already installed
+		var current = wrapFullCalendar($.fn.fullCalendar);
+		try {
+			Object.defineProperty($.fn, 'fullCalendar', {
+				configurable: true, enumerable: true,
+				get: function () { return current; },
+				set: function (v) { current = wrapFullCalendar(v); }
+			});
+		} catch (e) { $.fn.fullCalendar = current; }
 	}
 
 	/* ------------------------------------------------------------------ bootstrap */
@@ -435,7 +463,6 @@
 		document.documentElement.setAttribute('lang', 'fa');
 		setupFormat(document.body.getAttribute('data-user-dateformat'));
 		patchJquery();
-		patchCalendar();
 		convertTree(document.body);
 		scanInputs(document.body);
 		var pending = [], scheduled = false;
@@ -468,5 +495,6 @@
 	PC._convertText = function (t) { if (!fmt) { setupFormat('yyyy-mm-dd'); } return convertText(t); };
 	PC._setupFormat = setupFormat;
 	if (typeof module !== 'undefined' && module.exports) { module.exports = PC; return; }   // node tests
+	patchCalendar();
 	if ($) { $(start); } else { document.addEventListener('DOMContentLoaded', start); }
 })(typeof window !== 'undefined' ? window : globalThis, typeof document !== 'undefined' ? document : null);

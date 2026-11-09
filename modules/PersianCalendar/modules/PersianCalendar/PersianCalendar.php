@@ -6,7 +6,8 @@
  * The module has no records. On install/enable it registers two global header links
  * (Vtiger_Link HEADERSCRIPT / HEADERCSS), which Vtiger_Header_View adds to every page:
  *   layouts/v7/modules/PersianCalendar/resources/PersianCalendar.js
- *   layouts/v7/modules/PersianCalendar/resources/rtl.generated.css + PersianCalendar.css
+ *   layouts/v7/modules/PersianCalendar/resources/PersianCalendar.css (picker + calendar)
+ * RTL layout and fonts live in the SamenTheme custom skin since 1.1.0.
  * Disabling the module in Settings > Module Management removes the links again.
  ************************************************************************************/
 require_once 'vtlib/Vtiger/Module.php';
@@ -14,13 +15,12 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class PersianCalendar {
 
-	const VERSION = '1.0.0';
+	const VERSION = '1.1.0';
 	const BASE = 'layouts/v7/modules/PersianCalendar/resources/';
 
 	static function links() {
 		$v = '?v=' . self::VERSION;
 		return array(
-			array('HEADERCSS', 'PersianCalendarRtl', self::BASE . 'rtl.generated.css' . $v),
 			array('HEADERCSS', 'PersianCalendarCss', self::BASE . 'PersianCalendar.css' . $v),
 			array('HEADERSCRIPT', 'PersianCalendarJs', self::BASE . 'PersianCalendar.js' . $v),
 		);

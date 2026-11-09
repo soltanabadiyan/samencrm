@@ -764,7 +764,11 @@ def build(xls_dir, out_dir):
     # -------------------- Persian labels for everything stored in Vtiger (see fa_labels.py) --------------------
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import fa_labels
+    import location
     for c in contacts:
+        loc = location.locate(c)
+        c["fields"]["country_source"] = loc.pop("country_source")
+        c.update(loc)                       # mailingcity/mailingcountry/othercity/othercountry (standard fields)
         c["fields"]["source_groups"] = fa_labels.source_groups(c["fields"]["source_groups"])
         c["description"] = fa_labels.description_fa(c["description"])
     for t in tasks:

@@ -3,7 +3,7 @@
  * SamenStudent – install the Persian language pack + PersianCalendar extension the vtlib way
  * (same code path as Settings > Module Management > Import Module from Zip), then make Persian the default.
  * Run INSIDE the web container:
- *   php /opt/ss/install_persian.php /opt/ss/Persian_fa_ir.zip /opt/ss/PersianCalendar.zip [--all-users]
+ *   php /opt/ss/install_persian.php /opt/ss/Persian_fa_ir.zip /opt/ss/PersianCalendar.zip /opt/ss/SamenTheme.zip [--all-users]
  *
  *  - config.inc.php: $default_language = 'fa_ir' (login page + new users)
  *  - --all-users: every active user -> language fa_ir, week starts Saturday, timezone Asia/Tehran,
@@ -43,24 +43,26 @@ $r = $adb->pquery('SELECT prefix, label, active FROM vtiger_language WHERE prefi
 echo 'language: ' . ($adb->num_rows($r) ? 'fa_ir registered (' . $adb->query_result($r, 0, 'label') . ')' : 'NOT registered') . "\n";
 $adb->pquery('UPDATE vtiger_language SET active=1 WHERE prefix=?', array('fa_ir'));
 
-/* 2. PersianCalendar extension */
-$zip = staged($modZip);
-$pkg = new Vtiger_Package();
-$existing = Vtiger_Module::getInstance('PersianCalendar');
-if ($existing) {
-	$pkg->update($existing, $zip, true);
-	echo "PersianCalendar: updated\n";
-} else {
-	$pkg->import($zip, true);
-	echo "PersianCalendar: installed\n";
-}
-$mod = Vtiger_Module::getInstance('PersianCalendar');
-if ($mod) {
-	require_once 'modules/PersianCalendar/PersianCalendar.php';
-	PersianCalendar::registerLinks();      // also covers the update path
+/* 2. extensions: PersianCalendar (Jalali) and SamenTheme (custom skin, login page, logo) */
+function install_extension($name, $zipPath) {
+	global $adb;
+	if (!$zipPath || !file_exists($zipPath)) { echo "$name: zip not given, skipped\n"; return; }
+	$zip = staged($zipPath);
+	$pkg = new Vtiger_Package();
+	$existing = Vtiger_Module::getInstance($name);
+	if ($existing) { $pkg->update($existing, $zip, true); echo "$name: updated\n"; }
+	else { $pkg->import($zip, true); echo "$name: installed\n"; }
+	$mod = Vtiger_Module::getInstance($name);
+	if (!$mod) { echo "$name: NOT installed\n"; return; }
+	require_once "modules/$name/$name.php";
+	// vtlib only fires module.postupdate for some package types – run the handler explicitly (idempotent)
+	$h = new $name();
+	$h->vtlib_handler($name, $existing ? 'module.postupdate' : 'module.postinstall');
 	$r = $adb->pquery('SELECT linktype, linkurl FROM vtiger_links WHERE tabid=?', array($mod->id));
 	while ($row = $adb->fetch_array($r)) { echo "  link {$row['linktype']} {$row['linkurl']}\n"; }
 }
+install_extension('PersianCalendar', $modZip);
+install_extension('SamenTheme', $argv[3] ?? '/opt/ss/SamenTheme.zip');
 
 /* 3. defaults */
 $cfg = file_get_contents('config.inc.php');
@@ -84,8 +86,14 @@ $renames = array(
 foreach ($renames as $rn) {
 	list($table, $col, $map) = $rn;
 	foreach ($map as $en => $fa) {
-		$adb->pquery("UPDATE $table SET $col=? WHERE $col=?", array($fa, $en));
-		if (true) { echo "renamed $table: $en -> $fa\n"; }
+		$r = $adb->pquery("SELECT 1 FROM $table WHERE $col=?", array($en));
+		if ($adb->num_rows($r)) {
+			$adb->pquery("UPDATE $table SET $col=? WHERE $col=?", array($fa, $en));
+			echo "renamed $table: $en -> $fa\n";
+		}
 	}
 }
+/* 5. admin display name created by the scripted installer */
+$adb->pquery("UPDATE vtiger_users SET first_name=?, last_name=? WHERE user_name='admin' AND first_name='SamenStudent' AND last_name='Admin'", array('مدیر', 'ثامن استودنت'));
+createUserPrivilegesfile(1);
 echo "PERSIAN DONE\n";

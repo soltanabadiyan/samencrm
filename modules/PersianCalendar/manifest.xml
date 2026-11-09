@@ -4,13 +4,13 @@
 	<label>Persian Calendar</label>
 	<parent>Tools</parent>
 	<type>extension</type>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<dependencies>
 		<vtiger_version>7.0.0</vtiger_version>
 		<vtiger_max_version>8.*</vtiger_max_version>
 	</dependencies>
 	<license>
-		<inline><![CDATA[SamenStudent – Persian (Jalali) calendar and RTL layout for Vtiger CRM.
+		<inline><![CDATA[SamenStudent – Persian (Jalali) calendar for Vtiger CRM.
 Jalali conversion based on jalaali-js (MIT). Bundled font: Shabnam (SIL OFL 1.1 / Bitstream Vera, Saber Rastikerdar).]]></inline>
 	</license>
 </module>

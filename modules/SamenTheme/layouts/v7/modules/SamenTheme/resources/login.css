@@ -1,0 +1,99 @@
+/* SamenTheme – login page (loaded by the SAMENTHEME hook that the installer adds to Users/Login.tpl) */
+@font-face {
+	font-family: 'Shabnam';
+	src: url('fonts/Shabnam.ttf') format('truetype');
+	font-display: swap;
+}
+:root {
+	--samen-teal-500: #13606F;
+	--samen-teal-700: #0F4B57;
+	--samen-brown-500: #7D4F2E;
+	--samen-copper-400: #D99058;
+	--samen-bg: #F4F7FB;
+	--samen-border: #D1D5DB;
+}
+html.samen-login body {
+	background: var(--samen-bg) url('img/shamseh.png') no-repeat !important;
+	background-position: left -60px bottom -60px !important;
+	background-size: 360px auto !important;
+	font-family: 'Shabnam', Tahoma, sans-serif;
+	font-size-adjust: from-font;
+	accent-color: var(--samen-teal-500);
+	min-height: 100vh;
+}
+html.samen-login .loginPageContainer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 48px;
+	min-height: calc(100vh - 40px);
+	padding-block: 32px;
+}
+html.samen-login .loginPageContainer > [class*="col-lg-"] { float: none; width: auto; padding: 0; }
+html.samen-login .loginPageContainer > .col-lg-1,
+html.samen-login .loginPageContainer > .col-lg-5:not(:first-child) { display: none; }   /* vtiger marketing feed */
+
+html.samen-login .loginDiv {
+	width: min(400px, 92vw);
+	margin: 0;
+	padding: 36px 32px 28px;
+	background: #fff;
+	border: 1px solid var(--samen-border);
+	border-radius: 14px;
+	box-shadow: 0 18px 40px rgb(11 57 67 / .12);
+	border-top: 4px solid var(--samen-teal-500);
+}
+html.samen-login .loginDiv .user-logo { max-width: 260px; margin: 0 auto 18px; }
+html.samen-login .group input,
+html.samen-login .group select {
+	font-family: inherit;
+	direction: ltr;
+	text-align: left;
+	border-bottom-color: var(--samen-border);
+}
+html.samen-login .group label { color: #6B7280; font-family: inherit; }
+html.samen-login .bar::before, html.samen-login .bar::after { background: var(--samen-teal-500); }
+html.samen-login .button.buttonBlue {
+	background: var(--samen-teal-500);
+	border-radius: 8px;
+	font-family: inherit;
+	font-size: 15px;
+	box-shadow: none;
+	transition: background-color .15s;
+}
+html.samen-login .button.buttonBlue:hover { background: var(--samen-teal-700); }
+html.samen-login .forgotPasswordLink { color: var(--samen-brown-500) !important; }
+html.samen-login .failureMessage { color: #B4432F; }
+html.samen-login #skin { display: none; }
+html.samen-login .group:has(> #skin) { display: none; }
+
+/* brand panel (built by login.js) */
+.samen-brand {
+	width: min(460px, 92vw);
+	text-align: center;
+	color: var(--samen-teal-700);
+}
+.samen-brand img { width: min(380px, 80vw); height: auto; }
+.samen-brand h1 {
+	margin: 12px 0 6px;
+	font: 700 34px/1.3 'Shabnam', Tahoma, sans-serif;
+	color: var(--samen-brown-500);
+}
+.samen-brand p {
+	display: inline-block;
+	margin: 0;
+	padding: 6px 14px;
+	border-radius: 6px;
+	background: var(--samen-teal-500);
+	color: #fff;
+	font-size: 15px;
+}
+html.samen-login .app-footer, html.samen-login footer { background: transparent !important; color: #6B7280; }
+
+html[dir="rtl"].samen-login .group label { right: 5px; left: auto; }
+@media (max-width: 900px) {
+	.samen-brand { order: -1; }
+	.samen-brand img { width: 220px; }
+	.samen-brand h1 { font-size: 26px; }
+}

@@ -1,74 +1,7 @@
 /*+**********************************************************************************
- * PersianCalendar – Persian UI for Vtiger (v7 layout): font, RTL base, Jalali picker.
- * Everything is scoped to body[data-language^="fa"] – other languages are untouched.
- * rtl.generated.css (mirrored Vtiger/Bootstrap rules) is loaded before this file.
+ * PersianCalendar – Jalali date picker and FullCalendar labels (Persian users).
+ * Layout direction and fonts come from the SamenTheme custom skin.
  ************************************************************************************/
-@font-face {
-	font-family: 'Shabnam';
-	src: url('fonts/Shabnam.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
-body[data-language^="fa"] {
-	direction: rtl;
-	text-align: right;
-}
-body[data-language^="fa"],
-body[data-language^="fa"] input,
-body[data-language^="fa"] button,
-body[data-language^="fa"] select,
-body[data-language^="fa"] textarea,
-body[data-language^="fa"] .btn,
-body[data-language^="fa"] .popover,
-body[data-language^="fa"] .tooltip,
-body[data-language^="fa"] .select2-container,
-body[data-language^="fa"] .select2-drop,
-body[data-language^="fa"] h1, body[data-language^="fa"] h2, body[data-language^="fa"] h3,
-body[data-language^="fa"] h4, body[data-language^="fa"] h5, body[data-language^="fa"] h6,
-body[data-language^="fa"] .app-name, body[data-language^="fa"] .module-title,
-body[data-language^="fa"] .fc {
-	font-family: 'Shabnam', Tahoma, 'Segoe UI', sans-serif;
-}
-/* icon fonts keep their own face */
-body[data-language^="fa"] .fa, body[data-language^="fa"] [class^="vicon-"], body[data-language^="fa"] [class*=" vicon-"],
-body[data-language^="fa"] .glyphicon, body[data-language^="fa"] .material-icons {
-	font-family: inherit;
-}
-body[data-language^="fa"] .fa { font-family: FontAwesome; }
-body[data-language^="fa"] .glyphicon { font-family: 'Glyphicons Halflings'; }
-body[data-language^="fa"] [class^="vicon-"], body[data-language^="fa"] [class*=" vicon-"] { font-family: 'vtiger-icons'; }
-
-/* Bootstrap grid: columns flow right-to-left */
-body[data-language^="fa"] [class*="col-xs-"], body[data-language^="fa"] [class*="col-sm-"],
-body[data-language^="fa"] [class*="col-md-"], body[data-language^="fa"] [class*="col-lg-"] { float: right; }
-body[data-language^="fa"] .col-xs-12, body[data-language^="fa"] .col-sm-12,
-body[data-language^="fa"] .col-md-12, body[data-language^="fa"] .col-lg-12 { float: none; }
-body[data-language^="fa"] .text-left { text-align: right !important; }
-body[data-language^="fa"] .text-right { text-align: left !important; }
-body[data-language^="fa"] .input-group .form-control:first-child,
-body[data-language^="fa"] .input-group-addon:first-child { border-radius: 0 4px 4px 0; }
-body[data-language^="fa"] .input-group .form-control:last-child,
-body[data-language^="fa"] .input-group-addon:last-child { border-radius: 4px 0 0 4px; }
-body[data-language^="fa"] .input-group-addon:first-child { border-left: 0; border-right: 1px solid #ccc; }
-body[data-language^="fa"] .input-group-addon:last-child { border-right: 0; border-left: 1px solid #ccc; }
-
-/* values that must stay left-to-right */
-body[data-language^="fa"] input[type="email"], body[data-language^="fa"] input[type="url"],
-body[data-language^="fa"] input[type="number"], body[data-language^="fa"] input[name*="phone"],
-body[data-language^="fa"] input[name="mobile"], body[data-language^="fa"] input[name="fax"],
-body[data-language^="fa"] input[name*="email"], body[data-language^="fa"] input[name="website"],
-body[data-language^="fa"] .timepicker-default, body[data-language^="fa"] input[data-fieldtype="time"],
-body[data-language^="fa"] input[name="cf_ss_passport"], body[data-language^="fa"] code, body[data-language^="fa"] pre {
-	direction: ltr;
-	text-align: left;
-}
-body[data-language^="fa"] .pc-ltr, body[data-language^="fa"] a[href^="mailto:"], body[data-language^="fa"] a[href^="tel:"] {
-	direction: ltr;
-	unicode-bidi: embed;
-}
-
 /* ---------------------------------------------------------------- Jalali date inputs */
 .pc-orig {
 	position: absolute !important;

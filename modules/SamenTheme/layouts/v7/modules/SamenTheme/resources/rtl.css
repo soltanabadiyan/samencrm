@@ -1,0 +1,105 @@
+/*+**********************************************************************************
+ * SamenTheme – right-to-left layout for Persian users (body[data-language^="fa"]).
+ * rtl.generated.css mirrors Vtiger/Bootstrap rules automatically; this file holds what a
+ * mechanical mirror cannot know: elements that Vtiger positions with inline styles from JS
+ * (app menu, its submenus), icons that point in a direction, and LTR-only values.
+ ************************************************************************************/
+body[data-language^="fa"] {
+	direction: rtl;
+	text-align: start;
+	/* Bootstrap's negative row gutters overflow on the left; in RTL that becomes a horizontal scrollbar */
+	overflow-x: clip;
+}
+
+/* Bootstrap grid: columns flow right-to-left */
+body[data-language^="fa"] :is([class*="col-xs-"], [class*="col-sm-"], [class*="col-md-"], [class*="col-lg-"]) { float: right; }
+body[data-language^="fa"] :is(.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12) { float: none; }
+body[data-language^="fa"] .text-left { text-align: right !important; }
+body[data-language^="fa"] .text-right { text-align: left !important; }
+
+/* ---------------------------------------------------------------- app menu (hamburger drawer)
+   Vtiger.js sets inline style="left:0" on .app-menu and style="left:<menu width>" on each
+   .app-modules-dropdown, so only !important can move them to the right side. */
+body[data-language^="fa"] .app-menu {
+	left: auto !important;
+	right: 0 !important;
+	border-left: 1px solid rgb(255 255 255 / .08);
+}
+body[data-language^="fa"] .app-menu .app-modules-dropdown {
+	left: auto !important;
+	right: 222px !important;          /* menu max-width (230px) – 8px, as Vtiger does for LTR */
+	box-shadow: var(--ui-shadow-pop);
+}
+body[data-language^="fa"] .app-menu .fa-chevron-right { transform: scaleX(-1); }
+body[data-language^="fa"] .app-menu :is(.app-item, .menu-item) { text-align: right; }
+body[data-language^="fa"] .app-menu .app-item .fa,
+body[data-language^="fa"] .app-menu .app-item [class*="vicon-"] { margin-left: 10px; margin-right: 0; }
+
+/* module rail on the right edge, content shifted away from it */
+body[data-language^="fa"] .main-container .module-nav { left: auto; right: 0; }
+body[data-language^="fa"] .module-nav .modules-menu ul li.active a {
+	border-left: 0 !important;
+	border-right: 3px solid var(--color-highlight) !important;
+}
+
+/* ---------------------------------------------------------------- dropdowns
+   Bootstrap opens .dropdown-menu at left:0 – in RTL they must hang from the right edge of the
+   trigger, and .dropdown-menu-right / .pull-right ones from the left edge. */
+body[data-language^="fa"] .dropdown-menu { left: auto; right: 0; text-align: right; }
+body[data-language^="fa"] :is(.dropdown-menu-right, .pull-right > .dropdown-menu, .navbar-right .dropdown-menu) { right: auto; left: 0; }
+body[data-language^="fa"] .dropdown-menu > li > a { text-align: right; }
+body[data-language^="fa"] .dropdown-submenu > .dropdown-menu { left: auto; right: 100%; margin-right: -1px; }
+body[data-language^="fa"] .dropdown-submenu > a::after { float: left; transform: scaleX(-1); }
+body[data-language^="fa"] .caret { margin-left: 0; margin-right: 2px; }
+
+/* icons that point forward/back */
+body[data-language^="fa"] :is(.fa-chevron-right, .fa-chevron-left, .fa-angle-right, .fa-angle-left, .fa-arrow-right,
+	.fa-arrow-left, .fa-caret-right, .fa-caret-left, .fa-long-arrow-right, .fa-long-arrow-left,
+	.vicon-chevronright, .vicon-chevronleft, .fa-step-forward, .fa-step-backward) { transform: scaleX(-1); }
+body[data-language^="fa"] .module-breadcrumb .fa-angle-right,
+body[data-language^="fa"] .current-filter-name .fa-angle-right { display: inline-block; }
+
+/* input groups: rounded side follows the reading direction */
+body[data-language^="fa"] .input-group .form-control:first-child,
+body[data-language^="fa"] .input-group-addon:first-child { border-radius: 0 var(--ui-radius-sm) var(--ui-radius-sm) 0 !important; }
+body[data-language^="fa"] .input-group .form-control:last-child,
+body[data-language^="fa"] .input-group-addon:last-child { border-radius: var(--ui-radius-sm) 0 0 var(--ui-radius-sm) !important; }
+body[data-language^="fa"] .input-group-addon:first-child { border-left: 0; border-right: 1px solid var(--ui-border-strong); }
+body[data-language^="fa"] .input-group-addon:last-child { border-right: 0; border-left: 1px solid var(--ui-border-strong); }
+
+/* page titles touching the edge */
+body[data-language^="fa"] :is(.editViewPageDiv .editViewHeader, .editViewHeader, .detailview-header) { padding-right: 15px; }
+
+/* values that must stay left-to-right */
+body[data-language^="fa"] :is(input[type="email"], input[type="url"], input[type="number"], input[name*="phone"],
+	input[name="mobile"], input[name="fax"], input[name*="email"], input[name="website"], .timepicker-default,
+	input[data-fieldtype="time"], input[name="cf_ss_passport"], code, pre) {
+	direction: ltr;
+	text-align: left;
+}
+body[data-language^="fa"] :is(.pc-ltr, a[href^="mailto:"], a[href^="tel:"]) { direction: ltr; unicode-bidi: embed; }
+
+/* select2 */
+body[data-language^="fa"] .select2-container .select2-choice > .select2-chosen { margin-right: 0; margin-left: 26px; text-align: right; }
+body[data-language^="fa"] .select2-container .select2-choice .select2-arrow { right: auto; left: 0; border-left: 0; border-right: 1px solid var(--ui-border-strong); }
+body[data-language^="fa"] .select2-results { text-align: right; padding: 0 4px 0 0; }
+body[data-language^="fa"] .select2-container-multi .select2-choices li { float: right; }
+body[data-language^="fa"] .select2-container-multi .select2-choices .select2-search-choice { margin: 3px 5px 3px 0; padding: 3px 18px 3px 5px; }
+body[data-language^="fa"] .select2-search-choice-close { left: auto; right: 3px; }
+
+/* list view: action icons column and horizontal scrollbar start on the right */
+body[data-language^="fa"] .table-actions { text-align: right; }
+body[data-language^="fa"] .listview-table td, body[data-language^="fa"] .listview-table th { text-align: right; }
+
+/* qtip / popovers */
+body[data-language^="fa"] .qtip, body[data-language^="fa"] .popover { direction: rtl; text-align: right; }
+
+/* phone numbers, e-mails, URLs inside RTL text: keep "+964..." readable (no leading "+" jumping to the end) */
+body[data-language^="fa"] :is([data-field-type="phone"], [data-field-type="email"], [data-field-type="url"],
+	[data-field-type="skype"]) :is(.value, a, span),
+body[data-language^="fa"] :is(td, span)[data-field-type="phone"],
+body[data-language^="fa"] :is(td, span)[data-field-type="email"],
+body[data-language^="fa"] a[href^="tel:"], body[data-language^="fa"] .phoneField {
+	unicode-bidi: plaintext;
+	text-align: right;
+}

@@ -29,6 +29,7 @@ BLOCKS = [
         ("student_status", "Student Status", "picklist"),
         ("source_groups", "Source Lists / Groups", "long"),
         ("phone_raw", "Phone (as written in sheet)", "text"),
+        ("country_source", "Country Source", "text"),
         ("faculty_code", "Faculty Code", "text"),
         ("major_code", "Major Code", "text"),
         ("level_code", "Level Code", "text"),

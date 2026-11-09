@@ -1,0 +1,228 @@
+/*+**********************************************************************************
+ * SamenTheme – SamenStudent brand for Vtiger CRM 8 (v7 layout), after samencloud.ir.
+ * Load order (HEADERCSS links): brand.generated.css → theme.css → rtl.generated.css → rtl.css
+ *  - brand.generated.css : Vtiger's own LESS skin recompiled with the brand palette (diff only)
+ *  - theme.css (this)    : design tokens + modern component polish, all languages
+ *  - rtl*.css            : right-to-left layout, only for body[data-language^="fa"]
+ * Note: Vtiger's stylesheets are not in cascade layers, so this file is deliberately unlayered
+ * (any @layer rule would lose to them).
+ ************************************************************************************/
+
+/* ------------------------------------------------------------------ tokens */
+:root {
+	/* tier 1 – samencloud.ir palette */
+	--samen-teal-50: #EAF1F8;
+	--samen-teal-100: #D4E6EA;
+	--samen-teal-500: #13606F;
+	--samen-teal-700: #0F4B57;
+	--samen-teal-900: #0B3943;
+	--samen-brown-500: #7D4F2E;
+	--samen-brown-600: #6A4227;
+	--samen-copper-400: #D99058;
+	--samen-sky-200: #A3C2E0;
+	--samen-gray-50: #F4F7FB;
+	--samen-gray-200: #E2E8F0;
+	--samen-gray-300: #D1D5DB;
+	--samen-gray-500: #6B7280;
+	--samen-ink: #121721;
+
+	/* tier 2 – semantic */
+	--color-primary: var(--samen-teal-500);
+	--color-primary-strong: var(--samen-teal-700);
+	--color-primary-soft: var(--samen-teal-50);
+	--color-accent: var(--samen-brown-500);
+	--color-accent-strong: var(--samen-brown-600);
+	--color-highlight: var(--samen-copper-400);
+	--color-text: #1F2933;
+	--color-text-muted: var(--samen-gray-500);
+	--font-fa: 'Shabnam', Tahoma, 'Segoe UI', sans-serif;
+
+	/* tier 3 – UI */
+	--surface-page: var(--samen-gray-50);
+	--surface-card: #FFFFFF;
+	--surface-rail: var(--samen-teal-700);
+	--ui-border: var(--samen-gray-200);
+	--ui-border-strong: var(--samen-gray-300);
+	--ui-radius: 10px;
+	--ui-radius-sm: 6px;
+	--ui-shadow: 0 1px 2px rgb(15 75 87 / .06), 0 4px 14px rgb(15 75 87 / .06);
+	--ui-shadow-pop: 0 10px 30px rgb(11 57 67 / .18);
+	--ui-focus: 0 0 0 3px rgb(19 96 111 / .22);
+	--topbar-height: 48px;
+}
+
+@font-face {
+	font-family: 'Shabnam';
+	src: url('fonts/Shabnam.ttf') format('truetype');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* ------------------------------------------------------------------ base */
+body {
+	background: var(--surface-page);
+	color: var(--color-text);
+	accent-color: var(--color-primary);
+}
+a { color: var(--color-primary); }
+a:hover, a:focus { color: var(--color-primary-strong); }
+::selection { background: var(--samen-teal-100); }
+
+/* ------------------------------------------------------------------ top bar */
+.app-fixed-navbar {
+	background: var(--surface-card) !important;
+	border-bottom: 1px solid var(--ui-border) !important;
+	box-shadow: 0 1px 0 rgb(125 79 46 / .25), var(--ui-shadow);
+}
+.app-fixed-navbar::after {             /* thin brand line under the bar */
+	content: '';
+	position: absolute;
+	inset-inline: 0;
+	inset-block-end: -3px;
+	height: 2px;
+	background: linear-gradient(90deg, var(--samen-teal-500), var(--samen-copper-400), var(--samen-brown-500));
+	pointer-events: none;
+}
+.app-fixed-navbar .logo-container .company-logo img {
+	max-height: 38px;
+	width: auto;
+	margin-top: 4px;
+}
+.app-fixed-navbar .search-link {
+	border-radius: 999px;
+	background: var(--surface-page);
+	border-color: var(--ui-border) !important;
+	transition: box-shadow .15s, border-color .15s;
+}
+.app-fixed-navbar .search-link:focus-within {
+	border-color: var(--color-primary) !important;
+	box-shadow: var(--ui-focus);
+	background: #fff;
+}
+.app-fixed-navbar .global-actions .nav > li > a,
+.app-fixed-navbar .global-actions .fa,
+.app-fixed-navbar .global-actions [class^="vicon-"] { color: var(--samen-teal-700); }
+.app-fixed-navbar .global-actions .nav > li > a:hover { background: var(--color-primary-soft); border-radius: var(--ui-radius-sm); }
+#appnavigator { background: var(--surface-rail) !important; }
+#appnavigator .app-icon { color: #fff; }
+
+/* ------------------------------------------------------------------ module rail + app menu */
+.module-nav, .main-container .module-nav, .app-menu, .app-menu .app-modules-dropdown {
+	background: var(--surface-rail) !important;
+}
+.module-nav .modules-menu ul li a { color: rgb(255 255 255 / .78); transition: background .15s, color .15s; }
+.module-nav .modules-menu ul li:hover a,
+.module-nav .modules-menu ul li.active a { background: var(--samen-teal-900); color: #fff; }
+.module-nav .modules-menu ul li.active a { border-inline-start: 3px solid var(--color-highlight) !important; border-left-color: var(--color-highlight); }
+.app-menu .app-item, .app-menu .menu-item { color: rgb(255 255 255 / .9); }
+.app-menu .app-item:hover, .app-menu .active-app-item, .app-menu .app-modules-dropdown li a:hover {
+	background: var(--samen-teal-900) !important;
+	color: #fff !important;
+}
+.app-menu .app-modules-dropdown li a { color: rgb(255 255 255 / .85); }
+.app-menu { box-shadow: var(--ui-shadow-pop); }
+
+/* ------------------------------------------------------------------ page chrome */
+.module-action-bar, .detailview-header-block, .settingsPageDiv .module-action-bar {
+	background: var(--surface-card);
+	border-bottom: 1px solid var(--ui-border);
+}
+.module-action-bar .module-title, .module-breadcrumb a, .current-filter-name { color: var(--samen-teal-700); font-weight: 600; }
+.sidebar-essentials { background: var(--surface-card); border-color: var(--ui-border) !important; }
+.sidebar-essentials .lists-menu li a:hover, .sidebar-essentials .lists-menu li.active a { color: var(--color-primary); background: var(--color-primary-soft); }
+
+/* cards: list, detail blocks, widgets, modals */
+.listViewPageDiv .listViewEntriesDiv, .list-content, .block, .summaryView, .summaryWidgetContainer,
+.dashboardWidget, .details .block, .editViewContents .fieldBlockContainer, .detailview-content .block {
+	background: var(--surface-card);
+	border: 1px solid var(--ui-border) !important;
+	border-radius: var(--ui-radius);
+	box-shadow: var(--ui-shadow);
+}
+.block > div > h4, .fieldBlockHeader, .summaryWidgetContainer .widget_header h4,
+.dashboardWidgetHeader .dashboardTitle, .detailview-content .block h4 {
+	color: var(--samen-teal-700);
+	font-weight: 700;
+}
+.dashboardWidgetHeader { background: var(--color-primary-soft) !important; border-radius: var(--ui-radius) var(--ui-radius) 0 0; }
+.modal-content { border-radius: var(--ui-radius); border: 0; box-shadow: var(--ui-shadow-pop); overflow: hidden; }
+.modal-header { background: var(--samen-teal-700) !important; color: #fff; }
+.modal-header .close, .modal-header .fa { color: #fff; opacity: .9; }
+.modal-footer { background: var(--surface-page) !important; }
+
+/* tables */
+.listview-table > thead > tr > th, .listViewEntriesTable thead th, .table > thead > tr > th {
+	background: var(--color-primary-soft);
+	color: var(--samen-teal-700);
+	font-weight: 600;
+	border-bottom: 1px solid var(--samen-teal-100) !important;
+}
+.listview-table > tbody > tr:hover > td, .listViewEntries:hover > td { background: var(--surface-page) !important; }
+.listViewEntryValue a, .listview-table td a { color: var(--samen-teal-700); }
+
+/* tabs (detail view related tabs) */
+.related-tabs .nav-tabs > li.active > a, .related-tabs .nav-tabs > li.active, .nav-tabs > li.active > a {
+	color: var(--color-primary) !important;
+	border-bottom-color: var(--color-primary) !important;
+}
+.related-tabs .nav-tabs > li.active { border-bottom: 3px solid var(--color-primary) !important; }
+
+/* ------------------------------------------------------------------ controls */
+.btn { border-radius: var(--ui-radius-sm); transition: background-color .15s, border-color .15s, box-shadow .15s; }
+.btn:focus-visible { box-shadow: var(--ui-focus); outline: 0; }
+.btn-success, .btn-primary, .btn-submit, .saveButton {
+	background: var(--color-primary) !important;
+	border-color: var(--color-primary-strong) !important;
+	color: #fff !important;
+	background-image: none !important;
+}
+.btn-success:hover, .btn-primary:hover, .saveButton:hover { background: var(--color-primary-strong) !important; }
+.btn-default { background: var(--surface-card); border-color: var(--ui-border-strong); color: var(--samen-teal-700); }
+.btn-default:hover { background: var(--color-primary-soft); border-color: var(--samen-sky-200); }
+.btn-danger { background: #B4432F; border-color: #973725; }
+.cancelLink, .cancelLink:hover { color: var(--color-accent) !important; }
+
+.form-control, .inputElement, .select2-container .select2-choice, .select2-container-multi .select2-choices {
+	border-radius: var(--ui-radius-sm) !important;
+	border-color: var(--ui-border-strong);
+}
+.form-control:focus, .inputElement:focus, .select2-container-active .select2-choice, .select2-container-active .select2-choices {
+	border-color: var(--color-primary) !important;
+	box-shadow: var(--ui-focus) !important;
+}
+.input-group-addon { background: var(--color-primary-soft); color: var(--samen-teal-700); border-color: var(--ui-border-strong); }
+
+/* tags / badges */
+.tag, .tagLabel, .detailview-header .tag {
+	background: var(--color-primary-soft) !important;
+	color: var(--samen-teal-700) !important;
+	border: 1px solid var(--samen-teal-100) !important;
+	border-radius: 999px !important;
+}
+.badge, .label-info { background: var(--color-accent); }
+
+/* record avatar (contact image placeholder) */
+.recordImage, .recordImage.bgContacts, .recordImage.bgcontacts { background: var(--color-primary) !important; border-radius: var(--ui-radius); }
+
+/* footer */
+.app-footer, .app-footer p { background: transparent !important; color: var(--color-text-muted); border: 0; }
+
+/* scrollbars */
+html { scrollbar-color: var(--samen-sky-200) transparent; }
+
+/* ------------------------------------------------------------------ Persian typography */
+body[data-language^="fa"] {
+	font-family: var(--font-fa);
+	font-size-adjust: from-font;
+	line-height: 1.6;
+}
+body[data-language^="fa"] :is(input, button, select, textarea, .btn, .popover, .tooltip, .select2-container, .select2-drop,
+	h1, h2, h3, h4, h5, h6, .app-name, .module-title, .fc, .dropdown-menu, .modal) {
+	font-family: var(--font-fa);
+}
+/* icon fonts keep their faces and their own metrics (font-size-adjust would shrink the glyphs) */
+:is(.fa, .glyphicon, [class^="vicon-"], [class*=" vicon-"], .material-icons) { font-size-adjust: none; }
+body[data-language^="fa"] .fa { font-family: FontAwesome; }
+body[data-language^="fa"] .glyphicon { font-family: 'Glyphicons Halflings'; }
+body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-family: 'vtiger-icons'; }
