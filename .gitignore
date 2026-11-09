@@ -1,0 +1,20 @@
+# Student personal data – NEVER commit (generated from ../xls by ./run_all.sh build)
+output/
+*.xlsx
+*.xls
+*.csv
+import_state.json
+import_errors*.jsonl
+persianize.sql
+
+# local environments / build artifacts (rebuild with run_all.sh / build scripts)
+.venv/
+__pycache__/
+*.pyc
+dist/
+node_modules/
+*.zip
+
+# secrets
+.env
+!deploy/.env.example

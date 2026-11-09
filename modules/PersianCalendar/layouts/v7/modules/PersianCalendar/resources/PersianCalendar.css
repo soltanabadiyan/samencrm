@@ -1,0 +1,135 @@
+/*+**********************************************************************************
+ * PersianCalendar – Persian UI for Vtiger (v7 layout): font, RTL base, Jalali picker.
+ * Everything is scoped to body[data-language^="fa"] – other languages are untouched.
+ * rtl.generated.css (mirrored Vtiger/Bootstrap rules) is loaded before this file.
+ ************************************************************************************/
+@font-face {
+	font-family: 'Shabnam';
+	src: url('fonts/Shabnam.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+body[data-language^="fa"] {
+	direction: rtl;
+	text-align: right;
+}
+body[data-language^="fa"],
+body[data-language^="fa"] input,
+body[data-language^="fa"] button,
+body[data-language^="fa"] select,
+body[data-language^="fa"] textarea,
+body[data-language^="fa"] .btn,
+body[data-language^="fa"] .popover,
+body[data-language^="fa"] .tooltip,
+body[data-language^="fa"] .select2-container,
+body[data-language^="fa"] .select2-drop,
+body[data-language^="fa"] h1, body[data-language^="fa"] h2, body[data-language^="fa"] h3,
+body[data-language^="fa"] h4, body[data-language^="fa"] h5, body[data-language^="fa"] h6,
+body[data-language^="fa"] .app-name, body[data-language^="fa"] .module-title,
+body[data-language^="fa"] .fc {
+	font-family: 'Shabnam', Tahoma, 'Segoe UI', sans-serif;
+}
+/* icon fonts keep their own face */
+body[data-language^="fa"] .fa, body[data-language^="fa"] [class^="vicon-"], body[data-language^="fa"] [class*=" vicon-"],
+body[data-language^="fa"] .glyphicon, body[data-language^="fa"] .material-icons {
+	font-family: inherit;
+}
+body[data-language^="fa"] .fa { font-family: FontAwesome; }
+body[data-language^="fa"] .glyphicon { font-family: 'Glyphicons Halflings'; }
+body[data-language^="fa"] [class^="vicon-"], body[data-language^="fa"] [class*=" vicon-"] { font-family: 'vtiger-icons'; }
+
+/* Bootstrap grid: columns flow right-to-left */
+body[data-language^="fa"] [class*="col-xs-"], body[data-language^="fa"] [class*="col-sm-"],
+body[data-language^="fa"] [class*="col-md-"], body[data-language^="fa"] [class*="col-lg-"] { float: right; }
+body[data-language^="fa"] .col-xs-12, body[data-language^="fa"] .col-sm-12,
+body[data-language^="fa"] .col-md-12, body[data-language^="fa"] .col-lg-12 { float: none; }
+body[data-language^="fa"] .text-left { text-align: right !important; }
+body[data-language^="fa"] .text-right { text-align: left !important; }
+body[data-language^="fa"] .input-group .form-control:first-child,
+body[data-language^="fa"] .input-group-addon:first-child { border-radius: 0 4px 4px 0; }
+body[data-language^="fa"] .input-group .form-control:last-child,
+body[data-language^="fa"] .input-group-addon:last-child { border-radius: 4px 0 0 4px; }
+body[data-language^="fa"] .input-group-addon:first-child { border-left: 0; border-right: 1px solid #ccc; }
+body[data-language^="fa"] .input-group-addon:last-child { border-right: 0; border-left: 1px solid #ccc; }
+
+/* values that must stay left-to-right */
+body[data-language^="fa"] input[type="email"], body[data-language^="fa"] input[type="url"],
+body[data-language^="fa"] input[type="number"], body[data-language^="fa"] input[name*="phone"],
+body[data-language^="fa"] input[name="mobile"], body[data-language^="fa"] input[name="fax"],
+body[data-language^="fa"] input[name*="email"], body[data-language^="fa"] input[name="website"],
+body[data-language^="fa"] .timepicker-default, body[data-language^="fa"] input[data-fieldtype="time"],
+body[data-language^="fa"] input[name="cf_ss_passport"], body[data-language^="fa"] code, body[data-language^="fa"] pre {
+	direction: ltr;
+	text-align: left;
+}
+body[data-language^="fa"] .pc-ltr, body[data-language^="fa"] a[href^="mailto:"], body[data-language^="fa"] a[href^="tel:"] {
+	direction: ltr;
+	unicode-bidi: embed;
+}
+
+/* ---------------------------------------------------------------- Jalali date inputs */
+.pc-orig {
+	position: absolute !important;
+	opacity: 0 !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	border: 0 !important;
+	pointer-events: none !important;
+	overflow: hidden;
+}
+.pc-jalali-input { direction: ltr; text-align: right; }
+.input-group .pc-jalali-input { display: table-cell; float: none; }
+.pc-jalali-input.pc-invalid { border-color: #d9534f !important; box-shadow: 0 0 0 2px rgba(217, 83, 79, .2) !important; }
+
+.pc-picker {
+	position: absolute;
+	z-index: 20000;
+	width: 252px;
+	padding: 8px;
+	background: #fff;
+	border: 1px solid #ccd3dd;
+	border-radius: 6px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, .16);
+	font-family: 'Shabnam', Tahoma, sans-serif;
+	font-size: 13px;
+	color: #2c3e50;
+	user-select: none;
+	direction: rtl;
+	text-align: center;
+}
+.pc-picker button { font-family: inherit; }
+.pc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.pc-title { display: flex; gap: 4px; }
+.pc-msel, .pc-ysel {
+	height: 26px; padding: 0 4px; border: 1px solid #ccd3dd; border-radius: 4px; background: #fff; font-family: inherit; font-size: 13px;
+}
+.pc-ysel { width: 64px; direction: ltr; text-align: center; }
+.pc-nav {
+	width: 28px; height: 26px; border: 0; border-radius: 4px; background: #f1f4f8; cursor: pointer; font-size: 18px; line-height: 1;
+}
+.pc-nav:hover { background: #e2e8f0; }
+.pc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.pc-wd { font-size: 11px; color: #7b8794; padding: 4px 0; }
+.pc-day {
+	height: 30px; border: 0; border-radius: 4px; background: transparent; cursor: pointer; font-size: 13px; color: inherit;
+}
+.pc-day:hover { background: #e8f0fe; }
+.pc-day.pc-fri { color: #d9534f; }
+.pc-day.pc-today { box-shadow: inset 0 0 0 1px #2d7be5; font-weight: bold; }
+.pc-day.pc-inrange { background: #e8f0fe; border-radius: 0; }
+.pc-day.pc-sel { background: #2d7be5; color: #fff; }
+.pc-foot { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-top: 8px; border-top: 1px solid #eef1f5; padding-top: 6px; }
+.pc-btn { border: 1px solid #ccd3dd; background: #fff; border-radius: 4px; padding: 2px 10px; cursor: pointer; font-size: 12px; }
+.pc-btn:hover { background: #f1f4f8; }
+.pc-hint { width: 100%; font-size: 11px; color: #7b8794; }
+
+/* ---------------------------------------------------------------- Calendar module (FullCalendar) */
+body[data-language^="fa"] .fc .fc-day-number { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; float: none !important; }
+body[data-language^="fa"] .fc .pc-jd { font-size: 14px; font-weight: bold; }
+body[data-language^="fa"] .fc .pc-gd { font-size: 10px; color: #9aa5b1; }
+body[data-language^="fa"] .fc-toolbar h2 { font-size: 18px; }
+body[data-language^="fa"] .fc-sat, body[data-language^="fa"] .fc-day-header.fc-fri { }
+body[data-language^="fa"] .fc-day.fc-fri { background: #fff7f7; }

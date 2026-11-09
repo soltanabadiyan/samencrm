@@ -1,0 +1,77 @@
+# Vtiger CRM for SamenStudent – lives in /opt/vtiger
+# Public port: 9081 (web). 9082 = optional Adminer, bound to localhost only (use an SSH tunnel).
+# Port 9080 is not published because the firewall only allows 9081/9082.
+name: vtiger
+
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+      - --sql-mode=
+      - --max-allowed-packet=128M
+      - --innodb-buffer-pool-size=512M
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      TZ: ${TZ:-Asia/Tehran}
+    volumes:
+      - ./data/db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build:
+      context: ./web
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.2}
+        DEBIAN_MIRROR: ${DEBIAN_MIRROR:-http://mirror.iranserver.com}
+    image: samenstudent/vtiger-web:local
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "9081:80"
+    environment:
+      TZ: ${TZ:-Asia/Tehran}
+    volumes:
+      - ./data/vtiger:/var/www/html
+      - ./ss:/opt/ss:ro
+
+  cron:
+    # Vtiger scheduler (workflows, reminders, mail scanner) every 15 minutes
+    image: samenstudent/vtiger-web:local
+    restart: unless-stopped
+    depends_on:
+      - web
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        while true; do
+          sleep 900
+          if [ -f /var/www/html/config.inc.php ] && [ -f /var/www/html/vtigercron.php ]; then
+            cd /var/www/html && su -s /bin/sh www-data -c 'php vtigercron.php' >> /var/www/html/logs/cron.log 2>&1
+          fi
+        done
+    environment:
+      TZ: ${TZ:-Asia/Tehran}
+    volumes:
+      - ./data/vtiger:/var/www/html
+
+  adminer:
+    profiles: ["tools"]
+    image: adminer:4
+    restart: unless-stopped
+    depends_on: [db]
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - "127.0.0.1:9082:8080"
