@@ -84,6 +84,7 @@
 		// calendar settings / preferences values
 		'Today': 'امروز', 'This Week': 'این هفته', 'This Month': 'این ماه', 'Planned': 'برنامه‌ریزی‌شده', 'Held': 'برگزارشده',
 		'Not Held': 'برگزارنشده', 'Call': 'تماس', 'Meeting': 'جلسه', 'Minute': 'دقیقه', 'Minutes': 'دقیقه', 'Hours': 'ساعت',
+		'User : All': 'کاربر: همه', 'Access Count': 'تعداد مشاهده', 'Click Count': 'تعداد کلیک',
 		'Saturday': 'شنبه', 'Sunday': 'یکشنبه', 'Monday': 'دوشنبه', 'Tuesday': 'سه‌شنبه', 'Wednesday': 'چهارشنبه', 'Thursday': 'پنجشنبه', 'Friday': 'جمعه'
 	};
 	// placeholders / titles Vtiger prints in English
@@ -100,13 +101,65 @@
 		.map(function (k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
 	var WORD_RE = new RegExp('\\b(' + WORD_KEYS.join('|') + ')\\b', 'g');
 	var HAS_FA = /[\u0600-\u06FF]/;
+	// LBL_NO is one key for the answer "No" (\u062E\u06CC\u0631) and for "No \u2026 found" \u2013 fix the glued sentences on screen
+	var SENTENCES = [
+		[/\u062E\u06CC\u0631\s+(.+?)\s+\u0628\u0627 \u0627\u06CC\u0646 \u0645\u0639\u06CC\u0627\u0631 \u0645\u0637\u0627\u0628\u0642\u062A \u062F\u0627\u0634\u062A\.?/g, '\u0647\u06CC\u0686 \u0645\u0648\u0631\u062F\u06CC \u062F\u0631 \u00AB$1\u00BB \u0628\u0627 \u0627\u06CC\u0646 \u0634\u0631\u0627\u06CC\u0637 \u06CC\u0627\u0641\u062A \u0646\u0634\u062F.'],
+		[/\u062E\u06CC\u0631\s+(.+?)\s+\u06CC\u0627\u0641\u062A \u0634\u062F\.?/g, '\u0647\u06CC\u0686 \u0645\u0648\u0631\u062F\u06CC \u062F\u0631 \u00AB$1\u00BB \u06CC\u0627\u0641\u062A \u0646\u0634\u062F.']
+	];
 	var SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, SELECT: 1, OPTION: 1 };
+	// Task Management panel prints priorities / statuses as raw picklist values (only translated inside the panel)
+	var TASKS = { 'TASK MANAGEMENT': 'مدیریت وظایف', 'High': 'اولویت زیاد', 'Medium': 'اولویت متوسط', 'Low': 'اولویت کم',
+		'Not Started': 'شروع نشده', 'In Progress': 'در حال انجام', 'Completed': 'تکمیل‌شده', 'Deferred': 'معوق',
+		'Pending Input': 'منتظر ورودی', 'Planned': 'برنامه‌ریزی‌شده', 'Held': 'برگزارشده', 'Not Held': 'برگزارنشده' };
+	ATTR['User : All'] = 'کاربر: همه';
+	ATTR['Search for an extension..'] = 'جستجوی افزونه...';
+	function translateAttrs(root) {
+		var els = [root].concat(Array.prototype.slice.call(root.querySelectorAll('[placeholder], [title], [data-original-title]')));
+		els.forEach(function (e) {
+			['placeholder', 'title', 'data-original-title'].forEach(function (a) {
+				var v = e.getAttribute && e.getAttribute(a);
+				if (v && ATTR.hasOwnProperty(v.trim())) { e.setAttribute(a, ATTR[v.trim()]); }
+			});
+		});
+	}
+	// report tables: Vtiger prefixes each column with its module in English word order ("مخاطبین نام") – show the
+	// field, and "صنعت (سازمان‌ها)" for fields of a secondary module (same rule as the print page)
+	var REPORT_MODS = ['مخاطبین', 'سازمان‌ها', 'سرنخ‌ها', 'فرصت‌ها', 'تیکت‌ها', 'کمپین‌ها', 'تقویم', 'رویدادها', 'اسناد', 'محصولات', 'خدمات',
+		'پیش‌فاکتورها', 'فاکتورها', 'سفارش‌های فروش', 'سفارش‌های خرید', 'تأمین‌کنندگان', 'پروژه‌ها', 'وظایف پروژه', 'دارایی‌ها', 'کاربران'];
+	function reportHeaders(root) {
+		if (!/module=Reports/.test(window.location.search) || !root.querySelectorAll) { return; }
+		var ths = Array.prototype.slice.call(root.querySelectorAll('table th')).filter(function (th) { return !th.getAttribute('data-samen-h'); });
+		if (!ths.length) { return; }
+		var parts = ths.map(function (th) {
+			var t = (th.textContent || '').trim(), mod = '';
+			REPORT_MODS.forEach(function (m) { if (!mod && t.indexOf(m + ' ') === 0) { mod = m; } });
+			return { th: th, mod: mod, field: mod ? t.slice(mod.length + 1) : '' };
+		});
+		var cnt = {}; parts.forEach(function (x) { if (x.mod) { cnt[x.mod] = (cnt[x.mod] || 0) + 1; } });
+		var primary = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; })[0];
+		parts.forEach(function (x) {
+			if (!x.mod || x.th.querySelector('input, select, a')) { return; }
+			x.th.setAttribute('data-samen-h', '1');
+			x.th.textContent = x.mod === primary ? x.field : x.field + ' (' + x.mod + ')';
+		});
+	}
 	function translateTree(root) {
 		if (!root || root.nodeType !== 1) { return; }
+		translateAttrs(root);
+		reportHeaders(root);
 		var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false), n, list = [];
 		while ((n = w.nextNode())) { list.push(n); }
 		list.forEach(function (t) {
 			var key = t.nodeValue.trim();
+			if (TASKS.hasOwnProperty(key) && t.parentNode && t.parentNode.closest && t.parentNode.closest('#taskManagementContainer, .overlayHeader')) {
+				t.nodeValue = t.nodeValue.replace(key, TASKS[key]); return;
+			}
+			// sentences Vtiger glues from fragments in English word order: "{No} {Module} {found}" etc.
+			if (key.indexOf('خیر ') > -1) {
+				var s = t.nodeValue;
+				SENTENCES.forEach(function (r) { s = s.replace(r[0], r[1]); });
+				if (s !== t.nodeValue) { t.nodeValue = s; return; }
+			}
 			var exact = key && FA.hasOwnProperty(key), mixed = !exact && HAS_FA.test(key) && WORD_RE.test(key);
 			WORD_RE.lastIndex = 0;
 			if (!exact && !mixed) { return; }

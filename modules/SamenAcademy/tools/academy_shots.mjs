@@ -38,7 +38,7 @@ const once = method => new Promise(resolve => waiters.push({ method, resolve }))
 const PAGE_TOOLS = readFileSync(join(HERE, 'page_tools.js'), 'utf8');
 
 async function connect() {
-  for (let i = 0; i < 60; i++) {
+  for (let i = 0; i < 300; i++) {   // up to 60 s: Chrome starts slowly on a busy machine
     try {
       const page = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find(t => t.type === 'page');
       if (page) { ws = new WebSocket(page.webSocketDebuggerUrl); break; }

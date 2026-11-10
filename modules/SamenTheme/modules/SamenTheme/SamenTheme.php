@@ -19,7 +19,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.2.4';
+	const VERSION = '1.3.2';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -204,6 +204,40 @@ class SamenTheme {
 		);
 	}
 
+	/* ---------------------------------------------------------------- report print
+	   Reports/PrintReport.tpl is a bare page (no header scripts): a marked block in its <head> loads the
+	   branded print stylesheet and script (SamenCRM header/footer, RTL, Jalali dates). */
+	const PRINT_TPL = 'layouts/v7/modules/Reports/PrintReport.tpl';
+	const PRINT_BEGIN = '{* SAMENTHEME:PRINT:BEGIN *}';
+	const PRINT_END = '{* SAMENTHEME:PRINT:END *}';
+
+	static function patchPrint() {
+		$tpl = self::PRINT_TPL;
+		if (!is_writable($tpl)) return false;
+		$src = self::unpatchedPrint(file_get_contents($tpl));
+		$v = self::VERSION;
+		$hook = self::PRINT_BEGIN . '<meta name="viewport" content="width=device-width, initial-scale=1">'
+			. '<link rel="stylesheet" href="' . self::RES . 'print.css?v=' . $v . '">'
+			. '<script src="' . self::RES . 'print.js?v=' . $v . '"></script>' . self::PRINT_END;
+		$pos = stripos($src, '</head>');
+		if ($pos === false) return false;
+		file_put_contents($tpl, substr($src, 0, $pos) . $hook . substr($src, $pos));
+		foreach (glob('test/templates_c/v7/*PrintReport.tpl*') ?: array() as $f) { @unlink($f); }
+		return true;
+	}
+
+	static function unpatchPrint() {
+		$tpl = self::PRINT_TPL;
+		if (is_writable($tpl)) {
+			file_put_contents($tpl, self::unpatchedPrint(file_get_contents($tpl)));
+			foreach (glob('test/templates_c/v7/*PrintReport.tpl*') ?: array() as $f) { @unlink($f); }
+		}
+	}
+
+	static function unpatchedPrint($src) {
+		return preg_replace('/' . preg_quote(self::PRINT_BEGIN, '/') . '.*?' . preg_quote(self::PRINT_END, '/') . '/s', '', $src);
+	}
+
 	/** Vtiger 8.4 ships libraries/bootstrap-legacy without img/ – its CSS asks for glyphicons-halflings*.png (404) */
 	static function legacyBootstrapIcons() {
 		$dst = 'libraries/bootstrap-legacy/img';
@@ -221,6 +255,7 @@ class SamenTheme {
 		self::registerLinks();
 		self::patchLogin();
 		self::patchFooter();
+		self::patchPrint();
 		self::setCompanyLogo();
 		self::registerSettings();
 		self::removeFromAppMenu();
@@ -234,6 +269,7 @@ class SamenTheme {
 			self::unregisterLinks();
 			self::unpatchLogin();
 			self::unpatchFooter();
+			self::unpatchPrint();
 			self::unregisterSettings();
 		}
 	}

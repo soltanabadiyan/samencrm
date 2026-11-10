@@ -1,0 +1,45 @@
+/* SamenTheme – branded, right-to-left print layout for Reports › Print (PrintReport.tpl hook) */
+@font-face { font-family: "Shabnam"; src: url("fonts/Shabnam.ttf") format("truetype"); font-weight: 400 700; font-display: swap; }
+@page { size: A4 landscape; margin: 12mm 10mm 14mm; }
+html { direction: rtl; }
+body { font-family: "Shabnam", Tahoma, "Segoe UI", sans-serif !important; color: #121721; background: #fff; margin: 0 !important; text-align: right !important;
+	-webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 12px; }
+.sp-sheet > table, body > table { width: 100% !important; max-width: none; margin: 0; border: 0 !important; }
+.sp-sheet > table > tbody > tr > td { padding: 0 !important; }
+/* the stock header row is replaced by .sp-head */
+.reportPrintHeader { display: none; }
+.sp-head { display: flex; max-width: none !important; align-items: center; gap: 16px; border-block-end: 3px solid #13606F; padding: 10px 6px 12px; margin: 0 auto 14px; max-width: 1400px; }
+.sp-head img { height: 54px; width: auto; }
+.sp-brand { line-height: 1.5; }
+.sp-brand b { font-size: 18px; color: #13606F; display: block; }
+.sp-brand small { color: #7D4F2E; font-size: 11.5px; }
+.sp-title { margin-inline-start: auto; text-align: left; }
+.sp-title h1 { margin: 0; font-size: 19px; color: #0B3943; }
+.sp-meta { display: flex; gap: 18px; justify-content: flex-end; color: #5B6472; font-size: 11.5px; margin-top: 4px; flex-wrap: wrap; }
+.sp-meta span b { color: #121721; }
+#report_info { display: none; }
+/* data table */
+.printReport { width: 100% !important; border: 1px solid #CBD5E1 !important; border-collapse: collapse !important; font-size: 11.5px; }
+.printReport thead th { background: #13606F !important; color: #fff !important; font-weight: 700; padding: 7px 8px !important; border: 1px solid #0F4B57 !important;
+	text-align: right !important; white-space: nowrap; }
+.printReport tbody td { border: 1px solid #E2E8F0 !important; padding: 5px 8px !important; text-align: right !important; vertical-align: top; }
+.printReport tbody tr:nth-child(even) td { background: #F4F7FB !important; }
+.printReport td[dir="ltr"], .printReport .sp-num { direction: ltr; unicode-bidi: plaintext; text-align: left !important; }
+/* totals block */
+.sp-sheet > table > tbody > tr:last-child table { width: auto !important; min-width: 40%; border-collapse: collapse; margin-top: 10px; }
+.sp-sheet > table > tbody > tr:last-child table td, .sp-sheet > table > tbody > tr:last-child table th { border: 1px solid #E2E8F0; padding: 5px 10px; text-align: right; }
+.sp-foot { display: flex; justify-content: space-between; color: #6B7280; font-size: 10.5px; border-top: 1px solid #E2E8F0; padding: 8px 6px 0; margin: 18px auto 0; max-width: 1400px; }
+.sp-foot b { color: #13606F; }
+/* on screen: a print button and a page-like look */
+@media screen {
+	body { background: #EEF2F6; padding: 18px !important; }
+	.sp-sheet { background: #fff; max-width: 1440px; margin: 0 auto; padding: 18px 22px 22px; border-radius: 10px; box-shadow: 0 4px 18px rgb(0 0 0 / .08); }
+	.sp-actions { max-width: 1440px; margin: 0 auto 10px; display: flex; justify-content: flex-end; gap: 8px; }
+	.sp-actions button { font: inherit; border: 0; border-radius: 8px; padding: 7px 16px; background: #13606F; color: #fff; cursor: pointer; }
+	.sp-actions button.alt { background: #fff; color: #13606F; border: 1px solid #13606F; }
+}
+@media print {
+	.sp-actions { display: none !important; }
+	.printReport thead { display: table-header-group; }
+	.printReport tr { page-break-inside: avoid; break-inside: avoid; }
+}

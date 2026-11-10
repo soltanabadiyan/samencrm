@@ -8174,6 +8174,60 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 /* header buttons of extension pages (ModuleHeader.tpl of TelegramBot / SamenTheme / PersianCalendar) */
 .module-action-bar .samen-head-btn { margin-block-start: 5px; margin-inline-end: 8px; }
 
+/* ---------------------------------------------------------------- Task Management (header ✓ icon)
+   Vtiger sets fixed pixel widths inline (filters 550px, columns 400px) – override for a responsive kanban */
+#taskManagementContainer { background: var(--samen-gray-50, #F4F7FB); }
+#taskManagementContainer .overlayHeader .modal-header { background: var(--samen-teal-900, #0B3943) !important; border: 0; padding: 14px 20px; }
+#taskManagementContainer .overlayHeader h4 { color: #fff !important; font-size: 18px; font-weight: 700; text-transform: none; margin: 0; }
+#taskManagementContainer .overlayHeader .close, #taskManagementContainer .overlayHeader .fa-close { color: #fff !important; opacity: .9; text-shadow: none; }
+#taskManagementContainer > hr { display: none; }
+#taskManagementContainer .modal-body { padding: 16px 20px 24px; }
+#taskManagementContainer .data-header { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between;
+	background: #fff; border: 1px solid var(--samen-gray-200, #E2E8F0); border-radius: 12px; padding: 12px; }
+#taskManagementContainer .data-header > * { float: none !important; }
+#taskManagementContainer .dateFilters .btn { border-radius: 0; }
+#taskManagementContainer .dateFilters .btn.active { background: var(--samen-teal-500, #13606F) !important; color: #fff !important; border-color: var(--samen-teal-500, #13606F) !important; }
+#taskManagementContainer #taskManagementOtherFilters { width: auto !important; flex: 1 1 420px; max-width: 620px; display: flex; gap: 8px; align-items: flex-start; }
+#taskManagementContainer #taskManagementOtherFilters .field { width: auto !important; flex: 1 1 0; padding: 0 !important; min-width: 0; }
+#taskManagementContainer #taskManagementOtherFilters .select2-container { width: 100% !important; }
+#taskManagementContainer .datacontent > hr { border-color: transparent; margin: 8px 0; }
+#taskManagementContainer .data-body { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
+#taskManagementContainer .data-body::before, #taskManagementContainer .data-body::after { display: none; }
+#taskManagementContainer .contentsBlock { width: auto !important; float: none !important; padding: 0 !important; background: #fff;
+	border: 1px solid var(--samen-gray-200, #E2E8F0); border-radius: 14px; overflow: hidden; --tm: #13606F; --tm-soft: #EAF1F8; }
+#taskManagementContainer .contentsBlock[data-priority="High"] { --tm: #DC2626; --tm-soft: #FEF2F2; }
+#taskManagementContainer .contentsBlock[data-priority="Medium"] { --tm: #D97706; --tm-soft: #FFFBEB; }
+#taskManagementContainer .contentsBlock[data-priority="Low"] { --tm: #0F766E; --tm-soft: #F0FDFA; }
+#taskManagementContainer .contentsBlock > br { display: none; }
+#taskManagementContainer .contentsBlock [class$="-header"] { border: 0 !important; background: var(--tm-soft); border-block-end: 3px solid var(--tm) !important; padding: 10px 14px; }
+#taskManagementContainer .contentsBlock [class$="-header"] .title { white-space: nowrap; width: auto !important; background: transparent !important; color: var(--tm) !important; font-weight: 800; font-size: 15px; padding: 0; display: inline-block; }
+#taskManagementContainer .contentsBlock .content { border: 0 !important; padding: 12px !important; }
+#taskManagementContainer .contentsBlock .content > br { display: none; }
+#taskManagementContainer .contentsBlock .input-group { display: flex; margin-block-end: 10px; }
+#taskManagementContainer .contentsBlock .input-group .form-control { width: auto !important; flex: 1; border-radius: 8px; }
+#taskManagementContainer .contentsBlock .quickTask { width: auto; display: flex; align-items: center; border-radius: 8px !important; margin-inline-start: 6px; background: var(--tm-soft); border-color: var(--tm) !important; }
+#taskManagementContainer .contentsBlock .quickTask a { color: var(--tm); }
+#taskManagementContainer .dataEntries { width: 100% !important; height: auto !important; max-height: 62vh; min-height: 120px; padding: 0 !important; }
+#taskManagementContainer .task { background: #fff; border: 1px solid var(--samen-gray-200, #E2E8F0) !important; border-inline-start: 4px solid var(--tm) !important; border-left-width: 1px !important;
+	border-radius: 10px; padding: 10px 12px; margin-block-end: 8px; box-shadow: 0 1px 2px rgb(18 23 33 / .05); }
+#taskManagementContainer .task:hover { box-shadow: 0 4px 12px rgb(18 23 33 / .08); }
+#taskManagementContainer .task .task-body { display: flex; gap: 8px; align-items: flex-start; }
+#taskManagementContainer .task .taskSubject { width: auto !important; flex: 1; float: none !important; white-space: normal; line-height: 1.8; }
+#taskManagementContainer .task .taskSubject a { color: var(--samen-ink, #121721); font-weight: 600; }
+#taskManagementContainer .task .taskStatus { float: none !important; flex: none; font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--samen-gray-50, #F4F7FB); color: var(--samen-gray-500, #6B7280) !important; white-space: nowrap; }
+#taskManagementContainer .task .other-details { color: var(--samen-gray-500, #6B7280); font-size: 12.5px; margin-block-start: 6px; }
+@media (max-width: 991px) {
+	#taskManagementContainer .data-body { grid-template-columns: minmax(0, 1fr); }
+	#taskManagementContainer .dataEntries { max-height: none; }
+}
+@media (max-width: 767px) {
+	#taskManagementContainer .modal-body { padding: 10px; }
+	#taskManagementContainer #taskManagementOtherFilters { flex-wrap: wrap; max-width: none; }
+	#taskManagementContainer #taskManagementOtherFilters .field { flex: 1 1 100%; }
+	#taskManagementContainer .dateFilters { display: flex; width: 100%; }
+	#taskManagementContainer .dateFilters .btn { flex: 1; }
+}
+
 /* ===== RTL (generated) ===== */
 /* GENERATED by tools/make_rtl_css.py from Vtiger's stylesheets – do not edit. RTL overrides for fa_* users. */
 

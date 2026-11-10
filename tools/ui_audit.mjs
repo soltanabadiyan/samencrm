@@ -28,7 +28,7 @@ const once = method => new Promise(resolve => waiters.push({ method, resolve }))
 const consoleErrors = [];
 
 async function connect() {
-  for (let i = 0; i < 60; i++) {
+  for (let i = 0; i < 300; i++) {   // up to 60 s: Chrome starts slowly on a busy machine
     try {
       const page = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find(t => t.type === 'page');
       if (page) { ws = new WebSocket(page.webSocketDebuggerUrl); break; }
@@ -55,6 +55,7 @@ try {
       await send('Emulation.setDeviceMetricsOverride', v);
       await send('Emulation.setUserAgentOverride', { userAgent: vp === 'mobile' ? MOBILE_UA : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36' });
       if (s.cookieless) await send('Network.clearBrowserCookies');
+      await send('Emulation.setEmulatedMedia', { media: s.media || '' });   // "print" = see the page as printed
       const key = vp + '|' + s.path;
       if (s.reload !== false || key !== current) {
         const loaded = once('Page.loadEventFired');
