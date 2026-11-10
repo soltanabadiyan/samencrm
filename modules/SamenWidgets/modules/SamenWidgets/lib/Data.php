@@ -107,26 +107,84 @@ class SamenWidgets_Data {
 		return $rows;
 	}
 
+	/** 'Y-m' => Jalali label for the last 12 months, oldest first */
+	static function lastMonths() {
+		$months = array();
+		$now = new DateTime('first day of this month');
+		for ($i = 11; $i >= 0; $i--) {
+			$d = (clone $now)->modify("-$i month");
+			$months[$d->format('Y-m')] = self::jalaliMonthLabel((int) $d->format('Y'), (int) $d->format('n'));
+		}
+		return $months;
+	}
+
+	/** record count per value of $expr over $from (which joins vtiger_crmentity as e), largest first, the rest as «سایر» */
+	static function countBy($from, $expr, $limit = 0) {
+		global $adb;
+		$r = $adb->pquery("SELECT $expr AS k, COUNT(*) n FROM $from WHERE 1=1" . self::ownerSql() . ' GROUP BY k ORDER BY n DESC', array());
+		$rows = array();
+		while ($row = $adb->fetch_array($r)) {
+			$k = trim(decode_html((string) $row['k']));
+			$k = $k === '' ? 'نامشخص' : $k;
+			$rows[$k] = (isset($rows[$k]) ? $rows[$k] : 0) + (int) $row['n'];
+		}
+		if ($limit && count($rows) > $limit) {
+			$top = array_slice($rows, 0, $limit, true);
+			$top['سایر'] = array_sum(array_slice($rows, $limit, null, true));
+			$rows = $top;
+		}
+		return $rows;
+	}
+
+	/** picklist values in the user's language (merging values that translate the same) */
+	static function translated($rows, $module) {
+		$out = array();
+		foreach ($rows as $k => $n) {
+			$t = ($k === 'نامشخص' || $k === 'سایر') ? $k : vtranslate($k, $module);
+			$out[$t] = (isset($out[$t]) ? $out[$t] : 0) + $n;
+		}
+		return $out;
+	}
+
+	static function hasColumn($table, $column) {
+		global $adb;
+		$r = $adb->pquery('SELECT 1 FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name=? AND column_name=?', array($table, $column));
+		return $adb->num_rows($r) > 0;
+	}
+
 	static function chart($name) {
 		global $adb;
-		$levels = array('PhD' => 'دکتری', 'MSc' => 'کارشناسی ارشد', 'BSc' => 'کارشناسی', 'Associate' => 'کاردانی', 'Other' => 'سایر');
 		$cf = ' LEFT JOIN vtiger_contactscf cf ON cf.contactid=cd.contactid';
 		switch ($name) {
-			case 'level':
-				return array('type' => 'doughnut', 'data' => self::contactsBy('cf.cf_ss_level', $cf, 6, 'نامشخص', $levels));
+			case 'leadsource':
+				return array('type' => 'doughnut', 'data' => self::translated(self::contactsBy('cs.leadsource', ' LEFT JOIN vtiger_contactsubdetails cs ON cs.contactsubscriptionid=cd.contactid', 6), 'Contacts'));
 			case 'country':
 				return array('type' => 'pie', 'data' => self::contactsBy('ca.mailingcountry', ' LEFT JOIN vtiger_contactaddress ca ON ca.contactaddressid=cd.contactid', 6));
-			case 'university':
-				$d = self::contactsBy('cf.cf_ss_university', $cf, 0);
-				unset($d['نامشخص']);
-				return array('type' => 'hbar', 'data' => array_slice($d, 0, 10, true));
-			case 'major':
-				$d = self::contactsBy('cf.cf_ss_major', $cf, 0);
-				unset($d['نامشخص']);
-				return array('type' => 'hbar', 'data' => array_slice($d, 0, 10, true));
-			case 'gender':
-				return array('type' => 'doughnut', 'data' => self::contactsBy('cf.cf_ss_gender', $cf, 0, 'نامشخص', array('Male' => 'مرد', 'Female' => 'زن')));
+			case 'pipeline':
+				$d = self::countBy("vtiger_potential t JOIN vtiger_crmentity e ON e.crmid=t.potentialid AND e.deleted=0", 't.sales_stage');
+				$order = array('Prospecting', 'Qualification', 'Needs Analysis', 'Value Proposition', 'Id. Decision Makers', 'Perception Analysis',
+					'Proposal or Price Quote', 'Negotiation or Review', 'Closed Won', 'Closed Lost');
+				$sorted = array();
+				foreach ($order as $k) { if (isset($d[$k])) { $sorted[$k] = $d[$k]; unset($d[$k]); } }
+				return array('type' => 'hbar', 'data' => self::translated($sorted + $d, 'Potentials'));
+			case 'leadstatus':
+				return array('type' => 'doughnut', 'data' => self::translated(self::countBy(
+					"vtiger_leaddetails t JOIN vtiger_crmentity e ON e.crmid=t.leadid AND e.deleted=0 AND t.converted=0", 't.leadstatus', 7), 'Leads'));
+			case 'tickets':
+				return array('type' => 'bar', 'data' => self::translated(self::countBy(
+					"vtiger_troubletickets t JOIN vtiger_crmentity e ON e.crmid=t.ticketid AND e.deleted=0", 't.status'), 'HelpDesk'));
+			case 'won':
+				// amount of won opportunities per Jalali month (by expected close date), last 12 months
+				$months = self::lastMonths();
+				$from = array_keys($months)[0] . '-01';
+				$r = $adb->pquery("SELECT DATE_FORMAT(t.closingdate,'%Y-%m') m, SUM(IFNULL(t.amount,0)) s FROM vtiger_potential t
+					JOIN vtiger_crmentity e ON e.crmid=t.potentialid AND e.deleted=0
+					WHERE t.sales_stage='Closed Won' AND t.closingdate >= ?" . self::ownerSql() . " GROUP BY m", array($from));
+				$vals = array_fill_keys(array_keys($months), 0);
+				while ($row = $adb->fetch_array($r)) { if (isset($vals[$row['m']])) { $vals[$row['m']] = round((float) $row['s']); } }
+				return array('type' => 'line', 'labels' => array_values($months), 'series' => array('مبلغ فروش موفق' => array_values($vals)));
 			case 'completeness':
+				if (!self::hasColumn('vtiger_contactscf', 'cf_ss_profile_completeness')) { return array('type' => 'bar', 'data' => array()); }
 				$buckets = array('۰–۴۰٪' => 0, '۴۱–۶۰٪' => 0, '۶۱–۸۰٪' => 0, '۸۱–۹۹٪' => 0, '۱۰۰٪' => 0);
 				$r = $adb->pquery("SELECT CAST(REPLACE(IFNULL(cf.cf_ss_profile_completeness,'0'),'%','') AS UNSIGNED) p, COUNT(*) n
 					FROM vtiger_contactdetails cd JOIN vtiger_crmentity e ON e.crmid=cd.contactid AND e.deleted=0 $cf
@@ -137,10 +195,6 @@ class SamenWidgets_Data {
 					$buckets[$k] += (int) $row['n'];
 				}
 				return array('type' => 'bar', 'data' => $buckets);
-			case 'admission':
-				$d = self::contactsBy('cf.cf_ss_admission_status', $cf, 7);
-				unset($d['نامشخص']);
-				return array('type' => 'bar', 'data' => $d);
 			case 'activities':
 				$r = $adb->pquery("SELECT CASE WHEN a.activitytype='Task' THEN IFNULL(a.status,'') ELSE IFNULL(a.eventstatus,'') END s, COUNT(*) n
 					FROM vtiger_activity a JOIN vtiger_crmentity e ON e.crmid=a.activityid AND e.deleted=0
@@ -151,16 +205,11 @@ class SamenWidgets_Data {
 				while ($row = $adb->fetch_array($r)) { $k = isset($names[$row['s']]) ? $names[$row['s']] : $row['s']; $d[$k] = (isset($d[$k]) ? $d[$k] : 0) + (int) $row['n']; }
 				return array('type' => 'polarArea', 'data' => $d);
 			case 'trend':
-				// last 12 Jalali months: new student files and activities
-				$months = array();
-				$now = new DateTime('first day of this month');
-				for ($i = 11; $i >= 0; $i--) {
-					$d = (clone $now)->modify("-$i month");
-					$months[$d->format('Y-m')] = self::jalaliMonthLabel((int) $d->format('Y'), (int) $d->format('n'));
-				}
+				// last 12 Jalali months: new contacts and activities
+				$months = self::lastMonths();
 				$from = array_keys($months)[0] . '-01';
 				$series = array();
-				foreach (array('Contacts' => 'پرونده‌های جدید', 'Calendar' => 'فعالیت‌ها') as $setype => $label) {
+				foreach (array('Contacts' => 'مخاطبان جدید', 'Calendar' => 'فعالیت‌ها') as $setype => $label) {
 					$r = $adb->pquery("SELECT DATE_FORMAT(e.createdtime,'%Y-%m') m, COUNT(*) n FROM vtiger_crmentity e
 						WHERE e.deleted=0 AND e.setype=? AND e.createdtime >= ?" . self::ownerSql() . " GROUP BY m", array($setype, $from));
 					$vals = array_fill_keys(array_keys($months), 0);

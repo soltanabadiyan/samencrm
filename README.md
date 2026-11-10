@@ -101,9 +101,10 @@ Module `modules/SamenWidgets` (vtlib extension):
   are collected into the bell instead.
 - **Dashboard widgets** (Home › افزودن ابزارک, placed at the top of every user's default tab on install): کارهای بدون
   زمان باقی‌مانده, Jalali mini calendar (days with open work marked), and charts with bundled Chart.js 4.4.4 –
-  students by level (doughnut), country (pie), gender, top universities / majors (horizontal bars), profile
-  completeness (bar), task/event status (polar area), open work in the next 14 days (bar + trend line), files and
-  activities over 12 Jalali months (line), admission status. Admins see all data, other users their own records.
+  contacts by lead source (doughnut), country (pie), sales pipeline (horizontal bars), won amount per month (line),
+  leads by status, tickets by status, profile
+  completeness (bar), task/event status (polar area), open work in the next 14 days (bar + trend line), new contacts and
+  activities over 12 Jalali months (line). Admins see all data, other users their own records.
 
 ## Help and academy  (`./run_all.sh academy`)
 Module `modules/SamenAcademy` (vtlib extension, menu **Marketing / Sales / Tools › آکادمی SamenCRM**):

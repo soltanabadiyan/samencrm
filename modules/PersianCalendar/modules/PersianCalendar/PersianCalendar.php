@@ -1,7 +1,7 @@
 <?php
 /*+**********************************************************************************
  * PersianCalendar – Jalali (Shamsi) dates and RTL layout for Persian (fa_ir) users.
- * Vtiger extension module (vtlib). SamenStudent.
+ * Vtiger extension module (vtlib). SamenCRM.
  *
  * The module has no records. On install/enable it registers two global header links
  * (Vtiger_Link HEADERSCRIPT / HEADERCSS), which Vtiger_Header_View adds to every page:

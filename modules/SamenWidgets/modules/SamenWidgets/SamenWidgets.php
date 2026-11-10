@@ -11,7 +11,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenWidgets {
 
-	const VERSION = '1.0.4';
+	const VERSION = '1.1.1';
 	// (a literal '?' inside SQL would be taken as a placeholder by PearDatabase – patterns go in as parameters)
 	const LIKE = 'index.php?module=SamenWidgets&%';
 	const RES = 'layouts/v7/modules/SamenWidgets/resources/';
@@ -21,28 +21,28 @@ class SamenWidgets {
 		return array(
 			'DueNow' => array('کارهای بدون زمان باقی‌مانده', 1, 2),
 			'MiniCalendar' => array('تقویم کوچک', 1, 2),
-			'ChartLevel' => array('دانشجویان بر اساس مقطع', 1, 2),
+			'ChartLeadSource' => array('مشتریان بر اساس منبع سرنخ', 1, 2),
 			'ChartWeek' => array('کارهای باز ۱۴ روز آینده', 2, 2),
-			'ChartCountry' => array('دانشجویان بر اساس کشور', 1, 2),
-			'ChartTrend' => array('روند ثبت پرونده و فعالیت', 2, 2),
+			'ChartCountry' => array('مشتریان بر اساس کشور', 1, 2),
+			'ChartTrend' => array('روند مخاطبان جدید و فعالیت‌ها', 2, 2),
 			'ChartActivities' => array('وضعیت وظایف و رویدادها', 1, 2),
-			'ChartUniversity' => array('۱۰ دانشگاه برتر', 2, 2),
-			'ChartCompleteness' => array('میزان تکمیل پرونده‌ها', 1, 2),
-			'ChartMajor' => array('۱۰ رشته پرطرفدار', 2, 2),
-			'ChartGender' => array('دانشجویان بر اساس جنسیت', 1, 2),
-			'ChartAdmission' => array('وضعیت پذیرش', 2, 2),
+			'ChartPipeline' => array('قیف فرصت‌های فروش', 2, 2),
+			'ChartCompleteness' => array('میزان تکمیل پرونده مشتریان', 1, 2),
+			'ChartWon' => array('فروش موفق ۱۲ ماه اخیر', 2, 2),
+			'ChartLeadStatus' => array('سرنخ‌ها بر اساس وضعیت', 1, 2),
+			'ChartTickets' => array('درخواست‌های پشتیبانی بر اساس وضعیت', 2, 2),
 		);
 	}
 
 	/** grid position of each widget (3 columns): due, calendar and a chart first, then the wide charts */
 	static function layout() {
 		return array(
-			'DueNow' => array(1, 1), 'MiniCalendar' => array(1, 2), 'ChartLevel' => array(1, 3),
+			'DueNow' => array(1, 1), 'MiniCalendar' => array(1, 2), 'ChartLeadSource' => array(1, 3),
 			'ChartWeek' => array(3, 1), 'ChartCountry' => array(3, 3),
 			'ChartTrend' => array(5, 1), 'ChartActivities' => array(5, 3),
-			'ChartUniversity' => array(7, 1), 'ChartCompleteness' => array(7, 3),
-			'ChartMajor' => array(9, 1), 'ChartGender' => array(9, 3),
-			'ChartAdmission' => array(11, 1),
+			'ChartPipeline' => array(7, 1), 'ChartCompleteness' => array(7, 3),
+			'ChartWon' => array(9, 1), 'ChartLeadStatus' => array(9, 3),
+			'ChartTickets' => array(11, 1),
 		);
 	}
 
@@ -79,6 +79,14 @@ class SamenWidgets {
 		Vtiger_Link::addLink($tabid, 'HEADERCSS', 'SamenWidgetsCss', self::RES . 'samenwidgets.css' . $v, '', 1);
 		Vtiger_Link::addLink($tabid, 'HEADERSCRIPT', 'SamenWidgetsJs', self::RES . 'samenwidgets.js' . $v, '', 4);
 		$home = getTabid('Home');
+		// widgets dropped in a newer version (e.g. 1.0.x domain charts): remove the link and the users' copies
+		$keep = array_map(array(__CLASS__, 'url'), array_keys(self::widgets()));
+		$r = $adb->pquery("SELECT linkid, linkurl FROM vtiger_links WHERE tabid=? AND linktype='DASHBOARDWIDGET' AND linkurl LIKE ?", array($home, self::LIKE));
+		while ($row = $adb->fetch_array($r)) {
+			if (in_array(decode_html($row['linkurl']), $keep, true)) { continue; }
+			$adb->pquery('DELETE FROM vtiger_module_dashboard_widgets WHERE linkid=?', array($row['linkid']));
+			$adb->pquery('DELETE FROM vtiger_links WHERE linkid=?', array($row['linkid']));
+		}
 		foreach (self::widgets() as $name => $w) {
 			$r = $adb->pquery("SELECT linkid FROM vtiger_links WHERE tabid=? AND linktype='DASHBOARDWIDGET' AND linkurl=?", array($home, self::url($name)));
 			if ($adb->num_rows($r)) {

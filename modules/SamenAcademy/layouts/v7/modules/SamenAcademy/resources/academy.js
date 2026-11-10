@@ -6,7 +6,7 @@
 (function (window, document) {
 	'use strict';
 	var BASE = 'layouts/v7/modules/SamenAcademy/resources/content/';
-	var VERSION = '1.0.1';
+	var VERSION = '1.1.0';
 	var root, user, catalog, flat = [], store;
 
 	function q(s, r) { return (r || document).querySelector(s); }
@@ -148,9 +148,9 @@
 
 	/* ------------------------------------------------------------------ lesson components */
 	var CALC = {
-		conv: { label: 'نرخ تبدیل', inputs: [['a', 'تعداد تبدیل‌شده (مثلاً ثبت‌نام)', 24], ['b', 'تعداد کل (مثلاً سرنخ)', 300]], out: function (v) { return pct(v.a / v.b); } },
+		conv: { label: 'نرخ تبدیل', inputs: [['a', 'تعداد تبدیل‌شده (مثلاً فروش)', 24], ['b', 'تعداد کل (مثلاً سرنخ)', 300]], out: function (v) { return pct(v.a / v.b); } },
 		cpl: { label: 'هزینه هر سرنخ (CPL)', inputs: [['a', 'هزینه کمپین', 30000000], ['b', 'تعداد سرنخ', 150]], out: function (v) { return money(v.a / v.b); } },
-		cac: { label: 'هزینه جذب هر دانشجو (CAC)', inputs: [['a', 'کل هزینه بازاریابی و فروش دوره', 120000000], ['b', 'تعداد دانشجوی جذب‌شده', 40]], out: function (v) { return money(v.a / v.b); } },
+		cac: { label: 'هزینه جذب هر مشتری (CAC)', inputs: [['a', 'کل هزینه بازاریابی و فروش دوره', 120000000], ['b', 'تعداد مشتری جذب‌شده', 40]], out: function (v) { return money(v.a / v.b); } },
 		ltv: { label: 'ارزش طول عمر مشتری (LTV)', inputs: [['a', 'میانگین درآمد هر خرید', 45000000], ['b', 'تعداد خرید در طول ارتباط', 2.5], ['c', 'حاشیه سود (٪)', 40]], out: function (v) { return money(v.a * v.b * v.c / 100); } },
 		ltvcac: { label: 'نسبت LTV به CAC', inputs: [['a', 'LTV', 45000000], ['b', 'CAC', 3000000]], out: function (v) { var r = v.a / v.b; return num(r) + ' : ۱ — ' + (r >= 3 ? 'سالم (۳ یا بیشتر)' : r >= 1 ? 'سودآور ولی ضعیف' : 'زیان‌ده'); } },
 		roi: { label: 'بازگشت سرمایه (ROI)', inputs: [['a', 'درآمد حاصل', 400000000], ['b', 'هزینه', 120000000]], out: function (v) { return pct((v.a - v.b) / v.b); } },
@@ -171,7 +171,7 @@
 			return num(Math.ceil(n), 0) + ' نفر در هر گروه (اطمینان ۹۵٪، توان ۸۰٪)';
 		} },
 		score: { label: 'امتیاز سرنخ', inputs: [['a', 'تناسب (۰–۴۰)', 30], ['b', 'علاقه/تعامل (۰–۳۰)', 20], ['c', 'آمادگی مالی (۰–۲۰)', 15], ['d', 'فوریت (۰–۱۰)', 5]], out: function (v) { var s = v.a + v.b + v.c + v.d; return num(s, 0) + ' از ۱۰۰ — ' + (s >= 70 ? 'داغ: امروز تماس' : s >= 40 ? 'گرم: پرورش با محتوا' : 'سرد: فهرست بلندمدت'); } },
-		quota: { label: 'فعالیت لازم برای رسیدن به هدف', inputs: [['a', 'هدف ثبت‌نام ماه', 10], ['b', 'نرخ تبدیل تماس به ثبت‌نام (٪)', 8], ['c', 'روز کاری ماه', 22]], out: function (v) { var calls = v.a / (v.b / 100); return num(Math.ceil(calls), 0) + ' گفتگوی مؤثر در ماه ≈ ' + num(Math.ceil(calls / v.c), 0) + ' در روز'; } }
+		quota: { label: 'فعالیت لازم برای رسیدن به هدف', inputs: [['a', 'هدف فروش ماه', 10], ['b', 'نرخ تبدیل تماس به فروش (٪)', 8], ['c', 'روز کاری ماه', 22]], out: function (v) { var calls = v.a / (v.b / 100); return num(Math.ceil(calls), 0) + ' گفتگوی مؤثر در ماه ≈ ' + num(Math.ceil(calls / v.c), 0) + ' در روز'; } }
 	};
 	function num(x, d) { if (!isFinite(x)) { return '—'; } return fa((Math.round(x * Math.pow(10, d == null ? 2 : d)) / Math.pow(10, d == null ? 2 : d)).toLocaleString('en-US')); }
 	function pct(x) { return num(100 * x) + '٪'; }

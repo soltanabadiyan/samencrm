@@ -56,6 +56,9 @@
 .sw-due-sum { display: flex; gap: 6px; flex-wrap: wrap; }
 .sw-more { margin: 6px 0 0; font-size: 12.5px; }
 .sw-chart { position: relative; block-size: 100%; min-block-size: 200px; }
+.sw-chart.sw-nodata { display: grid; place-items: center; text-align: center; color: var(--sw-muted); }
+.sw-nodata p { margin: 0; display: grid; gap: 8px; justify-items: center; font-size: 13px; }
+.sw-nodata .fa { font-size: 34px; color: var(--sw-line); }
 .sw-chart canvas { position: absolute; inset: 0; inline-size: 100% !important; block-size: 100% !important; }
 
 /* Jalali mini calendar */

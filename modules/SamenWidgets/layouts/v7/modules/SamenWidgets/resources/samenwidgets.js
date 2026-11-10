@@ -5,7 +5,7 @@
 (function (window, document) {
 	'use strict';
 	var BASE = 'layouts/v7/modules/SamenWidgets/resources/';
-	var VERSION = '1.0.4';
+	var VERSION = '1.1.1';
 	var POLL = 120000;
 	var COLORS = ['#13606F', '#D99058', '#7D4F2E', '#4F7CAC', '#0F766E', '#E11D48', '#A3C2E0', '#F59E0B', '#64748B', '#22C55E', '#8B5CF6', '#0EA5E9'];
 
@@ -174,6 +174,14 @@
 	function renderChart(box) {
 		var spec; try { spec = JSON.parse(box.getAttribute('data-chart')); } catch (e) { return; }
 		var canvas = q('canvas', box);
+		// nothing recorded yet (e.g. no opportunities or tickets): a message instead of empty axes
+		var vals = spec.series ? [].concat.apply([], Object.keys(spec.series).map(function (k) { return spec.series[k]; }))
+			: Object.keys(spec.data || {}).map(function (k) { return spec.data[k]; });
+		if (!vals.some(function (v) { return +v > 0; })) {
+			box.classList.add('sw-nodata');
+			box.replaceChildren(el('p', {}, [el('i', { class: 'fa fa-bar-chart', 'aria-hidden': 'true' }), el('span', { text: 'هنوز داده‌ای برای این نمودار ثبت نشده است.' })]));
+			return;
+		}
 		loadChart().then(function (Chart) {
 			Chart.defaults.font.family = 'Shabnam, Tahoma, sans-serif';
 			Chart.defaults.color = '#475569';

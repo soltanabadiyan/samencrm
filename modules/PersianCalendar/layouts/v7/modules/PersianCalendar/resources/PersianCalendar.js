@@ -1,6 +1,6 @@
 /*+**********************************************************************************
  * PersianCalendar – Jalali (Shamsi) dates for Vtiger CRM 7/8 (v7 layout)
- * SamenStudent. Loaded on every page as a HEADERSCRIPT link (see PersianCalendar.php).
+ * SamenCRM. Loaded on every page as a HEADERSCRIPT link (see PersianCalendar.php).
  *
  * Active only for users whose language is fa_ir (body[data-language]).
  *  - Dates are STORED in Gregorian (Vtiger standard); only the UI is Jalali:
