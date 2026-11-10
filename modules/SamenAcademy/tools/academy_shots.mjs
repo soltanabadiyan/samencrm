@@ -6,7 +6,7 @@
 //   SESSION=$(tools/get_session.sh) node modules/SamenAcademy/tools/academy_shots.mjs [filter]
 // Needs the SOCKS tunnel (ssh -D 19080 hashemz_crm), like tools/ui_audit.mjs.
 import { spawn } from 'node:child_process';
-import { mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
+import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -26,9 +26,11 @@ const UA = { desktop: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML
   tablet: 'Mozilla/5.0 (Linux; Android 14; SM-X710) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
   mobile: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Mobile Safari/537.36' };
 
+const PROFILE = mkdtempSync(join(tmpdir(), 'acshots-'));   // removed again when the run ends
 const port = 9600 + Math.floor(Math.random() * 300);
 const chrome = spawn('google-chrome', ['--headless=new', `--remote-debugging-port=${port}`, '--no-first-run', '--hide-scrollbars',
-  `--user-data-dir=${mkdtempSync(join(tmpdir(), 'acshots-'))}`, `--proxy-server=${process.env.PROXY || 'socks5://127.0.0.1:19080'}`, 'about:blank'], { stdio: 'ignore' });
+  `--user-data-dir=${PROFILE}`, `--proxy-server=${process.env.PROXY || 'socks5://127.0.0.1:19080'}`, 'about:blank'], { stdio: 'ignore' });
+chrome.on('exit', () => { try { rmSync(PROFILE, { recursive: true, force: true }); } catch {} });   // no profiles left in /tmp
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let ws, id = 0; const pending = new Map(), waiters = [];
 const send = (method, params = {}) => new Promise(r => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });

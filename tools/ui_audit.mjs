@@ -4,7 +4,7 @@
 //   SESSION=$(tools/get_session.sh) node tools/ui_audit.mjs out_dir tools/ui_audit_steps.json [filter]
 // Needs a SOCKS tunnel to the server:  ssh -D 19080 hashemz_crm  (through tools/direct_proxy.py when on VPN).
 import { spawn } from 'node:child_process';
-import { mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
+import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -17,10 +17,12 @@ const VIEW = {
   mobile: { width: 390, height: 844, deviceScaleFactor: 1, mobile: true },
 };
 const MOBILE_UA = 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Mobile Safari/537.36';
+const PROFILE = mkdtempSync(join(tmpdir(), 'uiaudit-'));   // removed again when the run ends
 const port = 9300 + Math.floor(Math.random() * 500);
 const chrome = spawn('google-chrome', ['--headless=new', `--remote-debugging-port=${port}`, '--no-first-run',
-  `--user-data-dir=${mkdtempSync(join(tmpdir(), 'uiaudit-'))}`, `--proxy-server=${process.env.PROXY || 'socks5://127.0.0.1:19080'}`,
+  `--user-data-dir=${PROFILE}`, `--proxy-server=${process.env.PROXY || 'socks5://127.0.0.1:19080'}`,
   'about:blank'], { stdio: 'ignore' });
+chrome.on('exit', () => { try { rmSync(PROFILE, { recursive: true, force: true }); } catch {} });   // no profiles left in /tmp
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let ws, id = 0; const pending = new Map(), waiters = [];
 const send = (method, params = {}) => new Promise(r => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });

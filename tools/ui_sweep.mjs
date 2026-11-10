@@ -6,7 +6,7 @@
 //   SESSION=$(tools/get_session.sh) node tools/ui_sweep.mjs out_dir [extra_urls.json]
 // Needs the SOCKS tunnel (ssh -D 19080 hashemz_crm). Screenshots are saved only for pages with problems.
 import { spawn } from 'node:child_process';
-import { mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
+import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -32,10 +32,12 @@ const ERROR_TEXT = /Permission to perform the operation is denied|Fatal error|Un
 // Latin words that are fine in the Persian UI (brand, units, formats, protocol names)
 const ALLOWED_EN = /^(SamenCRM|samen|CRM|PBX|RSS|SMS|URL|API|ID|PDF|CSV|Excel|vCard|ON|OFF|KB|MB|GB|Google|Telegram|WhatsApp|Bot|HTML|IMAP|SMTP|SSL|TLS|PHP|Vtiger|vtiger|OAuth|Webhook|CKEditor|Jalali|admin|fa_ir|en_us|Asia|Tehran|yyyy|mm|dd|AM|PM|USD|IRR|IRT|ok|OK|Email|ext|www|http|https|com|ir|tg|wa|me|org|net)$/i;
 
+const PROFILE = mkdtempSync(join(tmpdir(), 'uisweep-'));   // removed again when the run ends
 const port = 9300 + Math.floor(Math.random() * 500);
 const chrome = spawn('google-chrome', ['--headless=new', `--remote-debugging-port=${port}`, '--no-first-run',
-  `--user-data-dir=${mkdtempSync(join(tmpdir(), 'uisweep-'))}`, `--proxy-server=${process.env.PROXY || 'socks5://127.0.0.1:19080'}`,
+  `--user-data-dir=${PROFILE}`, `--proxy-server=${process.env.PROXY || 'socks5://127.0.0.1:19080'}`,
   'about:blank'], { stdio: 'ignore' });
+chrome.on('exit', () => { try { rmSync(PROFILE, { recursive: true, force: true }); } catch {} });   // no profiles left in /tmp
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let ws, id = 0; const pending = new Map(), waiters = [];
 const send = (method, params = {}) => new Promise(r => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });
