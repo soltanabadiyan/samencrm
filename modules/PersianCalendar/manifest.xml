@@ -2,9 +2,9 @@
 <module>
 	<name>PersianCalendar</name>
 	<label>Persian Calendar</label>
-	<parent>Tools</parent>
+	<parent></parent>
 	<type>extension</type>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	<dependencies>
 		<vtiger_version>7.0.0</vtiger_version>
 		<vtiger_max_version>8.*</vtiger_max_version>

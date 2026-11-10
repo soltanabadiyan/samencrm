@@ -31,7 +31,7 @@
 		'Potentials Won': 'فرصت‌های موفق',
 		'Open Quotes': 'پیش‌فاکتورهای باز',
 		'Persian Calendar': 'تقویم شمسی',
-		'Samen Theme': 'پوسته ثامن',
+		'Samen Theme': 'پوسته SamenCRM', 'SamenCRM Theme': 'پوسته SamenCRM',
 		'Calendar Settings': 'تنظیمات تقویم',
 		'My Preferences': 'تنظیمات من',
 		'Users': 'کاربران',

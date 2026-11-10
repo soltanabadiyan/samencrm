@@ -1,0 +1,53 @@
+/* SamenCRM extension settings pages (SamenTheme, PersianCalendar). Tokens come from the samen skin, with fallbacks. */
+.samen-ext {
+	--x-teal: var(--samen-teal-500, #13606F);
+	--x-ink: var(--samen-ink, #121721);
+	--x-muted: var(--samen-gray-500, #6B7280);
+	--x-line: var(--samen-gray-200, #E2E8F0);
+	--x-soft: var(--samen-gray-50, #F4F7FB);
+	padding: 20px 24px 40px;
+	color: var(--x-ink);
+	max-width: 1280px;
+}
+.samen-ext-head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-block-end: 20px; }
+.samen-ext-head h3 { margin: 0 0 4px; font-size: 20px; font-weight: 700; }
+.samen-ext-logo { inline-size: 48px; block-size: 48px; border-radius: 12px; background: var(--x-soft); padding: 6px; }
+.samen-ext-sub { margin: 0; color: var(--x-muted); }
+.samen-ext-ver { display: inline-block; margin-inline-start: 6px; padding: 0 8px; border-radius: 999px; background: var(--x-soft); font-size: 12px; }
+.samen-ext-actions { margin-inline-start: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+.samen-ext-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 16px; margin-block-end: 16px; }
+.samen-ext-card { background: #fff; border: 1px solid var(--x-line); border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 2px rgba(18, 23, 33, .04); margin-block-end: 16px; }
+.samen-ext-grid > .samen-ext-card { margin: 0; }
+.samen-ext-card h4 { margin: 0 0 14px; font-size: 15px; font-weight: 700; color: var(--x-teal); }
+.samen-ext-checks { list-style: none; margin: 0; padding: 0; }
+.samen-ext-checks li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-block-end: 1px solid var(--x-line); }
+.samen-ext-checks li:last-child { border-block-end: 0; }
+.samen-ext-checks li > span::before { content: ""; display: inline-block; inline-size: 9px; block-size: 9px; border-radius: 50%; margin-inline-end: 10px; background: #9CA3AF; vertical-align: middle; }
+.samen-ext-checks li.ok > span::before { background: #16A34A; }
+.samen-ext-checks li.warn > span::before { background: #D97706; }
+.samen-ext-checks li.bad > span::before { background: #DC2626; }
+.samen-ext-checks li b { font-weight: 600; color: var(--x-muted); text-align: end; overflow-wrap: anywhere; }
+.samen-ext-checks li.bad b { color: #B91C1C; }
+.samen-ext-note { margin: 12px 0 0; color: var(--x-muted); font-size: 12.5px; line-height: 1.8; }
+.samen-ext-dl { display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; margin: 0 0 14px; }
+.samen-ext-dl dt { color: var(--x-muted); font-weight: 500; }
+.samen-ext-dl dd { margin: 0; overflow-wrap: anywhere; }
+.samen-ext-palette { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+.samen-ext-swatch { display: grid; gap: 2px; font-size: 12px; }
+.samen-ext-swatch i { display: block; block-size: 36px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, .08); }
+.samen-ext-swatch code { background: none; color: var(--x-muted); padding: 0; font-size: 11px; justify-self: start; }
+.samen-ext-links { display: flex; flex-wrap: wrap; gap: 16px; margin: 16px 0 0; }
+.samen-ext-table { margin: 0; }
+.samen-ext-table th { background: var(--x-soft); font-weight: 600; white-space: nowrap; }
+.samen-ext-table td, .samen-ext-table th { text-align: start; vertical-align: middle !important; }
+.samen-ext-big { font-size: 22px; font-weight: 700; color: var(--x-teal); }
+.samen-ext-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+.samen-ext-kpi { background: var(--x-soft); border-radius: 10px; padding: 12px 14px; }
+.samen-ext-kpi small { display: block; color: var(--x-muted); margin-block-end: 4px; }
+.samen-ext-tag { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; background: #DCFCE7; color: #166534; }
+.samen-ext-tag.off { background: #FEF3C7; color: #92400E; }
+@media (max-width: 767px) {
+	.samen-ext { padding: 14px 12px 32px; }
+	.samen-ext-actions { margin-inline-start: 0; inline-size: 100%; }
+	.samen-ext-actions .btn { flex: 1 1 auto; }
+}

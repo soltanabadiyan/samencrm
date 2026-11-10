@@ -49,6 +49,11 @@ All three are standard Vtiger packages (Settings > Module Management can also im
 | `PersianCalendar.zip` (extension) | Jalali dates everywhere in the UI, Jalali date picker on every date field, Shamsi FullCalendar (RTL, week starts Saturday). Dates stay Gregorian in the DB. | `modules/PersianCalendar/` (`tests/convert.test.js`) |
 | `SamenTheme.zip` (extension) | **Vtiger 8 custom skin `samen`** (`layouts/v7/custom_skins/samen`): Vtiger's own LESS recompiled with the samencloud.ir palette (teal `#13606F`, brown `#7D4F2E`, copper `#D99058`), design tokens, Shabnam font, complete RTL (mirrored automatically + hand fixes for the app menu/sub-menus and dropdowns). Brand login page (SamenCRM), favicon, company logo, high-contrast navigation (app menu, sub-menus, rail, settings), responsive phone layout. | `modules/SamenTheme/` |
 
+Both extensions have no records, so they are **not in the app menus**; each has an admin page in
+**Settings > Extensions**: «پوسته SamenCRM» (status of skin / login page / logo, palette, *apply again*) and
+«تقویم شمسی» (status, every user's language / week start / date format, *set all users to Persian*).
+Old links such as `index.php?module=SamenTheme&view=List` redirect there.
+
 * The login page preselects the `samen` skin (Vtiger keeps the choice in the session). Vtiger has no hook for the login
   page, so the installer adds one marked block to `layouts/v7/modules/Users/Login.tpl`; it is re-applied on update and removed
   when SamenTheme is disabled.

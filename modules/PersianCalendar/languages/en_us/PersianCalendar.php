@@ -1,6 +1,25 @@
 <?php
 $languageStrings = array(
-	'PersianCalendar' => 'Persian Calendar',
-	'SINGLE_PersianCalendar' => 'Persian Calendar',
+	'PersianCalendar' => 'Persian Calendar', 'Persian Calendar' => 'Persian Calendar', 'SINGLE_PersianCalendar' => 'Persian Calendar',
+	'LBL_PC_TITLE' => 'Persian Calendar',
+	'LBL_PC_SUBTITLE' => 'Jalali (Shamsi) dates shown and picked on every page; the database keeps Gregorian dates',
+	'LBL_PC_APPLY_USERS' => 'Set all users to Persian', 'LBL_PC_APPLY' => 'Register scripts again', 'LBL_PC_DONE' => 'Done',
+	'LBL_PC_USERS_CONFIRM' => 'Set Persian language, Saturday week start, Tehran time zone and yyyy-mm-dd dates for all active users?',
+	'LBL_PC_TODAY' => 'Today', 'LBL_PC_SHOWN' => 'Shown to users', 'LBL_PC_STORED' => 'Stored (Gregorian)',
+	'LBL_PC_TODAY_HELP' => 'Persian users see every date in Jalali and pick Jalali days in date pickers. Reports, filters and exports use Gregorian dates.',
+	'LBL_PC_STATUS' => 'Status', 'LBL_PC_SCRIPTS' => 'Calendar script on every page', 'LBL_PC_LANG' => 'Persian language pack',
+	'LBL_PC_DEFAULT_LANG' => 'System default language', 'LBL_PC_USERS_OK' => 'Users with Persian settings',
+	'LBL_PC_ACTIVE' => 'Active', 'LBL_PC_MISSING' => 'Not installed',
+	'LBL_PC_USERS' => 'Users\' calendar settings', 'LBL_PC_USER' => 'User', 'LBL_PC_LANGUAGE' => 'Language',
+	'LBL_PC_WEEK_START' => 'Week starts', 'LBL_PC_DATE_FORMAT' => 'Date format', 'LBL_PC_TIMEZONE' => 'Time zone',
+	'LBL_PC_PERSIAN' => 'Persian', 'LBL_PC_NOT_PERSIAN' => 'Needs setup',
+	'LBL_PC_USERS_HELP' => 'The Jalali calendar is active for users whose language is Persian. Each user can change these in My Preferences.',
+	'DAY_Sunday' => 'Sunday',
+	'DAY_Monday' => 'Monday',
+	'DAY_Tuesday' => 'Tuesday',
+	'DAY_Wednesday' => 'Wednesday',
+	'DAY_Thursday' => 'Thursday',
+	'DAY_Friday' => 'Friday',
+	'DAY_Saturday' => 'Saturday',
 );
 $jsLanguageStrings = array();

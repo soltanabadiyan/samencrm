@@ -1,7 +1,25 @@
 <?php
 $languageStrings = array(
-	'PersianCalendar' => 'تقویم شمسی',
-	'Persian Calendar' => 'تقویم شمسی',
-	'SINGLE_PersianCalendar' => 'تقویم شمسی',
+	'PersianCalendar' => 'تقویم شمسی', 'Persian Calendar' => 'تقویم شمسی', 'SINGLE_PersianCalendar' => 'تقویم شمسی',
+	'LBL_PC_TITLE' => 'تقویم شمسی',
+	'LBL_PC_SUBTITLE' => 'نمایش و انتخاب تاریخ به شمسی در همه صفحات؛ تاریخ‌ها در پایگاه داده میلادی می‌مانند',
+	'LBL_PC_APPLY_USERS' => 'تنظیم همه کاربران برای فارسی', 'LBL_PC_APPLY' => 'ثبت دوباره اسکریپت‌ها', 'LBL_PC_DONE' => 'انجام شد',
+	'LBL_PC_USERS_CONFIRM' => 'زبان فارسی، شروع هفته از شنبه، منطقه زمانی تهران و قالب تاریخ yyyy-mm-dd برای همه کاربران فعال تنظیم شود؟',
+	'LBL_PC_TODAY' => 'امروز', 'LBL_PC_SHOWN' => 'نمایش به کاربر', 'LBL_PC_STORED' => 'ذخیره در پایگاه داده (میلادی)',
+	'LBL_PC_TODAY_HELP' => 'کاربران فارسی همه تاریخ‌ها را شمسی می‌بینند و در انتخابگر تاریخ، روز شمسی انتخاب می‌کنند. گزارش‌ها، فیلترها و خروجی‌ها با تاریخ میلادی کار می‌کنند.',
+	'LBL_PC_STATUS' => 'وضعیت', 'LBL_PC_SCRIPTS' => 'اسکریپت تقویم در همه صفحات', 'LBL_PC_LANG' => 'بسته زبان فارسی',
+	'LBL_PC_DEFAULT_LANG' => 'زبان پیش‌فرض سامانه', 'LBL_PC_USERS_OK' => 'کاربران با تنظیمات فارسی',
+	'LBL_PC_ACTIVE' => 'فعال', 'LBL_PC_MISSING' => 'نصب نشده',
+	'LBL_PC_USERS' => 'تنظیمات تقویم کاربران', 'LBL_PC_USER' => 'کاربر', 'LBL_PC_LANGUAGE' => 'زبان',
+	'LBL_PC_WEEK_START' => 'شروع هفته', 'LBL_PC_DATE_FORMAT' => 'قالب تاریخ', 'LBL_PC_TIMEZONE' => 'منطقه زمانی',
+	'LBL_PC_PERSIAN' => 'فارسی', 'LBL_PC_NOT_PERSIAN' => 'نیاز به تنظیم',
+	'LBL_PC_USERS_HELP' => 'تقویم شمسی برای کاربرانی فعال است که زبانشان فارسی باشد. هر کاربر می‌تواند این موارد را در «تنظیمات من» تغییر دهد.',
+	'DAY_Sunday' => 'یکشنبه',
+	'DAY_Monday' => 'دوشنبه',
+	'DAY_Tuesday' => 'سه‌شنبه',
+	'DAY_Wednesday' => 'چهارشنبه',
+	'DAY_Thursday' => 'پنجشنبه',
+	'DAY_Friday' => 'جمعه',
+	'DAY_Saturday' => 'شنبه',
 );
 $jsLanguageStrings = array();
