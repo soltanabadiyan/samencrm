@@ -1,7 +1,7 @@
 {
   "Contacts.php": {
     "languageStrings": {
-      "Student Profile": "مشخصات دانشجو",
+      "Student Profile": "مشخصات مشتری",
       "Admission & Documents Workflow": "روند پذیرش و مدارک",
       "Payments & Fees": "پرداخت‌ها و هزینه‌ها",
       "Passport No": "شماره پاسپورت",
@@ -10,7 +10,7 @@
       "Full Name (Latin)": "نام کامل (لاتین)",
       "Gender": "جنسیت",
       "Nationality": "ملیت",
-      "University Student No": "شماره دانشجویی",
+      "University Student No": "شماره مشتری",
       "Saorg / Tracking Code": "کد سااورگ / کد پیگیری",
       "List Code": "کد فهرست",
       "Level": "مقطع",
@@ -27,7 +27,7 @@
       "Entry Term": "ترم ورود",
       "Entry Type": "نوع ورود",
       "Study Start Date": "تاریخ شروع تحصیل",
-      "Student Status": "وضعیت دانشجو",
+      "Student Status": "وضعیت مشتری",
       "Source Lists / Groups": "فهرست‌ها / گروه‌های منبع",
       "Phone (as written in sheet)": "تلفن (مطابق فایل)",
       "Faculty Code": "کد دانشکده",

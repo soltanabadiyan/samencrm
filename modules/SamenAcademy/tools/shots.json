@@ -135,17 +135,17 @@
 				"label": "مسئول"
 			},
 			{
-				"text": "مشخصات دانشجو",
+				"text": "مشخصات مشتری",
 				"sel": ".block h4, .blockHeader, h4"
 			},
 			{
-				"label": "مقطع"
+				"label": "گروه مشتری"
 			},
 			{
-				"label": "دانشگاه"
+				"label": "شعبه"
 			},
 			{
-				"label": "رشته"
+				"label": "محصول موردعلاقه"
 			}
 		]
 	},
@@ -224,7 +224,7 @@
 		"id": "contact-edit-student",
 		"path": "index.php?module=Contacts&view=Edit&record=2&app=MARKETING",
 		"height": 1100,
-		"setup": "(async()=>{const h=[...document.querySelectorAll('h4, .blockHeader')].find(e=>/مشخصات دانشجو/.test(e.textContent));h&&h.scrollIntoView({block:'start'});window.scrollBy(0,-110);})()",
+		"setup": "(async()=>{const h=[...document.querySelectorAll('h4, .blockHeader')].find(e=>/مشخصات (دانشجو|مشتری)/.test(e.textContent));h&&h.scrollIntoView({block:'start'});window.scrollBy(0,-110);})()",
 		"marks": [
 			{
 				"label": "شماره پاسپورت"
@@ -239,16 +239,16 @@
 				"label": "ملیت"
 			},
 			{
-				"label": "کد سااورگ"
+				"label": "کد اشتراک"
 			},
 			{
-				"label": "مقطع"
+				"label": "گروه مشتری"
 			},
 			{
-				"label": "دانشگاه"
+				"label": "شعبه"
 			},
 			{
-				"label": "رشته"
+				"label": "محصول موردعلاقه"
 			}
 		]
 	},

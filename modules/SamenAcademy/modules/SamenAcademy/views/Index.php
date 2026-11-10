@@ -16,11 +16,18 @@ class SamenAcademy_Index_View extends Vtiger_Index_View {
 
 	function getHeaderCss(Vtiger_Request $request) {
 		return array_merge(parent::getHeaderCss($request),
-			$this->checkAndConvertCssStyles(array('~layouts/v7/modules/SamenAcademy/resources/academy.css')));
+			self::versioned($this->checkAndConvertCssStyles(array('~layouts/v7/modules/SamenAcademy/resources/academy.css')), 'href'));
 	}
 
 	function getHeaderScripts(Vtiger_Request $request) {
 		return array_merge(parent::getHeaderScripts($request),
-			$this->checkAndConvertJsScripts(array('~layouts/v7/modules/SamenAcademy/resources/academy.js')));
+			self::versioned($this->checkAndConvertJsScripts(array('~layouts/v7/modules/SamenAcademy/resources/academy.js')), 'src'));
+	}
+
+	/** Vtiger adds only ?v=<Vtiger version> – our own version makes browsers fetch the new files after an update */
+	static function versioned($models, $attr) {
+		require_once 'modules/SamenAcademy/SamenAcademy.php';
+		foreach ($models as $m) { $m->set($attr, $m->get($attr) . '?sa=' . SamenAcademy::VERSION); }
+		return $models;
 	}
 }

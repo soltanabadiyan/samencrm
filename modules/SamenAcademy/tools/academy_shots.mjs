@@ -82,6 +82,9 @@ try {
     const leaks = await evaluate('window.__acLeaks()');
     if (leaks && leaks.length && process.env.DEBUG_LEAKS) console.log(await evaluate(`(${JSON.stringify(leaks)}).map(o=>{const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))if(n.nodeValue.indexOf(o)>-1){const e=n.parentElement;return o.length+' chars in <'+e.tagName.toLowerCase()+' class='+e.className+'> under '+(e.closest('[class]')&&e.closest('[class]').parentElement.className)}return o.length+' chars in a form value'})`));
     if (leaks && leaks.length) throw new Error(s.id + ': personal data still visible after masking (' + leaks.length + ' values) – nothing captured');
+    await evaluate('window.__acGeneric()');
+    const domain = await evaluate('window.__acDomainLeft()');
+    if (domain && domain.length) throw new Error(s.id + ': education wording still visible – nothing captured: ' + domain.join(' | '));
     const missing = await evaluate(`window.__acMark(${JSON.stringify(s.marks || [])})`);
     const shot = await send('Page.captureScreenshot', { format: 'webp', quality: 80 });
     writeFileSync(join(OUT, `${s.id}.webp`), Buffer.from(shot.result.data, 'base64'));

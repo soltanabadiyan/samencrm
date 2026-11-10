@@ -9,14 +9,14 @@ LEVEL = {"PhD": "دکتری", "MSc": "کارشناسی ارشد", "BSc": "کار
          "Other": "سایر", "": "نامشخص"}
 
 SOURCE_GROUPS = {
-    "Afghanistan students": "دانشجویان افغانستان",
-    "All students master list": "فهرست کل دانشجویان",
+    "Afghanistan students": "مشتریان افغانستان",
+    "All students master list": "فهرست کل مشتریان",
     "Documents handling": "پیگیری مدارک",
     "EVA list": "فهرست EVA",
     "Employment-study certificates": "گواهی‌های اشتغال به تحصیل",
     "Lorestan University": "دانشگاه لرستان",
     "Lorestan new": "لرستان جدید",
-    "Non-Iranian students form": "فرم دانشجویان غیرایرانی",
+    "Non-Iranian students form": "فرم مشتریان غیرایرانی",
     "Orhan broker transfers": "واریزی‌های معقب اورهان",
     "Payments list": "فهرست پرداخت‌ها",
     "Persian language course": "دوره زبان فارسی",
@@ -30,10 +30,10 @@ SOURCE_GROUPS = {
     "Shahrekord University": "دانشگاه شهرکرد",
     "Shahrekord/EVA batch": "دسته شهرکرد/EVA",
     "University of Religions": "دانشگاه ادیان و مذاهب",
-    "Urmia Tech students": "دانشجویان دانشگاه صنعتی ارومیه",
+    "Urmia Tech students": "مشتریان دانشگاه صنعتی ارومیه",
     "Urmia new admissions": "پذیرش‌های جدید ارومیه",
     "Urmia registration": "ثبت‌نام ارومیه",
-    "Withdrawn students": "دانشجویان انصرافی",
+    "Withdrawn students": "مشتریان انصرافی",
 }
 
 TASK = {  # field -> subject prefix

@@ -27,7 +27,7 @@ def main(dataset, out):
                 e["values"] = sorted(vals[key]) or ["-"]
             fl.append(e)
         blocks.append(dict(label=label, fields=fl))
-    groups = [dict(name=f"مقطع - {LEVEL_FA.get(l, l)}", old=f"SS Level - {l}", level=l, desc=f"دانشجویان مقطع {LEVEL_FA.get(l, l)}")
+    groups = [dict(name=f"مقطع - {LEVEL_FA.get(l, l)}", old=f"SS Level - {l}", level=l, desc=f"مشتریان مقطع {LEVEL_FA.get(l, l)}")
               for l in sorted(vals["level"])]
     groups.append(dict(name="مقطع - نامشخص", old="SS Level - Unknown", level="", desc="مخاطبین بدون مقطع مشخص (فهرست‌های فقط شماره تلفن و ...)"))
     filters = []

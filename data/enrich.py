@@ -5,7 +5,7 @@
   mobile_operator     from the dialling prefix (Iraq: Asiacell 077, Zain 078/079, Korek 075; Iran: MCI 091/099,
                       Irancell 093/090, Rightel 092)
   otherphone          (standard field) 3rd and later numbers – before they only survived in "Phone (as written)"
-  title               (standard field) "دانشجوی <level>"
+  title               (standard field) "مشتری" (when a level is known)
   profile_completeness / missing_info   share of key fields filled and which ones are missing (follow-up lists)
 """
 import re
@@ -68,7 +68,7 @@ def enrich(contact, raw_rows, norm_phone):
     extra = list(contact.get("_extra_phones") or [])
     contact["otherphone"] = extra[0] if extra else ""
     lvl = LEVEL_FA.get(F.get("level", ""), "")
-    contact["title"] = f"دانشجوی {lvl}" if lvl else ""
+    contact["title"] = "مشتری" if lvl else ""
     have = [label for label, ok in KEY_FIELDS if ok(contact)]
     missing = [label for label, ok in KEY_FIELDS if not ok(contact)]
     F["profile_completeness"] = f"{round(100 * len(have) / len(KEY_FIELDS))}%"

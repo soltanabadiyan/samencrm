@@ -6,7 +6,7 @@
 (function (window, document) {
 	'use strict';
 	var BASE = 'layouts/v7/modules/SamenAcademy/resources/content/';
-	var VERSION = '1.1.0';
+	var VERSION = '1.1.2';
 	var root, user, catalog, flat = [], store;
 
 	function q(s, r) { return (r || document).querySelector(s); }
@@ -109,6 +109,7 @@
 			if (!r.ok) { throw new Error(r.status); }
 			return r.text();
 		}).then(function (html) {
+			html = html.replace(/(content\/img\/[\w-]+\.webp)"/g, '$1?v=' + VERSION + '"');   // new screenshots after an update
 			main.innerHTML = '';
 			main.appendChild(el('nav', { class: 'ac-crumb', 'aria-label': 'مسیر' }, [
 				el('a', { href: '?module=SamenAcademy&view=Index', 'data-lesson': '', text: 'آکادمی' }), ' › ',

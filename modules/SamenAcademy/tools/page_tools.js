@@ -12,7 +12,7 @@ window.__acMask = function () {
   const STOP = /^(ویرایش|افزودن|مخاطب|مخاطبین|دانشجو|دانشجوی|همه|نمونه|جزئیات|اطلاعات|مقطع|دانشگاه|رشته|برای|جستجو|تایپ|کنید|انتخاب|گزینه|یک)$/;
   const clean = t => (t || '').replace(/[\u200c*:]/g, ' ').replace(/\s+/g, ' ').trim();
   const fakeFor = (label, text) => {
-    if (/@/.test(text)) return 'student' + (k++ % 90 + 10) + '@example.com';
+    if (/@/.test(text)) return 'customer' + (k++ % 90 + 10) + '@example.com';
     if (/wa\.me|https?:/.test(text)) return 'https://wa.me/9647700000000';
     if (/نام خانوادگی/.test(label)) return pick(LAST);
     if (/^نام$/.test(label)) return pick(FIRST);
@@ -91,7 +91,7 @@ window.__acMask = function () {
   while ((n2 = w2.nextNode())) {
     if (n2.parentElement && n2.parentElement.closest('.sh-panel, .sh-tip, .ac-main')) continue;   // our own help texts (fictitious examples)
     let v = n2.nodeValue;
-    v = v.replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, 'student@example.com').replace(/\+\d[\d\s-]{8,}\d|\b\d{9,}\b/g, '+964 770 000 0000').replace(/\b[A-Z]\d{7,8}\b/g, 'A12345678');
+    v = v.replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, 'customer@example.com').replace(/\+\d[\d\s-]{8,}\d|\b\d{9,}\b/g, '+964 770 000 0000').replace(/\b[A-Z]\d{7,8}\b/g, 'A12345678');
     if (v !== n2.nodeValue) n2.nodeValue = v;
   }
   document.querySelectorAll('.tag .tagLabel, .tag-item').forEach(t => { if (!/مقطع|رشته|دانشگاه/.test(t.textContent)) t.textContent = 'برچسب نمونه'; });
@@ -145,4 +145,64 @@ window.__acLeaks = function () {
   const left = (window.__acOrig || []).filter(o => text.indexOf(o) > -1);
   const pat = text.match(/[\w.+-]+@(?!example\.com)[\w-]+\.[a-z]{2,}/gi) || [];   // any real-looking e-mail
   return left.concat(pat.filter(e => !/samenstudent\.local$/i.test(e)));
+};
+
+// __acGeneric(): SamenCRM is a general CRM – the screenshots must not show the education fields of this installation.
+// Runs after __acMask (which still needs the original words to know what is not personal); replaces field names,
+// values, list / tag / group names with general business wording everywhere on the page.
+window.__acGeneric = function () {
+  let k = 0; const pick = a => a[(k++) % a.length];
+  const TITLES = ['مدیر خرید', 'کارشناس فروش', 'مدیرعامل', 'مسئول بازرگانی', 'مدیر مالی'];
+  const TIER = { 'کارشناسی ارشد': 'نقره‌ای', 'دکتری': 'طلایی', 'کارشناسی': 'برنزی', 'کاردانی': 'عادی', 'سایر': 'سایر', 'نامشخص': 'نامشخص' };
+  const PRODUCTS = ['بسته پایه', 'بسته حرفه‌ای', 'بسته سازمانی', 'پشتیبانی سالانه', 'آموزش و راه‌اندازی'];
+  const BRANCHES = ['شعبه تهران', 'شعبه اصفهان', 'شعبه شیراز', 'شعبه مشهد', 'شعبه تبریز'];
+  const tier = v => TIER[v.trim()] || pick(['طلایی', 'نقره‌ای', 'برنزی']);
+  // values of the education fields (list columns, detail / edit fields) first, while their labels are still recognisable
+  const FIELD = [[/^(مقطع|مقطع \(مطابق فایل\)|کد مقطع)$/, v => tier(v)], [/^(رشته|کد رشته)$/, () => pick(PRODUCTS)],
+    [/^(دانشگاه|دانشگاه \(مطابق فایل\))$/, () => pick(BRANCHES)], [/^(معدل)$/, () => pick(['۸۵', '۷۲', '۹۰'])], [/^(دپارتمان|دانشکده|گرایش)$/, () => pick(['فروش', 'بازرگانی', 'مالی', 'فنی'])], [/^سمت$/, null]];
+  const clean = t => (t || '').replace(/[‌*:]/g, ' ').replace(/\s+/g, ' ').trim();
+  const fieldFn = l => { const f = FIELD.find(x => x[0].test(l)); return f ? f[1] : undefined; };
+  const setVal = (cell, fn) => {
+    cell.querySelectorAll('input:not([type=hidden]):not([type=checkbox]), textarea').forEach(i => { if (i.value) i.value = fn(i.value); });
+    const w = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) { if (n.nodeValue.trim() && !(n.parentElement && n.parentElement.closest('option, script, style'))) n.nodeValue = n.nodeValue.replace(n.nodeValue.trim(), fn(n.nodeValue)); }
+  };
+  document.querySelectorAll('table').forEach(t => {
+    const heads = [...t.querySelectorAll('thead tr:first-child th')].map(th => clean(th.textContent));
+    t.querySelectorAll('tr.listViewEntries').forEach(tr => [...tr.children].forEach((td, i) => { const fn = fieldFn(heads[i] || ''); if (fn) setVal(td, fn); }));
+  });
+  document.querySelectorAll('.fieldLabel').forEach(lab => {
+    const fn = fieldFn(clean(lab.textContent)); const val = lab.nextElementSibling;
+    if (fn && val) setVal(val, fn);
+  });
+  // then words anywhere (labels, block titles, filter / tag / group names, options, attributes)
+  const RULES = [
+    [/دانشجوی\s+(کارشناسی ارشد|دکتری|کارشناسی|کاردانی|سایر)/g, () => pick(TITLES)],
+    [/مشخصات دانشجو/g, 'مشخصات مشتری'], [/شماره دانشجویی/g, 'شماره مشتری'], [/وضعیت دانشجو/g, 'وضعیت مشتری'],
+    [/دانشجویان/g, 'مشتریان'], [/دانشجوی/g, 'مشتری'], [/دانشجو/g, 'مشتری'],
+    [/مقطع\s*([:\-–])\s*(کارشناسی ارشد|دکتری|کارشناسی|کاردانی|سایر|نامشخص)/g, (m, s, v) => 'گروه مشتری ' + s + ' ' + TIER[v]],
+    [/رشته\s*:\s*[^\n،|]+/g, () => 'علاقه: ' + pick(PRODUCTS)],
+    [/دانشگاه‌های شهریه‌ای|دانشگاه های شهریه ای/g, 'خدمات ویژه'], [/خدمات دانشگاه/g, 'خدمات جانبی'],
+    [/دانشگاه\s*:\s*[^\n،|]+/g, () => 'شعبه: ' + pick(BRANCHES).replace('شعبه ', '')],
+    [/دانشگاه(\s+(صنعتی|آزاد|علوم پزشکی|بین‌المللی))?\s+([آ-ی]+)/g, (m, a, b, c) => 'شعبه ' + c], [/دانشگاه/g, 'شعبه'],
+    [/کد سااورگ/g, 'کد اشتراک'], [/سااورگ/g, 'اشتراک'], [/کد رشته/g, 'کد محصول'], [/کد مقطع/g, 'کد گروه'],
+    [/مقطع/g, 'گروه مشتری'], [/رشته/g, 'محصول موردعلاقه'],
+    [/ارزشیابی معدل/g, 'ارزیابی'], [/معدل/g, 'امتیاز'], [/ترم ورود/g, 'دوره شروع'], [/شهر ویزا/g, 'شهر خدمت'], [/ویزا/g, 'خدمات اداری'],
+    [/اشتغال به تحصیل/g, 'گواهی'], [/شیوه تحصیل/g, 'شیوه ارائه خدمت'], [/تحصیل/g, 'خدمت'], [/شهریه/g, 'قرارداد'],
+    [/وضعیت پذیرش/g, 'وضعیت قرارداد'], [/پذیرش اولیه/g, 'قرارداد اولیه'], [/پذیرش/g, 'قرارداد'],
+    [/فارغ‌التحصیل\S*/g, 'مشتری قدیمی'], [/خوابگاه/g, 'خدمات جانبی'],
+    [/samenstudent/gi, 'samencrm'],
+    [/کد دانشکده/g, 'کد واحد'], [/دانشکده/g, 'واحد'], [/گرایش/g, 'نوع خدمت'], [/آیین‌نامه آموزشی/g, 'نوع قرارداد'], [/آموزش عالی/g, 'خدمات'],
+    [/^\s*(کارشناسی ارشد|دکتری|کارشناسی|کاردانی)\s*$/g, (m, v) => m.replace(v, TIER[v])],
+  ];
+  const swap = v => RULES.reduce((s, r) => s.replace(r[0], r[1]), v);
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let n;
+  while ((n = w.nextNode())) { if (n.parentElement && n.parentElement.closest('script, style')) continue; const v = swap(n.nodeValue); if (v !== n.nodeValue) n.nodeValue = v; }
+  document.querySelectorAll('input:not([type=hidden]), textarea').forEach(i => { if (i.value) i.value = swap(i.value); });
+  document.querySelectorAll('[title], [alt], [placeholder], [data-original-title]').forEach(e => ['title', 'alt', 'placeholder', 'data-original-title'].forEach(a => { if (e.getAttribute(a)) e.setAttribute(a, swap(e.getAttribute(a))); }));
+};
+// education words still visible after __acGeneric (a screenshot with any of them is not captured)
+window.__acDomainLeft = function () {
+  const text = document.body.innerText + ' ' + [...document.querySelectorAll('input:not([type=hidden]), textarea')].map(i => i.value).join(' ');
+  return [...new Set(text.match(/.{0,25}(دانشجو|دانشگاه|دانشکده|گرایش|آیین‌نامه آموزشی|مقطع|رشته|سااورگ|معدل|ویزا|شهریه|پذیرش|تحصیل|خوابگاه).{0,25}/g) || [])].slice(0, 8);
 };

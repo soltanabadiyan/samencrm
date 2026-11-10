@@ -14,7 +14,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenAcademy {
 
-	const VERSION = '1.1.0';
+	const VERSION = '1.1.2';
 	const RES = 'layouts/v7/modules/SamenAcademy/resources/';
 	const APPS = array('MARKETING', 'SALES', 'TOOLS');
 

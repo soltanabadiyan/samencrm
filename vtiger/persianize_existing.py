@@ -20,7 +20,7 @@ out = ["SET NAMES utf8;", "START TRANSACTION;"]
 # groups
 for lv, fa in FA.LEVEL.items():
     on = f"SS Level - {lv or 'Unknown'}"
-    out.append(f"UPDATE vtiger_groups SET groupname={q('مقطع - ' + fa)}, description={q('دانشجویان مقطع ' + fa)} WHERE groupname={q(on)};")
+    out.append(f"UPDATE vtiger_groups SET groupname={q('مقطع - ' + fa)}, description={q('مشتریان مقطع ' + fa)} WHERE groupname={q(on)};")
 # filters
 lv_set = {c['fields']['level'] for c in old['contacts'] if c['fields']['level']}
 for lv in lv_set:
