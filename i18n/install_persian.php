@@ -128,4 +128,9 @@ foreach ($folders as $en => $fa) {
 }
 echo "sample reports/folders: Persian names\n";
 createUserPrivilegesfile(1);
+/* 7. Vtiger's sample workflows: names, task names, e-mail subjects/bodies, e-mails they already created */
+require_once __DIR__ . '/translate_workflows.php';
+echo 'workflows: ' . json_encode(samen_workflow_fa()) . "\n";
+echo 'templates/profiles/groups: ' . json_encode(samen_templates_fa()) . "\n";
+
 echo "PERSIAN DONE\n";

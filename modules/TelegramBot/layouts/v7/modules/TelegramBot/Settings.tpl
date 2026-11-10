@@ -4,7 +4,6 @@
 <div class="content-area full-width tg-page" id="tgSettings">
 	<div class="clearfix tg-page-head">
 		<h3 class="pull-left"><i class="fa fa-cog"></i> {vtranslate('LBL_SETTINGS_TITLE', 'TelegramBot')}</h3>
-		<div class="pull-right"><a class="btn btn-default btn-sm" href="index.php?module=TelegramBot&view=Index"><i class="fa fa-telegram"></i> {vtranslate('TelegramBot', 'TelegramBot')}</a></div>
 	</div>
 
 	{* ---------------------------------------------------------- bots *}
@@ -40,7 +39,7 @@
 			<form class="form-inline tg-bot-form" onsubmit="return false;" autocomplete="off">
 				<input type="hidden" name="id" value="" />
 				<input type="text" name="title" class="form-control" placeholder="{vtranslate('LBL_BOT_TITLE', 'TelegramBot')}" />&nbsp;
-				<input type="password" name="token" class="form-control" style="min-width:340px" dir="ltr" autocomplete="new-password" placeholder="123456789:AA… ({vtranslate('LBL_TOKEN', 'TelegramBot')})" />&nbsp;
+				<input type="password" name="token" class="form-control tg-token-input" dir="ltr" autocomplete="new-password" placeholder="123456789:AA… ({vtranslate('LBL_TOKEN', 'TelegramBot')})" />&nbsp;
 				<button type="button" class="btn btn-success tg-bot-save"><i class="fa fa-plus"></i> <span>{vtranslate('LBL_ADD_BOT', 'TelegramBot')}</span></button>
 			</form>
 		</div>

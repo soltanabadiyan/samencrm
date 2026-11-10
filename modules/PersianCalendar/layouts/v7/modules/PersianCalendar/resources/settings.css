@@ -7,7 +7,6 @@
 	--x-soft: var(--samen-gray-50, #F4F7FB);
 	padding: 20px 24px 40px;
 	color: var(--x-ink);
-	max-width: 1280px;
 }
 .samen-ext-head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-block-end: 20px; }
 .samen-ext-head h3 { margin: 0 0 4px; font-size: 20px; font-weight: 700; }

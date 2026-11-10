@@ -16,10 +16,16 @@ const HOST = new URL(BASE).host;
 mkdirSync(out, { recursive: true });
 const VIEW = {
   desktop: { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false },
+  laptop: { width: 1280, height: 800, deviceScaleFactor: 1, mobile: false },
+  tablet: { width: 768, height: 1024, deviceScaleFactor: 1, mobile: true },
   mobile: { width: 390, height: 844, deviceScaleFactor: 1, mobile: true },
 };
+// SWEEP_VIEWPORTS=desktop,laptop,tablet,mobile  – viewports for the pages marked "mobile" in the page list
+const EXTRA_VP = (process.env.SWEEP_VIEWPORTS || 'mobile').split(',').filter(v => VIEW[v]);
 const UA = {
   desktop: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+  laptop: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+  tablet: 'Mozilla/5.0 (Linux; Android 14; SM-X710) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
   mobile: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Mobile Safari/537.36',
 };
 const ERROR_TEXT = /Permission to perform the operation is denied|Fatal error|Uncaught|Exception:|Warning: |Notice: |Deprecated: |Parse error|Call to undefined|SQLSTATE|Error in query|Smarty error|Unable to load template|Invalid request|خطای پایگاه داده/;
@@ -70,7 +76,8 @@ const PROBE = `(() => {
     const el = n.parentElement;
     if (!el || el.closest('script,style,noscript,code,pre,textarea,[dir=ltr],.select2-offscreen,.hide,.ltr,input,option,.CodeMirror') || !vis(el)) continue;
     // skip record data (values the users typed / imported), only check the UI chrome
-    if (el.closest('.listViewEntries td.listViewEntryValue, .value, .fieldValue, .summaryViewEntries .fieldValue, .listview-table td:not(:first-child), .commentInfoContent, .historyContainer, .updates_timeline, .tg-msg, .samen-ext-table td')) continue;
+    // (Settings pages show configuration, not student records – their tables are checked too)
+    if (!/parent=Settings/.test(location.search) && el.closest('.listViewEntries td.listViewEntryValue, .value, .fieldValue, .summaryViewEntries .fieldValue, .listview-table td:not(:first-child), .commentInfoContent, .historyContainer, .tg-msg, .samen-ext-table td')) continue;
     for (const m of n.nodeValue.matchAll(/[A-Za-z][A-Za-z']{2,}/g)) words.add(m[0]);
   }
   return {
@@ -79,6 +86,17 @@ const PROBE = `(() => {
     err: (txt.match(${ERROR_TEXT}) || [''])[0],
     overflow: document.documentElement.scrollWidth - window.innerWidth,
     en: [...words],
+    // empty band between the content and the right edge / module rail (RTL), or the left edge
+    gap: (() => {
+      const ca = [...document.querySelectorAll('.main-container .content-area, .main-container .settingsPageDiv')].find(vis);
+      if (!ca) return null;
+      const b = ca.getBoundingClientRect(), s = getComputedStyle(ca);
+      const rail = [...document.querySelectorAll('.main-container .module-nav, .settingsgroup, .sidebar-essentials')].filter(vis)
+        .map(e => e.getBoundingClientRect()).filter(r => r.left > innerWidth / 2).reduce((m, r) => Math.min(m, r.left), document.documentElement.clientWidth);
+      const side = [...document.querySelectorAll('.main-container .module-nav, .settingsgroup, .sidebar-essentials')].filter(vis)
+        .map(e => e.getBoundingClientRect()).filter(r => r.left > innerWidth / 2).reduce((m, r) => Math.max(m, r.right), 0);
+      return { right: Math.round(rail - (b.right - parseFloat(s.paddingRight))), left: Math.round(b.left + parseFloat(s.paddingLeft)), side: Math.round(side) };
+    })(),
     menuJs: !!(window.jQuery && jQuery._data(document.querySelector('.app-icon') || document, 'events')?.click),
   };
 })()`;
@@ -99,7 +117,9 @@ async function visit(url, vp) {
   res.overflow = info.overflow > 2 ? info.overflow : 0;
   res.en = (info.en || []).filter(x => !ALLOWED_EN.test(x));
   res.menuJs = info.menuJs;
-  res.bad = !!(res.js.length || res.console.length || res.http.length || res.err || res.overflow || (res.final.startsWith('index.php') && !/view=Login/.test(res.final) && !res.menuJs && !/action=|mode=|view=(Popup|ComposeEmail)/.test(url)));
+  res.gap = info.gap;
+  res.gapBad = !!(info.gap && (info.gap.right > 60 || info.gap.left > 80));
+  res.bad = !!(res.js.length || res.console.length || res.http.length || res.err || res.overflow || res.gapBad || (res.final.startsWith('index.php') && !/view=Login/.test(res.final) && !res.menuJs && !/action=|mode=|view=(Popup|ComposeEmail)/.test(url)));
   if (res.bad || res.en.length) {
     const shot = await send('Page.captureScreenshot', { format: 'png' });
     res.shot = `${String(results.length).padStart(3, '0')}.${vp}.png`;
@@ -125,12 +145,12 @@ try {
   const extra = extraFile ? JSON.parse(readFileSync(extraFile, 'utf8')) : [];
   const urls = [...new Set([...extra.map(e => e.url || e), ...links])];
   const mobileUrls = new Set(extra.filter(e => e.mobile).map(e => e.url));
-  console.log(`sweeping ${urls.length} pages (+${mobileUrls.size} on phone)`);
+  console.log(`sweeping ${urls.length} pages (+${mobileUrls.size} x ${EXTRA_VP.join('/')})`);
   for (const u of urls) {
     results.push(await visit(u, 'desktop'));
-    if (mobileUrls.has(u)) results.push(await visit(u, 'mobile'));
+    if (mobileUrls.has(u)) for (const vp of EXTRA_VP) results.push(await visit(u, vp));
     const r = results[results.length - 1];
-    if (r.bad || r.en.length) console.log(JSON.stringify({ u, vp: r.vp, final: r.final !== u ? r.final : undefined, js: r.js, console: r.console, http: r.http, err: r.err, overflow: r.overflow, en: r.en, menuJs: r.menuJs, shot: r.shot }));
+    if (r.bad || r.en.length) console.log(JSON.stringify({ u, vp: r.vp, final: r.final !== u ? r.final : undefined, js: r.js, console: r.console, http: r.http, err: r.err, overflow: r.overflow, gap: r.gapBad ? r.gap : undefined, en: r.en, menuJs: r.menuJs, shot: r.shot }));
   }
   writeFileSync(join(out, 'sweep.json'), JSON.stringify(results, null, 1));
   const bad = results.filter(r => r.bad), en = results.filter(r => r.en.length);

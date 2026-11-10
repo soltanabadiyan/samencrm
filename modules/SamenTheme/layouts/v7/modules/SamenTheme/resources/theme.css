@@ -376,3 +376,6 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 	padding: 0 3px;
 }
 .app-menu .module-icon img, .module-nav .module-icon img, .modules-menu img { width: 20px; height: 20px; object-fit: contain; vertical-align: middle; }
+
+/* header buttons of extension pages (ModuleHeader.tpl of TelegramBot / SamenTheme / PersianCalendar) */
+.module-action-bar .samen-head-btn { margin-block-start: 5px; margin-inline-end: 8px; }

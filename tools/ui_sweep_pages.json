@@ -33,7 +33,7 @@
 },
 {
 "url": "index.php?module=EmailTemplates&view=List",
-"mobile": false
+"mobile": true
 },
 {
 "url": "index.php?module=Faq&view=List",
@@ -326,5 +326,33 @@
 {
 "url": "index.php?module=Contacts&view=Import",
 "mobile": false
+},
+{
+"url": "index.php?module=Workflows&parent=Settings&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Users&parent=Settings&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=ExtensionStore&parent=Settings&view=ExtensionStore",
+"mobile": true
+},
+{
+"url": "index.php?module=Contacts&view=Detail&record=8597&mode=showRecentActivities&page=1&tab_label=LBL_UPDATES",
+"mobile": true
+},
+{
+"url": "index.php?module=CronTasks&parent=Settings&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Profiles&parent=Settings&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Groups&parent=Settings&view=List",
+"mobile": true
 }
 ]

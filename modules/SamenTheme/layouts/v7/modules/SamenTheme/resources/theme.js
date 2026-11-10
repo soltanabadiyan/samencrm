@@ -67,17 +67,31 @@
 		'Public: Read, Create/Edit, Delete': 'عمومی: خواندن، ایجاد، ویرایش و حذف', 'Private': 'خصوصی', 'Comments': 'یادداشت‌ها',
 		'Frequency(H:M)': 'تناوب (ساعت:دقیقه)', 'Enable': 'فعال', 'Currency Name': 'نام ارز', 'Currency Code': 'کد ارز', 'Symbol': 'نماد',
 		'Source Field': 'فیلد منبع', 'Target Field': 'فیلد مقصد', 'MenuEditor': 'ویرایشگر منو', 'Fixed': 'ثابت', 'Simple': 'ساده',
-		'Private/Public': 'خصوصی/عمومی', 'Info': 'راهنما'
+		'Private/Public': 'خصوصی/عمومی', 'Info': 'راهنما',
+		'Relation': 'ارتباط', 'Url': 'نشانی وب', 'WEBSERVICE': 'وب‌سرویس', 'Login to marketplace': 'ورود به فروشگاه افزونه‌ها',
+		// e-mail template NAMES: code looks them up by these English names, so they are only translated on screen
+		// (subjects / descriptions / system bodies are translated in the database by i18n/translate_workflows.php)
+		'Announcement for Release': 'اطلاعیه انتشار', 'Pending Invoices': 'فاکتورهای پرداخت‌نشده', 'Acceptance Proposal': 'پذیرش پیشنهاد',
+		'Goods received acknowledgement': 'تأیید دریافت کالا', 'Accept Order': 'پذیرش سفارش', 'Address Change': 'تغییر نشانی',
+		'Follow Up': 'پیگیری', 'Target Crossed!': 'هدف محقق شد!', 'Thanks Note': 'یادداشت سپاس', 'Customer Login Details': 'اطلاعات ورود مشتری',
+		'Support end notification before a week': 'اطلاعیه پایان پشتیبانی (یک هفته مانده)',
+		'Support end notification before a month': 'اطلاعیه پایان پشتیبانی (یک ماه مانده)',
+		'Activity Reminder': 'یادآوری رویداد', 'ToDo Reminder': 'یادآوری وظیفه', 'Invite Users': 'دعوت کاربران',
+		// scheduler task names (Settings > Scheduler): referenced by name in code, translated on screen only
+		'Workflow': 'گردش‌کار', 'RecurringInvoice': 'فاکتورهای تکراری', 'SendReminder': 'ارسال یادآوری‌ها', 'MailScanner': 'اسکنر ایمیل',
+		'Scheduled Import': 'ورود اطلاعات زمان‌بندی‌شده', 'ScheduleReports': 'گزارش‌های زمان‌بندی‌شده', 'Oauth2TokenRefresher': 'نوسازی توکن OAuth2',
+		'TelegramBot Worker': 'تلگرام: صف و دریافت پیام‌ها', 'TelegramBot Birthdays': 'تلگرام: پیام‌های تولد'
 	};
 	// placeholders / titles Vtiger prints in English
 	var ATTR = { 'Search for List': 'جستجوی فهرست', 'Search for Folders': 'جستجوی پوشه‌ها', 'Search': 'جستجو',
-		'Type to search': 'برای جستجو تایپ کنید', 'Search Settings': 'جستجوی تنظیمات', 'Enter tag name': 'نام برچسب را وارد کنید' };
+		'Type to search': 'برای جستجو تایپ کنید', 'Search Settings': 'جستجوی تنظیمات', 'Enter tag name': 'نام برچسب را وارد کنید',
+		'Search for an extension..': 'جستجوی افزونه...', 'Search for an extension': 'جستجوی افزونه' };
 	// module names Vtiger concatenates into already-translated sentences ("بدون مورد مرتبط Documents")
 	// (also field labels the calendar feed list joins with Persian module names: "Start Date & Time,End-رویدادها")
 	var WORDS = { 'Documents': 'اسناد', 'Contacts': 'مخاطبین', 'Calendar': 'تقویم', 'Emails': 'ایمیل‌ها',
 		'ModComments': 'یادداشت‌ها', 'Organizations': 'سازمان‌ها', 'Accounts': 'سازمان‌ها',
 		'Start Date & Time': 'تاریخ و زمان شروع', 'End Date & Time': 'تاریخ و زمان پایان', 'Start Date': 'تاریخ شروع',
-		'End Date': 'تاریخ پایان', 'Target End Date': 'تاریخ پایان هدف', 'Due Date': 'تاریخ سررسید', 'End': 'پایان', 'Due': 'سررسید', 'Date': 'تاریخ', 'Faq': 'پرسش‌های متداول' };
+		'End Date': 'تاریخ پایان', 'Target End Date': 'تاریخ پایان هدف', 'Due Date': 'تاریخ سررسید', 'End': 'پایان', 'Due': 'سررسید', 'Date': 'تاریخ', 'Faq': 'پرسش‌های متداول', 'Comment': 'یادداشت' };
 	var WORD_KEYS = Object.keys(WORDS).sort(function (a, b) { return b.length - a.length; })
 		.map(function (k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
 	var WORD_RE = new RegExp('\\b(' + WORD_KEYS.join('|') + ')\\b', 'g');

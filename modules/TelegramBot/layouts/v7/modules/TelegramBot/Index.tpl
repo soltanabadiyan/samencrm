@@ -10,7 +10,6 @@
 			<span class="label label-default">{vtranslate('LBL_STATUS_sent', 'TelegramBot')}: {$QUEUE.sent|default:0}</span>&nbsp;
 			<span class="label label-danger">{vtranslate('LBL_STATUS_failed', 'TelegramBot')}: {$QUEUE.failed|default:0}</span>&nbsp;
 			<button type="button" class="btn btn-default btn-sm tg-run-worker" title="{$WORKER_RESULT|escape:'html'}"><i class="fa fa-refresh"></i> {vtranslate('LBL_RUN_WORKER', 'TelegramBot')}</button>
-			{if $IS_ADMIN}&nbsp;<a class="btn btn-default btn-sm" href="index.php?module=TelegramBot&view=Settings"><i class="fa fa-cog"></i> {vtranslate('LBL_SETTINGS', 'TelegramBot')}</a>{/if}
 		</div>
 	</div>
 	<p class="text-muted small">{vtranslate('LBL_WORKER_LAST', 'TelegramBot')}: {$WORKER_LAST|default:'—'}</p>

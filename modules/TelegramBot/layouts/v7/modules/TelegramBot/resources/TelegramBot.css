@@ -36,3 +36,14 @@ tr.tg-row-failed td { background: #fff4f4; }
 .tg-media-item img { max-width: 260px; max-height: 220px; border-radius: 6px; display: block; margin-bottom: 4px; }
 .tg-empty { padding: 30px; text-align: center; }
 .related-tabs li.tg-tab .fa-telegram { color: #229ED9; }
+
+/* token field: wide on desktop, never wider than the card */
+.tg-bot-form .tg-token-input { min-width: 340px; max-width: 100%; }
+/* phones and narrow tablets: one field per row, full width (Vtiger's .form-control is width:auto here) */
+@media (max-width: 767px) {
+	.tg-page .form-control:not([type="checkbox"]):not([type="radio"]),
+	.tg-page .select2-container { width: 100% !important; min-width: 0 !important; max-width: 100%; }
+	.tg-bot-form .form-control, .tg-bot-form .btn { display: block; width: 100%; margin-block-end: 8px; }
+	.tg-page .tg-head-stats { float: none !important; margin-block-start: 8px; }
+	.tg-page .tg-head-stats .label { display: inline-block; margin-block-end: 4px; }
+}

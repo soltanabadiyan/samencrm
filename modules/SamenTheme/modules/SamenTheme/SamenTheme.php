@@ -19,7 +19,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.2.0';
+	const VERSION = '1.2.3';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -204,8 +204,19 @@ class SamenTheme {
 		);
 	}
 
+	/** Vtiger 8.4 ships libraries/bootstrap-legacy without img/ – its CSS asks for glyphicons-halflings*.png (404) */
+	static function legacyBootstrapIcons() {
+		$dst = 'libraries/bootstrap-legacy/img';
+		if (!is_dir('libraries/bootstrap-legacy') || !is_dir('libraries/bootstrap/img')) return;
+		if (!is_dir($dst)) @mkdir($dst, 0755, true);
+		foreach (array('glyphicons-halflings.png', 'glyphicons-halflings-white.png') as $f) {
+			if (!file_exists("$dst/$f") && file_exists("libraries/bootstrap/img/$f")) @copy("libraries/bootstrap/img/$f", "$dst/$f");
+		}
+	}
+
 	/** everything install/update does (idempotent) */
 	static function apply() {
+		self::legacyBootstrapIcons();
 		self::installSkin();
 		self::registerLinks();
 		self::patchLogin();
