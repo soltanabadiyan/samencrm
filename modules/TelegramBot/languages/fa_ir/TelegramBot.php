@@ -58,5 +58,6 @@ $languageStrings = array(
 	'LBL_NO_RECIPIENTS' => 'گیرنده‌ای وجود ندارد.', 'LBL_EMPTY_MESSAGE' => 'متن پیام را بنویسید یا فایلی پیوست کنید.', 'LBL_BAD_DATE' => 'تاریخ و ساعت معتبر انتخاب کنید.',
 	'LBL_DATE_PAST' => 'زمان انتخاب‌شده گذشته است.', 'LBL_UPLOAD_FAILED' => 'بارگذاری فایل ناموفق بود', 'LBL_FILE_TOO_BIG' => 'حجم فایل حداکثر ۵۰ مگابایت است.',
 	'LBL_CHOOSE_DOCUMENT' => 'یک سند انتخاب کنید.', 'LBL_DOCUMENT_NO_FILE' => 'این سند فایل ذخیره‌شده ندارد.',
+	'TelegramBot Worker' => 'صف و دریافت پیام‌ها', 'TelegramBot Birthdays' => 'پیام‌های تولد', 'LBL_SECONDS_SHORT' => 'ثانیه',
 );
 $jsLanguageStrings = array();

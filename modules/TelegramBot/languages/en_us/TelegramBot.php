@@ -57,5 +57,6 @@ $languageStrings = array(
 	'LBL_NO_RECIPIENTS' => 'No recipients.', 'LBL_EMPTY_MESSAGE' => 'Write a text or attach a file.', 'LBL_BAD_DATE' => 'Choose a valid date and time.',
 	'LBL_DATE_PAST' => 'The time is in the past.', 'LBL_UPLOAD_FAILED' => 'Upload failed', 'LBL_FILE_TOO_BIG' => 'Files can be at most 50 MB.',
 	'LBL_CHOOSE_DOCUMENT' => 'Choose a document.', 'LBL_DOCUMENT_NO_FILE' => 'This document has no stored file.',
+	'TelegramBot Worker' => 'Queue and incoming messages', 'TelegramBot Birthdays' => 'Birthday messages', 'LBL_SECONDS_SHORT' => 's',
 );
 $jsLanguageStrings = array();

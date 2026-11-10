@@ -392,6 +392,13 @@
 		cfg.dayNames = PC.WEEKDAYS.slice();
 		cfg.dayNamesShort = PC.WEEKDAYS.slice();
 		cfg.eventLimitText = function (n) { return '+' + PC.faDigits(n) + ' مورد دیگر'; };
+		// times on the grid and on events: 24-hour clock as used in Iran (Vtiger passes "ha" -> "12am", English)
+		cfg.slotLabelFormat = 'HH:mm';
+		cfg.timeFormat = 'HH:mm';
+		// phones: seven agenda columns of ~45px are unreadable – open the day view instead (week stays one tap away)
+		if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches && (!cfg.defaultView || cfg.defaultView === 'agendaWeek')) {
+			cfg.defaultView = 'agendaDay';
+		}
 		var vr = cfg.viewRender, ar = cfg.eventAfterAllRender;
 		cfg.viewRender = function (view, element) { if (vr) { vr.apply(this, arguments); } jalaliizeCalendar(view, element); };
 		cfg.eventAfterAllRender = function (view) { if (ar) { ar.apply(this, arguments); } jalaliizeCalendar(view, view.el); };

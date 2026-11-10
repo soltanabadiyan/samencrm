@@ -88,6 +88,12 @@ sub-menu, dropdowns, quick-create, date picker, calendar, settings…) on 1440px
 `tools/contact_sheet.py` turns the screenshots into review sheets. Needs `ssh -D 19080 hashemz_crm` and
 `SESSION=$(tools/get_session.sh)`.
 
+`tools/ui_sweep.mjs out_dir tools/ui_sweep_pages.json` is the error sweep: it opens every app-menu and Settings link
+(collected from the live app) plus list / create / detail / edit of every module and the extension pages
+(`ui_sweep_pages.json`, key pages also at phone width) and reports per page JS exceptions, console errors, failed
+requests, PHP/Vtiger error text, horizontal overflow and English words left in the Persian UI; screenshots only for
+pages with findings.
+
 ## Telegram messaging  (`./run_all.sh telegram`)
 Module `modules/TelegramBot` (vtlib extension, menu **Marketing > تلگرام**, settings in **Settings > Extensions > ربات تلگرام**).
 Uses the Telegram **Bot API** (bot from @BotFather). `./run_all.sh telegram` builds `dist/TelegramBot.zip`, backs up the DB to

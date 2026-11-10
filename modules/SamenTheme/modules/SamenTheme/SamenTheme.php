@@ -19,7 +19,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.1.0';
+	const VERSION = '1.2.0';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -65,7 +65,12 @@ class SamenTheme {
 	/* ---------------------------------------------------------------- login page hook */
 	static function loginHook() {
 		$v = self::VERSION;
-		return self::HOOK_BEGIN . '<link rel="stylesheet" href="' . self::RES . 'login.css?v=' . $v . '">'
+		// keep the stock page from flashing: nothing of it is painted until login.js has applied the brand
+		// (html gets .samen-login-ready); the animation reveals it anyway after 2.5 s if the script failed
+		$guard = '{literal}<style>html:not(.samen-login-ready){background:#F4F7FB!important}'
+			. 'html:not(.samen-login-ready) body{visibility:hidden;animation:samenLoginReveal 0s 2.5s forwards}'
+			. '@keyframes samenLoginReveal{to{visibility:visible}}</style>{/literal}';
+		return self::HOOK_BEGIN . $guard . '<link rel="stylesheet" href="' . self::RES . 'login.css?v=' . $v . '">'
 			. '<script src="' . self::RES . 'login.js?v=' . $v . '" defer></script>' . self::HOOK_END;
 	}
 
@@ -95,6 +100,44 @@ class SamenTheme {
 
 	static function clearCompiledTemplates() {
 		foreach (glob('test/templates_c/v7/*Login.tpl*') ?: array() as $f) { @unlink($f); }
+		foreach (glob('test/templates_c/v7/*Footer.tpl*') ?: array() as $f) { @unlink($f); }
+	}
+
+	/* ---------------------------------------------------------------- footer
+	   Vtiger_Footer (layouts/v7/modules/Vtiger/Footer.tpl) has no extension point either: its credit line is
+	   replaced by a marked block, and the stock line is put back when the module is disabled/uninstalled. */
+	const FOOTER_TPL = 'layouts/v7/modules/Vtiger/Footer.tpl';
+	const FOOTER_BEGIN = '{* SAMENTHEME:FOOTER:BEGIN *}';
+	const FOOTER_END = '{* SAMENTHEME:FOOTER:END *}';
+	const FOOTER_STOCK = "<p>\n\t\tPowered by vtiger CRM - {\$VTIGER_VERSION}&nbsp;&nbsp;© 2004 - {date('Y')}&nbsp;&nbsp;\n\t\t<a href=\"//www.vtiger.com\" target=\"_blank\">Vtiger</a>&nbsp;|&nbsp;\n\t\t<a href=\"https://www.vtiger.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>\n\t</p>";
+
+	static function footerBlock() {
+		return self::FOOTER_BEGIN . '<p class="samen-footer" dir="ltr">Powered by SamenCRM - {$VTIGER_VERSION}&nbsp;&nbsp;© 2004 - {date(\'Y\')}'
+			. '&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://samencloud.ir" target="_blank" rel="noopener">SamenCloud Co.</a></p>' . self::FOOTER_END;
+	}
+
+	static function patchFooter() {
+		$tpl = self::FOOTER_TPL;
+		if (!is_writable($tpl)) return false;
+		$src = self::unpatchedFooter(file_get_contents($tpl));
+		$new = preg_replace('#(<footer class="app-footer">\s*)<p>.*?</p>#s', '$1' . str_replace('$', '\\$', self::footerBlock()), $src, 1, $n);
+		if (!$n) return false;
+		file_put_contents($tpl, $new);
+		self::clearCompiledTemplates();
+		return true;
+	}
+
+	static function unpatchFooter() {
+		$tpl = self::FOOTER_TPL;
+		if (is_writable($tpl)) {
+			file_put_contents($tpl, self::unpatchedFooter(file_get_contents($tpl)));
+			self::clearCompiledTemplates();
+		}
+	}
+
+	static function unpatchedFooter($src) {
+		return preg_replace_callback('/' . preg_quote(self::FOOTER_BEGIN, '/') . '.*?' . preg_quote(self::FOOTER_END, '/') . '/s',
+			function () { return SamenTheme::FOOTER_STOCK; }, $src);
 	}
 
 	/* ---------------------------------------------------------------- company logo */
@@ -166,6 +209,7 @@ class SamenTheme {
 		self::installSkin();
 		self::registerLinks();
 		self::patchLogin();
+		self::patchFooter();
 		self::setCompanyLogo();
 		self::registerSettings();
 		self::removeFromAppMenu();
@@ -178,6 +222,7 @@ class SamenTheme {
 		} else if (in_array($eventType, array('module.disabled', 'module.preuninstall'))) {
 			self::unregisterLinks();
 			self::unpatchLogin();
+			self::unpatchFooter();
 			self::unregisterSettings();
 		}
 	}

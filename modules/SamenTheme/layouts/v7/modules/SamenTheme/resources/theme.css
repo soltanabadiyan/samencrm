@@ -359,3 +359,20 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 .lists-menu-container .sidebar-header,
 .settingsgroup-accordion a span,
 .module-title, .module-breadcrumb { text-transform: none; }
+
+/* module icons: add-on modules without a font icon get Vtiger's 2-letter badge (was white on white),
+   modules that ship layouts/v7/modules/<Module>/<Module>.png get an <img> – size both like the font icons */
+.app-menu .module-icon .custom-module,
+.module-nav .custom-module {
+	background: rgb(255 255 255 / .12) !important;
+	color: var(--samen-sky-200) !important;
+	border-radius: 6px;
+	font-size: 11px;
+	line-height: 20px;
+	min-width: 22px;
+	height: 20px;
+	display: inline-block;
+	text-align: center;
+	padding: 0 3px;
+}
+.app-menu .module-icon img, .module-nav .module-icon img, .modules-menu img { width: 20px; height: 20px; object-fit: contain; vertical-align: middle; }

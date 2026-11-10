@@ -1,0 +1,330 @@
+[
+{
+"url": "index.php?module=Accounts&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Accounts&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Assets&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Assets&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Campaigns&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Campaigns&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Contacts&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Contacts&view=Edit",
+"mobile": true
+},
+{
+"url": "index.php?module=EmailTemplates&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Faq&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Faq&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=HelpDesk&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=HelpDesk&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Invoice&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Invoice&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Leads&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Leads&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=PBXManager&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Portal&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Potentials&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Potentials&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=PriceBooks&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=PriceBooks&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Products&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Products&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Project&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Project&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=ProjectMilestone&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=ProjectMilestone&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=ProjectTask&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=ProjectTask&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=PurchaseOrder&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=PurchaseOrder&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Quotes&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Quotes&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=RecycleBin&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Rss&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=SalesOrder&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=SalesOrder&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=ServiceContracts&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=ServiceContracts&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Services&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Services&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=SMSNotifier&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Vendors&view=List",
+"mobile": false
+},
+{
+"url": "index.php?module=Vendors&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Documents&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Documents&view=Edit",
+"mobile": false
+},
+{
+"url": "index.php?module=Calendar&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Calendar&view=Edit",
+"mobile": true
+},
+{
+"url": "index.php?module=Reports&view=List",
+"mobile": true
+},
+{
+"url": "index.php?module=Contacts&view=Detail&record=2",
+"mobile": true
+},
+{
+"url": "index.php?module=Contacts&view=Detail&record=2&mode=showDetailViewByMode&requestMode=full",
+"mobile": false
+},
+{
+"url": "index.php?module=Contacts&view=Edit&record=2",
+"mobile": true
+},
+{
+"url": "index.php?module=Contacts&view=Detail&record=2&mode=showRelatedList&relatedModule=Calendar&tab_label=Activities",
+"mobile": false
+},
+{
+"url": "index.php?module=Contacts&view=Detail&record=2&mode=showRecentActivities&page=1&tab_label=LBL_UPDATES",
+"mobile": false
+},
+{
+"url": "index.php?module=Contacts&view=Detail&record=2&mode=showRelatedList&relatedModule=Documents&tab_label=Documents",
+"mobile": false
+},
+{
+"url": "index.php?module=Calendar&view=Detail&record=22",
+"mobile": true
+},
+{
+"url": "index.php?module=Calendar&view=Edit&record=22",
+"mobile": false
+},
+{
+"url": "index.php?module=Calendar&view=Calendar",
+"mobile": true
+},
+{
+"url": "index.php?module=Calendar&view=SharedCalendar",
+"mobile": false
+},
+{
+"url": "index.php?module=Calendar&view=List&viewname=",
+"mobile": false
+},
+{
+"url": "index.php?module=Home&view=DashBoard",
+"mobile": true
+},
+{
+"url": "index.php?module=Contacts&view=List&viewname=&app=SALES",
+"mobile": false
+},
+{
+"url": "index.php?module=Users&view=PreferenceDetail&parent=Settings&record=1",
+"mobile": true
+},
+{
+"url": "index.php?module=Users&view=PreferenceEdit&parent=Settings&record=1",
+"mobile": false
+},
+{
+"url": "index.php?module=Users&view=Calendar&parent=Settings&record=1",
+"mobile": false
+},
+{
+"url": "index.php?module=TelegramBot&view=Index&app=MARKETING",
+"mobile": true
+},
+{
+"url": "index.php?module=TelegramBot&view=Index&tab=campaigns&app=MARKETING",
+"mobile": false
+},
+{
+"url": "index.php?module=TelegramBot&view=Index&tab=messages&app=MARKETING",
+"mobile": false
+},
+{
+"url": "index.php?module=TelegramBot&view=Index&tab=templates&app=MARKETING",
+"mobile": false
+},
+{
+"url": "index.php?module=TelegramBot&view=List&app=MARKETING",
+"mobile": false
+},
+{
+"url": "index.php?module=TelegramBot&view=Settings",
+"mobile": true
+},
+{
+"url": "index.php?module=SamenTheme&view=Settings&app=SETTINGS",
+"mobile": true
+},
+{
+"url": "index.php?module=PersianCalendar&view=Settings&app=SETTINGS",
+"mobile": true
+},
+{
+"url": "index.php?module=SamenTheme&view=List&app=TOOLS",
+"mobile": false
+},
+{
+"url": "index.php?module=PersianCalendar&view=List&app=TOOLS",
+"mobile": false
+},
+{
+"url": "index.php?module=Vtiger&parent=Settings&view=Index",
+"mobile": true
+},
+{
+"url": "index.php?module=Calendar&view=Edit&mode=Events",
+"mobile": true
+},
+{
+"url": "index.php?module=Calendar&view=Detail&record=39",
+"mobile": false
+},
+{
+"url": "index.php?module=Calendar&view=Edit&record=39",
+"mobile": false
+},
+{
+"url": "index.php?module=Contacts&view=Import",
+"mobile": false
+}
+]

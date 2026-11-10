@@ -12,7 +12,7 @@ $languageStrings = array(
 	'LBL_ST_BRAND' => 'Brand', 'LBL_ST_ORG' => 'System name', 'LBL_ST_WEBSITE' => 'Website',
 	'LBL_ST_COMPANY_PAGE' => 'Company details', 'LBL_ST_CALENDAR_PAGE' => 'Persian calendar',
 	'LBL_ST_FILES' => 'Skin files', 'LBL_ST_APP' => 'App', 'LBL_ST_SIZE' => 'Size', 'LBL_ST_BUILT' => 'Built',
-	'LBL_ST_FILES_HELP' => 'Built from Vtiger\'s own LESS sources with the Samen palette (modules/SamenTheme/build.sh); updated when the package is installed.',
+	'LBL_ST_FILES_HELP' => 'Built from Vtiger\'s own LESS sources with the Samen palette (<code dir="ltr">modules/SamenTheme/build.sh</code>); updated when the package is installed.',
 	'APP_contact' => 'Contacts', 'APP_inventory' => 'Inventory', 'APP_marketing' => 'Marketing', 'APP_marketing_and_sales' => 'Marketing & Sales',
 	'APP_project' => 'Projects', 'APP_sales' => 'Sales', 'APP_support' => 'Support', 'APP_tools' => 'Tools', 'APP_vtiger' => 'General',
 );

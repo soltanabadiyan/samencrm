@@ -111,3 +111,14 @@ body[data-language^="fa"] .module-nav .modules-menu ul li.active a,
 body[data-language^="fa"] .settingsgroup ul li a.settingsgroup-menu-color { box-shadow: inset -3px 0 0 var(--color-highlight) !important; }
 body[data-language^="fa"] .settingsgroup ul li a { text-align: right; }
 body[data-language^="fa"] .settingsgroup .settingsgroup-accordion a i { margin-right: 0; margin-left: 6px; }
+
+/* phones: the sub-menu sits beside the 222px drawer – let it use only the space left and wrap long names
+   ("مدیریت تلفن (PBX)" was cut at the screen edge) */
+@media (max-width: 767px) {
+	body[data-language^="fa"] .app-menu .app-modules-dropdown {
+		max-width: calc(100vw - 230px) !important;
+		min-width: 0 !important;
+	}
+	body[data-language^="fa"] .app-menu .app-modules-dropdown li a { white-space: normal !important; line-height: 1.5; }
+	body[data-language^="fa"] .app-menu .app-modules-dropdown li a span { overflow-wrap: anywhere; }
+}

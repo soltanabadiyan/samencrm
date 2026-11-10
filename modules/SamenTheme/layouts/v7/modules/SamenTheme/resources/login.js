@@ -45,6 +45,7 @@
 			container.appendChild(brand);
 		}
 		tr(document.body);
+		html.classList.add('samen-login-ready');   // lifts the no-flash guard set by the Login.tpl hook
 	}
 	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
 })(document);

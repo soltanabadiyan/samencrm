@@ -19,7 +19,7 @@ require_once 'modules/TelegramBot/lib/Store.php';
 
 class TelegramBot {
 
-	const VERSION = '1.0.1';
+	const VERSION = '1.0.3';
 	const RES = 'layouts/v7/modules/TelegramBot/resources/';
 	const SEND_LABEL = 'ارسال تلگرام';
 	const SETTINGS_LABEL = 'ربات تلگرام';

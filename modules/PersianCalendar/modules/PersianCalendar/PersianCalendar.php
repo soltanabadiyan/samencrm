@@ -17,7 +17,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class PersianCalendar {
 
-	const VERSION = '1.2.0';
+	const VERSION = '1.2.3';
 	const SETTINGS_LINK = 'index.php?module=PersianCalendar&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'تقویم شمسی';
 	const BASE = 'layouts/v7/modules/PersianCalendar/resources/';

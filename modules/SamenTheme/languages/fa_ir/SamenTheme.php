@@ -12,7 +12,7 @@ $languageStrings = array(
 	'LBL_ST_BRAND' => 'هویت بصری', 'LBL_ST_ORG' => 'نام سامانه', 'LBL_ST_WEBSITE' => 'وب‌سایت',
 	'LBL_ST_COMPANY_PAGE' => 'مشخصات سازمان', 'LBL_ST_CALENDAR_PAGE' => 'تقویم شمسی',
 	'LBL_ST_FILES' => 'فایل‌های پوسته', 'LBL_ST_APP' => 'برنامه', 'LBL_ST_SIZE' => 'حجم', 'LBL_ST_BUILT' => 'زمان ساخت',
-	'LBL_ST_FILES_HELP' => 'فایل‌ها از سورس LESS خود Vtiger با رنگ‌های ثامن ساخته می‌شوند (modules/SamenTheme/build.sh) و با نصب بسته به‌روز می‌شوند.',
+	'LBL_ST_FILES_HELP' => 'فایل‌ها از سورس LESS خود Vtiger با رنگ‌های ثامن ساخته می‌شوند (<code dir="ltr">modules/SamenTheme/build.sh</code>) و با نصب بسته به‌روز می‌شوند.',
 	'APP_contact' => 'مخاطبین', 'APP_inventory' => 'موجودی', 'APP_marketing' => 'بازاریابی', 'APP_marketing_and_sales' => 'بازاریابی و فروش',
 	'APP_project' => 'پروژه‌ها', 'APP_sales' => 'فروش', 'APP_support' => 'پشتیبانی', 'APP_tools' => 'ابزارها', 'APP_vtiger' => 'عمومی',
 );

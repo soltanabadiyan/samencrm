@@ -65,7 +65,7 @@
 				<div class="col-md-3 form-group"><label class="control-label">{vtranslate('LBL_TIMEZONE', 'TelegramBot')}</label><input type="text" name="timezone" class="form-control" dir="ltr" value="{$S.timezone|escape:'html'}" /></div>
 			</div>
 			<p class="small text-muted">{vtranslate('LBL_WORKER_LAST', 'TelegramBot')}: {$WORKER_LAST|default:'—'} <code dir="ltr">{$WORKER_RESULT|escape:'html'}</code></p>
-			<p class="small text-muted">{foreach item=C from=$CRONS}{$C.name}: {if $C.status eq 1}✔{else}✖{/if} ({$C.frequency}s, {$C.laststart_fmt|default:'—'})&nbsp;&nbsp;{/foreach}</p>
+			<p class="small text-muted">{foreach item=C from=$CRONS}{vtranslate($C.name, 'TelegramBot')}: {if $C.status eq 1}✔{else}✖{/if} ({$C.frequency} {vtranslate('LBL_SECONDS_SHORT', 'TelegramBot')}، {$C.laststart_fmt|default:'—'})&nbsp;&nbsp;{/foreach}</p>
 		</div>
 	</div>
 

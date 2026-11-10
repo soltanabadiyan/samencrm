@@ -52,7 +52,22 @@
 		'Conditions': 'شرایط', 'Groups': 'گروه‌ها', 'Name': 'نام', 'Select from My Computer': 'انتخاب از رایانه من',
 		// (bootstrap-switch ON/OFF stay English: the widget measures its handles from that text at init)
 		'comma': 'ویرگول', 'semicolon': 'نقطه‌ویرگول', 'Pipe': 'خط عمودی', 'Caret': 'هشتک (^)',
-		'Webmails': 'وب‌میل', 'Webforms': 'فرم‌های وب', 'RSS': 'خوراک RSS', 'Google': 'گوگل', 'Default Skin': 'پوسته پیش‌فرض'
+		'Webmails': 'وب‌میل', 'Webforms': 'فرم‌های وب', 'RSS': 'خوراک RSS', 'Google': 'گوگل', 'Default Skin': 'پوسته پیش‌فرض',
+		// found by tools/ui_sweep.mjs: labels Vtiger prints with a module whose language file lacks them,
+		// and sample data (tax / charge names, currency) shown as text
+		'Template Name': 'نام قالب', 'Module Name': 'نام ماژول', 'Recurring Invoice Information': 'اطلاعات فاکتور تکراری',
+		'Iran, Rials (﷼)': 'ریال ایران (﷼)', 'Iran, Rials': 'ریال ایران', 'Discount': 'تخفیف', 'Shipping & Handling': 'هزینه ارسال و جابجایی',
+		'VAT': 'مالیات بر ارزش افزوده', 'Sales': 'فروش', 'Service': 'خدمات',
+		'Shipping & Handling - VAT': 'هزینه ارسال - مالیات بر ارزش افزوده', 'Shipping & Handling - Sales': 'هزینه ارسال - فروش',
+		'Shipping & Handling - Service': 'هزینه ارسال - خدمات', 'Save': 'ذخیره', 'Edit': 'ویرایش',
+		'Call Status': 'وضعیت تماس', 'Customer Number': 'شماره مشتری', 'Customer': 'مشتری', 'User': 'کاربر', 'Start Time': 'زمان شروع',
+		'Sales Stage': 'مرحله فروش', 'Amount': 'مبلغ', 'Proposal or Price Quote': 'پیشنهاد یا پیش‌فاکتور', 'Negotiation or Review': 'مذاکره یا بررسی',
+		'Due date': 'تاریخ سررسید', 'Send Reminder': 'ارسال یادآوری',
+		'Public: Read Only': 'عمومی: فقط خواندن', 'Public: Read, Create/Edit': 'عمومی: خواندن، ایجاد و ویرایش',
+		'Public: Read, Create/Edit, Delete': 'عمومی: خواندن، ایجاد، ویرایش و حذف', 'Private': 'خصوصی', 'Comments': 'یادداشت‌ها',
+		'Frequency(H:M)': 'تناوب (ساعت:دقیقه)', 'Enable': 'فعال', 'Currency Name': 'نام ارز', 'Currency Code': 'کد ارز', 'Symbol': 'نماد',
+		'Source Field': 'فیلد منبع', 'Target Field': 'فیلد مقصد', 'MenuEditor': 'ویرایشگر منو', 'Fixed': 'ثابت', 'Simple': 'ساده',
+		'Private/Public': 'خصوصی/عمومی', 'Info': 'راهنما'
 	};
 	// placeholders / titles Vtiger prints in English
 	var ATTR = { 'Search for List': 'جستجوی فهرست', 'Search for Folders': 'جستجوی پوشه‌ها', 'Search': 'جستجو',
@@ -62,7 +77,7 @@
 	var WORDS = { 'Documents': 'اسناد', 'Contacts': 'مخاطبین', 'Calendar': 'تقویم', 'Emails': 'ایمیل‌ها',
 		'ModComments': 'یادداشت‌ها', 'Organizations': 'سازمان‌ها', 'Accounts': 'سازمان‌ها',
 		'Start Date & Time': 'تاریخ و زمان شروع', 'End Date & Time': 'تاریخ و زمان پایان', 'Start Date': 'تاریخ شروع',
-		'End Date': 'تاریخ پایان', 'Target End Date': 'تاریخ پایان هدف', 'Due Date': 'تاریخ سررسید', 'End': 'پایان', 'Due': 'سررسید', 'Date': 'تاریخ' };
+		'End Date': 'تاریخ پایان', 'Target End Date': 'تاریخ پایان هدف', 'Due Date': 'تاریخ سررسید', 'End': 'پایان', 'Due': 'سررسید', 'Date': 'تاریخ', 'Faq': 'پرسش‌های متداول' };
 	var WORD_KEYS = Object.keys(WORDS).sort(function (a, b) { return b.length - a.length; })
 		.map(function (k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
 	var WORD_RE = new RegExp('\\b(' + WORD_KEYS.join('|') + ')\\b', 'g');
@@ -99,8 +114,37 @@
 		Array.prototype.forEach.call(document.querySelectorAll('.content-area'), function (c) { c.classList.add('full-width'); });
 	}
 
+	// Vtiger wires the app menu / search / quick create through a page controller <Module>_<view>_Js
+	// (application.js getModuleSpecificViewClass). Some stock pages have none or a plain object
+	// (Import: "Vtiger_Import_Js is not a constructor"), which leaves the menu dead – give them an empty one.
+	function pageController() {
+		if (typeof window.Vtiger_Index_Js !== 'function') { return; }
+		var q = new URLSearchParams(window.location.search), module = q.get('module'), view = q.get('view');
+		if (!module || !view || q.get('parent') === 'Settings' || !/^\w+$/.test(module + view)) { return; }
+		var own = module + '_' + view + '_Js', generic = 'Vtiger_' + view + '_Js';
+		if (typeof window[own] === 'function') { return; }
+		if (typeof window[own] === 'undefined' && typeof window[generic] === 'function') { return; }
+		if (typeof window[own] === 'undefined') { window.Vtiger_Index_Js(own, {}, {}); }
+	}
+	pageController();
+
+	// phones: when the fixed header wraps to two rows (e.g. Calendar's add buttons) it covers the top of
+	// the page (the calendar's prev/next/view buttons) – push the page down by the overlap
+	function navOffset() {
+		var nav = document.querySelector('.app-fixed-navbar'), main = document.querySelector('.main-container');
+		if (!nav || !main) { return; }
+		main.style.marginTop = '';
+		var gap = nav.getBoundingClientRect().bottom - main.getBoundingClientRect().top;
+		if (gap > 8) { main.style.marginTop = Math.ceil(gap) + 'px'; }
+	}
+
 	function start() {
 		favicon();
+		navOffset();
+		window.addEventListener('resize', navOffset);
+		if (window.ResizeObserver && document.querySelector('.app-fixed-navbar')) {
+			new ResizeObserver(navOffset).observe(document.querySelector('.app-fixed-navbar'));
+		}
 		brandTitle();
 		mobileSidebar();
 		var fa = /^fa/i.test(document.body.getAttribute('data-language') || '');
