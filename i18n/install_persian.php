@@ -93,7 +93,39 @@ foreach ($renames as $rn) {
 		}
 	}
 }
-/* 5. admin display name created by the scripted installer */
-$adb->pquery("UPDATE vtiger_users SET first_name=?, last_name=? WHERE user_name='admin' AND first_name='SamenStudent' AND last_name='Admin'", array('مدیر', 'ثامن استودنت'));
+/* 5. admin display name created by the scripted installer (earlier runs used other names) */
+$adb->pquery("UPDATE vtiger_users SET first_name=?, last_name=? WHERE user_name='admin' AND ((first_name='SamenStudent' AND last_name='Admin') OR (first_name='مدیر' AND last_name='ثامن استودنت'))", array('مدیر', 'سامانه'));
+
+/* 6. Vtiger's sample reports and report folders (not referenced by name in code; sample filters and the
+      "My Dashboard" tab ARE, so those are only translated on screen by SamenTheme/theme.js) */
+$reports = array(
+	'Contacts by Accounts' => 'مخاطبین بر اساس سازمان', 'Contacts without Accounts' => 'مخاطبین بدون سازمان',
+	'Contacts by Potentials' => 'مخاطبین بر اساس فرصت', 'Lead by Source' => 'سرنخ‌ها بر اساس منبع',
+	'Lead Status Report' => 'گزارش وضعیت سرنخ', 'Potential Pipeline' => 'خط لوله فرصت‌ها', 'Closed Potentials' => 'فرصت‌های بسته‌شده',
+	'Last Month Activities' => 'فعالیت‌های ماه گذشته', 'This Month Activities' => 'فعالیت‌های این ماه',
+	'Tickets by Products' => 'تیکت‌ها بر اساس محصول', 'Tickets by Priority' => 'تیکت‌ها بر اساس اولویت', 'Open Tickets' => 'تیکت‌های باز',
+	'Product Details' => 'جزئیات محصولات', 'Products by Contacts' => 'محصولات بر اساس مخاطب', 'Open Quotes' => 'پیش‌فاکتورهای باز',
+	'Quotes Detailed Report' => 'گزارش تفصیلی پیش‌فاکتورها', 'PurchaseOrder by Contacts' => 'سفارش خرید بر اساس مخاطب',
+	'PurchaseOrder Detailed Report' => 'گزارش تفصیلی سفارش خرید', 'Invoice Detailed Report' => 'گزارش تفصیلی فاکتور',
+	'SalesOrder Detailed Report' => 'گزارش تفصیلی سفارش فروش', 'Campaign Expectations and Actuals' => 'انتظارات و واقعیات کمپین',
+	'Contacts Email Report' => 'گزارش ایمیل مخاطبین', 'Accounts Email Report' => 'گزارش ایمیل سازمان‌ها',
+	'Leads Email Report' => 'گزارش ایمیل سرنخ‌ها', 'Vendors Email Report' => 'گزارش ایمیل تأمین‌کنندگان',
+);
+// Reports double-escapes the zero-width non-joiner (shows "&zwnj;"), so report/folder names use a plain space
+$zwnj = function ($s) { return str_replace("\u{200C}", ' ', $s); };
+foreach ($reports as $en => $fa) {
+	$adb->pquery('UPDATE vtiger_report SET reportname=? WHERE reportname IN (?, ?)', array($zwnj($fa), $en, $fa));
+}
+$folders = array(
+	'Organization and Contact Reports' => 'گزارش‌های سازمان و مخاطب', 'Lead Reports' => 'گزارش‌های سرنخ',
+	'Opportunity Reports' => 'گزارش‌های فرصت', 'Activity Reports' => 'گزارش‌های فعالیت', 'Tickets Reports' => 'گزارش‌های تیکت',
+	'Product Reports' => 'گزارش‌های محصول', 'Quote Reports' => 'گزارش‌های پیش‌فاکتور', 'Purchase Order Reports' => 'گزارش‌های سفارش خرید',
+	'Invoice Reports' => 'گزارش‌های فاکتور', 'Sales Order Reports' => 'گزارش‌های سفارش فروش', 'Campaign Reports' => 'گزارش‌های کمپین',
+	'Email Reports' => 'گزارش‌های ایمیل',
+);
+foreach ($folders as $en => $fa) {
+	$adb->pquery('UPDATE vtiger_reportfolder SET foldername=?, description=? WHERE foldername IN (?, ?)', array($zwnj($fa), $zwnj($fa), $en, $fa));
+}
+echo "sample reports/folders: Persian names\n";
 createUserPrivilegesfile(1);
 echo "PERSIAN DONE\n";

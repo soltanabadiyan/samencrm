@@ -93,7 +93,9 @@ html.samen-login .app-footer, html.samen-login footer { background: transparent 
 
 html[dir="rtl"].samen-login .group label { right: 5px; left: auto; }
 @media (max-width: 900px) {
+	html.samen-login .loginPageContainer { gap: 16px; padding-block: 16px; min-height: auto; }
 	.samen-brand { order: -1; }
-	.samen-brand img { width: 220px; }
-	.samen-brand h1 { font-size: 26px; }
+	.samen-brand img { display: none; }             /* the form must be above the fold on phones */
+	.samen-brand h1 { font-size: 26px; margin-top: 0; }
+	html.samen-login .loginDiv { padding: 24px 20px; }
 }

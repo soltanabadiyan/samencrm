@@ -5,7 +5,7 @@
 #   ./run_all.sh install    # 2) copy kit to server, install docker stack in /opt/vtiger  (then finish web wizard)
 #   ./run_all.sh import     # 3) after the wizard: push data, create fields/groups/filters, import everything
 #   ./run_all.sh import --limit 20   # test import of first 20 contacts
-#   ./run_all.sh locations  # fill city/country (+ Country Source) on imported contacts
+#   ./run_all.sh details    # add derived details (city/country, WhatsApp, operator, title, completeness) to contacts
 #   ./run_all.sh persian    # build + install fa_ir pack, PersianCalendar (Jalali) and SamenTheme (skin/RTL/login), users -> Persian
 #
 # Env overrides:  SSH_TARGET=root@212.33.206.241  SSH_PORT=9080  DIRECT_IF=auto|wlp5s0|none   XLS_DIR=...   VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz
@@ -90,14 +90,15 @@ case "$cmd" in
     ssh "$SSH_TARGET" "$SUDO cp $REMOTE_KIT/ss/persianize.sql $REMOTE_KIT/ss/dataset.json $REMOTE_KIT/ss/schema.json $REMOTE_KIT/ss/tag_contacts.php /opt/vtiger/ss/ && cd /opt/vtiger && set -a && . ./.env && set +a && \
       docker compose exec -T db mariadb-dump -uroot -p\$DB_ROOT_PASSWORD --single-transaction \$DB_NAME | gzip > backups/pre_migrate_fa_\$(date +%F_%H%M).sql.gz && \
       docker compose exec -T db mariadb --default-character-set=utf8 -u\$DB_USER -p\$DB_PASSWORD \$DB_NAME < ss/persianize.sql && echo migrated" ;;
-  locations)
-    # fill city/country + Country Source on already-imported contacts (adds the custom field first)
+  details|locations)
+    # add derived details (city/country, WhatsApp, operator, title, completeness...) to imported contacts;
+    # the import step creates any new custom fields first and skips existing records
     [ -s "$OUT/dataset.json" ] || build
     "$0" import --skip-activities >/dev/null      # pushes dataset/schema, creates the new field, skips existing records
     ssh "$SSH_TARGET" "cat /opt/vtiger/ss/import_state.json" > "$OUT/import_state.json"
-    python3 "$HERE/vtiger/apply_location.py" "$OUT/dataset.json" "$OUT/import_state.json" > "$OUT/location.sql"
-    scp -q "$OUT/location.sql" "$SSH_TARGET:$REMOTE_KIT/ss/"
-    ssh "$SSH_TARGET" "$SUDO cp $REMOTE_KIT/ss/location.sql /opt/vtiger/ss/ && cd /opt/vtiger && set -a && . ./.env && set +a && \
-      docker compose exec -T db mariadb --default-character-set=utf8 -u\$DB_USER -p\$DB_PASSWORD \$DB_NAME < ss/location.sql && echo 'locations applied'" ;;
+    python3 "$HERE/vtiger/apply_details.py" "$OUT/dataset.json" "$OUT/import_state.json" > "$OUT/details.sql"
+    scp -q "$OUT/details.sql" "$SSH_TARGET:$REMOTE_KIT/ss/"
+    ssh "$SSH_TARGET" "$SUDO cp $REMOTE_KIT/ss/details.sql /opt/vtiger/ss/ && cd /opt/vtiger && set -a && . ./.env && set +a && \
+      docker compose exec -T db mariadb --default-character-set=utf8 -u\$DB_USER -p\$DB_PASSWORD \$DB_NAME < ss/details.sql && echo 'details applied'" ;;
   *) sed -n '2,12p' "$0" ;;
 esac

@@ -19,3 +19,4 @@ node_modules/
 .env
 !deploy/.env.example
 location.sql
+details.sql

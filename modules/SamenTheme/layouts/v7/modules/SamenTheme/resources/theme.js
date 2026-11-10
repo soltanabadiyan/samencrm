@@ -1,5 +1,5 @@
 /*+**********************************************************************************
- * SamenTheme – small runtime helpers for the SamenStudent theme (HEADERSCRIPT link).
+ * SamenTheme – small runtime helpers for the SamenCRM theme (HEADERSCRIPT link).
  *  - brand favicon
  *  - <html lang="fa" dir="rtl"> for Persian users (screen readers, native form controls)
  *  - Persian for the few labels Vtiger prints without vtranslate() (filter "All", widget titles...)
@@ -39,8 +39,24 @@
 		'Lists': 'فهرست‌ها',
 		'Primary Module': 'ماژول اصلی',
 		'Default': 'پیش‌فرض',
-		'Privacy Policy': 'حریم خصوصی'
+		'Privacy Policy': 'حریم خصوصی',
+		// Vtiger's sample filters – core code looks some of them up by English name, so they are only translated on screen
+		'This Month Leads': 'سرنخ‌های این ماه', 'New This Week': 'جدید در این هفته', 'Prospecting': 'در حال جستجو',
+		'High Prioriy Tickets': 'تیکت‌های با اولویت بالا', 'Rejected Quotes': 'پیش‌فاکتورهای ردشده',
+		'Drafted FAQ': 'پرسش‌های متداول پیش‌نویس', 'Published FAQ': 'پرسش‌های متداول منتشرشده',
+		'Open Purchase Orders': 'سفارش‌های خرید باز', 'Received Purchase Orders': 'سفارش‌های خرید دریافت‌شده',
+		'Open Invoices': 'فاکتورهای باز', 'Paid Invoices': 'فاکتورهای پرداخت‌شده', 'Pending Sales Orders': 'سفارش‌های فروش در انتظار',
+		'CRM Phone Extension': 'داخلی تلفن CRM', 'Default Landing Page': 'صفحه پیش‌فرض پس از ورود', 'Picklist': 'لیست انتخابی',
+		'Datetime': 'تاریخ و زمان', 'DocumentsFolder': 'پوشه اسناد', 'Owner': 'مالک', 'FileLocationType': 'نوع محل فایل',
+		'DocumentsFileUpload': 'بارگذاری فایل سند', 'Module': 'ماژول', 'Workflow Name': 'نام گردش‌کار', 'Trigger': 'محرک',
+		'Conditions': 'شرایط', 'Groups': 'گروه‌ها', 'Name': 'نام', 'Select from My Computer': 'انتخاب از رایانه من',
+		// (bootstrap-switch ON/OFF stay English: the widget measures its handles from that text at init)
+		'comma': 'ویرگول', 'semicolon': 'نقطه‌ویرگول', 'Pipe': 'خط عمودی', 'Caret': 'هشتک (^)',
+		'Webmails': 'وب‌میل', 'Webforms': 'فرم‌های وب', 'RSS': 'خوراک RSS', 'Google': 'گوگل', 'Default Skin': 'پوسته پیش‌فرض'
 	};
+	// placeholders / titles Vtiger prints in English
+	var ATTR = { 'Search for List': 'جستجوی فهرست', 'Search for Folders': 'جستجوی پوشه‌ها', 'Search': 'جستجو',
+		'Type to search': 'برای جستجو تایپ کنید', 'Search Settings': 'جستجوی تنظیمات', 'Enter tag name': 'نام برچسب را وارد کنید' };
 	// module names Vtiger concatenates into already-translated sentences ("بدون مورد مرتبط Documents")
 	// (also field labels the calendar feed list joins with Persian module names: "Start Date & Time,End-رویدادها")
 	var WORDS = { 'Documents': 'اسناد', 'Contacts': 'مخاطبین', 'Calendar': 'تقویم', 'Emails': 'ایمیل‌ها',
@@ -68,8 +84,25 @@
 		});
 	}
 
+	function brandTitle() {
+		var t = document.title || '';
+		if (!/SamenCRM/.test(t)) { document.title = (t.replace(/\s*[-|]?\s*vtiger( CRM)?/i, '').trim() || 'SamenCRM') + ' | SamenCRM'; }
+	}
+
+	// phones: start list pages with the filter sidebar collapsed so the records are visible first
+	// (same classes Vtiger's own .essentials-toggle switches, so the toggle still opens it)
+	function mobileSidebar() {
+		if (!window.matchMedia || !window.matchMedia('(max-width: 767px)').matches) { return; }
+		var side = document.querySelector('.sidebar-essentials');
+		if (!side || side.classList.contains('hide')) { return; }
+		side.classList.add('hide');
+		Array.prototype.forEach.call(document.querySelectorAll('.content-area'), function (c) { c.classList.add('full-width'); });
+	}
+
 	function start() {
 		favicon();
+		brandTitle();
+		mobileSidebar();
 		var fa = /^fa/i.test(document.body.getAttribute('data-language') || '');
 		document.documentElement.classList.add('samen-theme');
 		if (!fa) { return; }

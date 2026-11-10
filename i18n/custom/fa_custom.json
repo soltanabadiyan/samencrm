@@ -74,7 +74,12 @@
       "iraq": "عراق",
       "syria": "سوریه",
       "Withdrawn": "انصرافی",
-      "Country Source": "منبع تعیین کشور"
+      "Country Source": "منبع تعیین کشور",
+      "WhatsApp": "واتساپ",
+      "WhatsApp Chat Link": "لینک گفتگوی واتساپ",
+      "Mobile Operator": "اپراتور موبایل",
+      "Profile Completeness": "میزان تکمیل پرونده",
+      "Missing Information": "اطلاعات ناقص"
     }
   },
   "Vtiger.php": {

@@ -21,13 +21,13 @@
 		html.classList.add('samen-login');
 		html.setAttribute('lang', 'fa');
 		html.setAttribute('dir', 'rtl');
-		document.title = 'ورود | ثامن استودنت';
+		document.title = 'ورود | SamenCRM – سامانه مدیریت ارتباط با مشتری';
 		var icon = document.createElement('link');
 		icon.rel = 'icon'; icon.type = 'image/png'; icon.href = BASE + 'img/favicon.png';
 		document.head.appendChild(icon);
 
 		var logo = document.querySelector('.loginDiv .user-logo');
-		if (logo) { logo.src = BASE + 'img/company-logo.png'; logo.alt = 'ثامن استودنت'; }
+		if (logo) { logo.src = BASE + 'img/company-logo.png'; logo.alt = 'SamenCRM'; }
 
 		// Vtiger 8 custom skin: preselect ours so every login uses it (Users/actions/Login.php stores it in the session)
 		var skin = document.getElementById('skin');
@@ -39,8 +39,8 @@
 			brand.className = 'samen-brand';
 			var art = document.createElement('img');
 			art.src = BASE + 'img/cloud-art.webp'; art.alt = ''; art.width = 480; art.height = 398; art.decoding = 'async';
-			var h1 = document.createElement('h1'); h1.textContent = 'ثامن استودنت';
-			var p = document.createElement('p'); p.textContent = 'سامانه پذیرش و پشتیبانی دانشجویان بین‌الملل';
+			var h1 = document.createElement('h1'); h1.textContent = 'SamenCRM'; h1.setAttribute('dir', 'ltr');
+			var p = document.createElement('p'); p.textContent = 'سامانه مدیریت ارتباط با مشتری';
 			brand.appendChild(art); brand.appendChild(h1); brand.appendChild(p);
 			container.appendChild(brand);
 		}

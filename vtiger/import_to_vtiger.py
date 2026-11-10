@@ -97,6 +97,8 @@ def contact_element(c, admin_id, groups):
         "mailingcountry": c.get("mailingcountry", ""),
         "othercity": c.get("othercity", ""),
         "othercountry": c.get("othercountry", ""),
+        "otherphone": c.get("otherphone", ""),
+        "title": c.get("title", ""),
         "description": c.get("description", ""),
         "assigned_user_id": owner,
     }

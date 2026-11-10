@@ -59,6 +59,9 @@ foreach ($schema['blocks'] as $bdef) {
             if ($f['kind'] === 'picklist') {
                 $field->uitype = 16;               // non-role-based picklist
                 $field->columntype = 'VARCHAR(255)';
+            } elseif ($f['kind'] === 'url') {
+                $field->uitype = 17;               // URL (clickable)
+                $field->columntype = 'VARCHAR(255)';
             } elseif ($f['kind'] === 'long') {
                 $field->uitype = 21;               // textarea
                 $field->columntype = 'TEXT';

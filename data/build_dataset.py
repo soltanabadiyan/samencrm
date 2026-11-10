@@ -692,6 +692,7 @@ def build(xls_dir, out_dir):
                         "; ".join(f"{k}: {' / '.join(dict.fromkeys(v))}" for k, v in p["conflicts"].items() if v and k not in ("changes", "pay_generic")))
         contact["description"] = "\n".join(desc)
         contact["_sources"] = [dict(file=s["file"], sheet=s["sheet"], row=s["row"]) for s in srcs]
+        contact["_raw_rows"] = [s["raw"] for s in srcs]
         contact["_extra_phones"] = phones[2:]
         contacts.append(contact)
 
@@ -765,10 +766,12 @@ def build(xls_dir, out_dir):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import fa_labels
     import location
+    import enrich
     for c in contacts:
         loc = location.locate(c)
         c["fields"]["country_source"] = loc.pop("country_source")
         c.update(loc)                       # mailingcity/mailingcountry/othercity/othercountry (standard fields)
+        enrich.enrich(c, c.pop("_raw_rows", []), norm_phone)
         c["fields"]["source_groups"] = fa_labels.source_groups(c["fields"]["source_groups"])
         c["description"] = fa_labels.description_fa(c["description"])
     for t in tasks:

@@ -1,4 +1,6 @@
-# SamenStudent – Vtiger CRM rollout kit
+# SamenCRM — سامانه مدیریت ارتباط با مشتری
+
+Vtiger CRM 8 for SamenStudent (admission & support of international students), Persian/RTL, Shamsi calendar, Samen theme.
 
 Everything is driven from your PC with `run_all.sh`. Server: `212.33.206.241`, installed in `/opt/vtiger` (Docker).
 
@@ -44,7 +46,7 @@ All three are standard Vtiger packages (Settings > Module Management can also im
 |---|---|---|
 | `Persian_fa_ir.zip` (language) | full fa_ir pack: 4,047 strings + labels of the custom student fields/picklists; default language | `i18n/` (`fa/*.txt` = translations, `build_langpack.py` validates placeholders/HTML) |
 | `PersianCalendar.zip` (extension) | Jalali dates everywhere in the UI, Jalali date picker on every date field, Shamsi FullCalendar (RTL, week starts Saturday). Dates stay Gregorian in the DB. | `modules/PersianCalendar/` (`tests/convert.test.js`) |
-| `SamenTheme.zip` (extension) | **Vtiger 8 custom skin `samen`** (`layouts/v7/custom_skins/samen`): Vtiger's own LESS recompiled with the samencloud.ir palette (teal `#13606F`, brown `#7D4F2E`, copper `#D99058`), design tokens, Shabnam font, complete RTL (mirrored automatically + hand fixes for the app menu/sub-menus and dropdowns). Brand login page, favicon and company logo. | `modules/SamenTheme/` |
+| `SamenTheme.zip` (extension) | **Vtiger 8 custom skin `samen`** (`layouts/v7/custom_skins/samen`): Vtiger's own LESS recompiled with the samencloud.ir palette (teal `#13606F`, brown `#7D4F2E`, copper `#D99058`), design tokens, Shabnam font, complete RTL (mirrored automatically + hand fixes for the app menu/sub-menus and dropdowns). Brand login page (SamenCRM), favicon, company logo, high-contrast navigation (app menu, sub-menus, rail, settings), responsive phone layout. | `modules/SamenTheme/` |
 
 * The login page preselects the `samen` skin (Vtiger keeps the choice in the session). Vtiger has no hook for the login
   page, so the installer adds one marked block to `layouts/v7/modules/Users/Login.tpl`; it is re-applied on update and removed
@@ -56,14 +58,29 @@ All three are standard Vtiger packages (Settings > Module Management can also im
   `tools/get_session.sh` + `tools/ui_shot.mjs` take headless screenshots (needs `ssh -D 19080 hashemz_crm`).
 * Data labels are Persian too (groups `مقطع - …`, filters, tags, task/event subjects, list names) – see `data/fa_labels.py`.
 
-## City / country  (`./run_all.sh locations`)
-`data/location.py` fills the standard address fields from what the sheets contain – nothing is guessed:
-* **Mailing (home)**: country from the nationality column, else the phone country code (+964 Iraq, +93 Afghanistan, …;
-  Iranian +98 numbers are ignored), else the visa city; city = visa city (only 18 students have one).
-  "Country Source" (منبع تعیین کشور) says which rule was used. Result: 3,402 Iraq, 193 Afghanistan, 2 other, 2,398 unknown
-  (no phone or only an Iranian number).
-* **Other (study)**: city of the university + ایران (4,204 students; the rest have no university in the sheets).
-Only empty fields are filled, so manual edits in the CRM are kept.
+## Contact details derived from the sheets  (`./run_all.sh details`)
+Rules only – nothing is guessed (`data/location.py`, `data/enrich.py`); only empty fields are filled, so edits made in the
+CRM are kept (the two computed indicators are refreshed every run).
+
+| field | rule | contacts |
+|---|---|---|
+| Mailing country / city (home) | nationality column → phone country code (+964 Iraq, +93 Afghanistan …; Iranian +98 ignored) → visa city; city = visa city | 3,597 / 18 |
+| Other city / country (study) | city of the university, ایران | 4,204 |
+| Country Source (منبع تعیین کشور) | which rule gave the country | 3,597 |
+| WhatsApp (واتساپ) | WhatsApp-labelled columns | 1,066 |
+| WhatsApp Chat Link | `https://wa.me/<number>` (WhatsApp number, else mobile) – one click opens a chat | 3,632 |
+| Mobile Operator (اپراتور موبایل) | dialling prefix: Asiacell/Zain/Korek (Iraq), Hamrah-e Aval/Irancell/Rightel (Iran) | 3,586 |
+| Title (سمت) | "دانشجوی <مقطع>" | 4,036 |
+| Profile Completeness / Missing Information | share of 9 key fields filled (name, passport, mobile, email, level, university, major, country, tracking code) and which are missing – use them as follow-up lists | 5,995 |
+
+Contact ids are stable across rebuilds (`_id` ↔ `import_state.json`); a parsing change that alters how rows merge must
+be checked against `output/dataset.en_labels.json` before running `details`.
+
+## UI checks (desktop + mobile)
+`tools/ui_audit.mjs` drives headless Chrome through `tools/ui_audit_steps.json` (all main pages, the app menu and every
+sub-menu, dropdowns, quick-create, date picker, calendar, settings…) on 1440px and 390px viewports;
+`tools/contact_sheet.py` turns the screenshots into review sheets. Needs `ssh -D 19080 hashemz_crm` and
+`SESSION=$(tools/get_session.sh)`.
 
 ## What gets imported
 * **Contacts: 5,995** (9,536 source rows from 23 files / 36 sheets; 8 byte-identical duplicate sheets dropped, rows for the
@@ -108,7 +125,7 @@ vtiger/make_schema.py         dataset -> schema.json (picklists, groups, filters
 vtiger/setup_vtiger.php       runs in the container: fields, groups, filters
 vtiger/import_to_vtiger.py    REST importer (resumable)
 vtiger/tag_contacts.php       Level/Major tags on contacts
-data/fa_labels.py, location.py Persian data labels; city/country rules
+data/fa_labels.py, location.py, enrich.py  Persian data labels; city/country; derived details
 i18n/                         fa_ir language pack + install_persian.php
 modules/PersianCalendar       Jalali calendar extension
 modules/SamenTheme            custom skin + brand (samencloud.ir)

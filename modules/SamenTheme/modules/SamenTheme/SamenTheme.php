@@ -1,6 +1,6 @@
 <?php
 /*+**********************************************************************************
- * SamenTheme – SamenStudent theme for Vtiger CRM 8 (v7 layout), after samencloud.ir.
+ * SamenTheme – SamenCRM (سامانه مدیریت ارتباط با مشتری) theme for Vtiger CRM 8 (v7 layout), after samencloud.ir.
  * Vtiger extension module (vtlib). It ships and maintains:
  *  1. the official Vtiger 8 *custom skin*  layouts/v7/custom_skins/samen/<app>/style.css
  *     (brand palette compiled from Vtiger's own LESS + theme + full RTL for Persian users).
@@ -100,7 +100,10 @@ class SamenTheme {
 		if (!is_dir('test/logo')) mkdir('test/logo', 0755, true);
 		copy(self::RES . 'img/company-logo.png', 'test/logo/' . $name);
 		$adb->pquery('UPDATE vtiger_organizationdetails SET logoname=?, organizationname=? WHERE organization_id=(SELECT id FROM (SELECT MIN(organization_id) id FROM vtiger_organizationdetails) t)',
-			array($name, 'ثامن استودنت'));
+			array($name, 'SamenCRM'));
+		// drop Vtiger's sample company address (Bangalore, vtiger.com) – only while it is still the sample
+		$adb->pquery("UPDATE vtiger_organizationdetails SET address='', city='', state='', code='', country=?, phone='', fax='', website=?
+			WHERE website='www.vtiger.com' AND city='Bangalore'", array('ایران', 'https://samencloud.ir'));
 	}
 
 	/* ---------------------------------------------------------------- vtlib events */
@@ -109,7 +112,7 @@ class SamenTheme {
 			self::installSkin();
 			self::registerLinks();
 			self::patchLogin();
-			if ($eventType == 'module.postinstall') self::setCompanyLogo();
+			self::setCompanyLogo();
 		} else if (in_array($eventType, array('module.disabled', 'module.preuninstall'))) {
 			self::unregisterLinks();
 			self::unpatchLogin();
