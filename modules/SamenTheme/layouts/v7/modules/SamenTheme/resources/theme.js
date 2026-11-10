@@ -84,7 +84,7 @@
 		// calendar settings / preferences values
 		'Today': 'امروز', 'This Week': 'این هفته', 'This Month': 'این ماه', 'Planned': 'برنامه‌ریزی‌شده', 'Held': 'برگزارشده',
 		'Not Held': 'برگزارنشده', 'Call': 'تماس', 'Meeting': 'جلسه', 'Minute': 'دقیقه', 'Minutes': 'دقیقه', 'Hours': 'ساعت',
-		'User : All': 'کاربر: همه', 'Access Count': 'تعداد مشاهده', 'Click Count': 'تعداد کلیک',
+		'User : All': 'کاربر: همه', 'Signed in': 'وارد شده', 'Signed off': 'خارج شده', 'Active': 'فعال', 'Inactive': 'غیرفعال', 'integer': 'عدد صحیح', 'public': 'عمومی', 'private': 'خصوصی', 'Access Count': 'تعداد مشاهده', 'Click Count': 'تعداد کلیک',
 		'Saturday': 'شنبه', 'Sunday': 'یکشنبه', 'Monday': 'دوشنبه', 'Tuesday': 'سه‌شنبه', 'Wednesday': 'چهارشنبه', 'Thursday': 'پنجشنبه', 'Friday': 'جمعه'
 	};
 	// placeholders / titles Vtiger prints in English
@@ -96,7 +96,7 @@
 	var WORDS = { 'Documents': 'اسناد', 'Contacts': 'مخاطبین', 'Calendar': 'تقویم', 'Emails': 'ایمیل‌ها',
 		'ModComments': 'یادداشت‌ها', 'Organizations': 'سازمان‌ها', 'Accounts': 'سازمان‌ها',
 		'Start Date & Time': 'تاریخ و زمان شروع', 'End Date & Time': 'تاریخ و زمان پایان', 'Start Date': 'تاریخ شروع',
-		'End Date': 'تاریخ پایان', 'Target End Date': 'تاریخ پایان هدف', 'Due Date': 'تاریخ سررسید', 'End': 'پایان', 'Due': 'سررسید', 'Date': 'تاریخ', 'Faq': 'پرسش‌های متداول', 'Comment': 'یادداشت' };
+		'End Date': 'تاریخ پایان', 'Target End Date': 'تاریخ پایان هدف', 'Due Date': 'تاریخ سررسید', 'End': 'پایان', 'Due': 'سررسید', 'Date': 'تاریخ', 'Faq': 'پرسش‌های متداول', 'Comment': 'یادداشت', 'Minutes': 'دقیقه', 'Minute': 'دقیقه', 'Hours': 'ساعت', 'Hour': 'ساعت' };
 	var WORD_KEYS = Object.keys(WORDS).sort(function (a, b) { return b.length - a.length; })
 		.map(function (k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
 	var WORD_RE = new RegExp('\\b(' + WORD_KEYS.join('|') + ')\\b', 'g');
@@ -189,13 +189,14 @@
 	// (application.js getModuleSpecificViewClass). Some stock pages have none or a plain object
 	// (Import: "Vtiger_Import_Js is not a constructor"), which leaves the menu dead – give them an empty one.
 	function pageController() {
+		// ONLY for views whose stock controller is broken (Import: Vtiger_Import_Js is a plain object, "not a
+		// constructor"). This script can run before a page's own controller script has loaded (e.g. DashBoard.js),
+		// so a generic fallback would replace the real controller – the dashboard then never lays out its widgets.
 		if (typeof window.Vtiger_Index_Js !== 'function') { return; }
 		var q = new URLSearchParams(window.location.search), module = q.get('module'), view = q.get('view');
-		if (!module || !view || q.get('parent') === 'Settings' || !/^\w+$/.test(module + view)) { return; }
-		var own = module + '_' + view + '_Js', generic = 'Vtiger_' + view + '_Js';
-		if (typeof window[own] === 'function') { return; }
-		if (typeof window[own] === 'undefined' && typeof window[generic] === 'function') { return; }
-		if (typeof window[own] === 'undefined') { window.Vtiger_Index_Js(own, {}, {}); }
+		if (view !== 'Import' || !module || q.get('parent') === 'Settings' || !/^\w+$/.test(module)) { return; }
+		var own = module + '_Import_Js';
+		if (typeof window[own] === 'undefined' && typeof window.Vtiger_Import_Js !== 'function') { window.Vtiger_Index_Js(own, {}, {}); }
 	}
 	pageController();
 
