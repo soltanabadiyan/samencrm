@@ -351,3 +351,12 @@
 		var st = $('#tgSettings'); if (st.length) { bindSettings(st); }
 	});
 })(window, window.jQuery);
+
+/* Page controllers: Vtiger wires the app menu, global search and quick create only when a class
+   <Module>_<view>_Js exists (application.js getModuleSpecificViewClass). */
+(function () {
+	if (!window.Vtiger_Index_Js) { return; }
+	['TelegramBot_Index_Js', 'TelegramBot_Settings_Js', 'TelegramBot_List_Js'].forEach(function (name) {
+		if (typeof window[name] === 'undefined') { Vtiger_Index_Js(name, {}, {}); }
+	});
+})();

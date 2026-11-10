@@ -1,3 +1,9 @@
+/* Vtiger only wires the page (app menu, search, quick create...) when a controller class named
+   <Module>_<view>_Js exists – application.js getModuleSpecificViewClass(). */
+if (window.Vtiger_Index_Js && typeof window.PersianCalendar_Settings_Js === 'undefined') {
+	Vtiger_Index_Js('PersianCalendar_Settings_Js', {}, {});
+}
+
 /* SamenTheme / PersianCalendar settings pages: buttons with data-samen-action -> <module> Ajax action. */
 jQuery(function ($) {
 	$(document).on('click', '[data-samen-action]', function () {
