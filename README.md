@@ -94,6 +94,17 @@ sub-menu, dropdowns, quick-create, date picker, calendar, settings…) on 1440px
 requests, PHP/Vtiger error text, horizontal overflow and English words left in the Persian UI; screenshots only for
 pages with findings.
 
+## Reminder bell and dashboard widgets  (`./run_all.sh widgets`)
+Module `modules/SamenWidgets` (vtlib extension):
+- **Bell** at the top-left of the header (floating on phones) with the number of the user's tasks/events whose time is up
+  (overdue + due today); the panel lists them. Vtiger's reminder pop-ups, which floated over the right-hand menu,
+  are collected into the bell instead.
+- **Dashboard widgets** (Home › افزودن ابزارک, placed at the top of every user's default tab on install): کارهای بدون
+  زمان باقی‌مانده, Jalali mini calendar (days with open work marked), and charts with bundled Chart.js 4.4.4 –
+  students by level (doughnut), country (pie), gender, top universities / majors (horizontal bars), profile
+  completeness (bar), task/event status (polar area), open work in the next 14 days (bar + trend line), files and
+  activities over 12 Jalali months (line), admission status. Admins see all data, other users their own records.
+
 ## Help and academy  (`./run_all.sh academy`)
 Module `modules/SamenAcademy` (vtlib extension, menu **Marketing / Sales / Tools › آکادمی SamenCRM**):
 - **«راهنما» on every page** (top bar; floating button on phones; keys `?` / `F1`): what the page is for, step-by-step

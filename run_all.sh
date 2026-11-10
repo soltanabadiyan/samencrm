@@ -7,6 +7,7 @@
 #   ./run_all.sh import --limit 20   # test import of first 20 contacts
 #   ./run_all.sh details    # add derived details (city/country, WhatsApp, operator, title, completeness) to contacts
 #   ./run_all.sh persian    # build + install fa_ir pack, PersianCalendar (Jalali) and SamenTheme (skin/RTL/login), users -> Persian
+#   ./run_all.sh widgets    # SamenWidgets: header bell (due tasks/events) + dashboard widgets (calendar, charts)
 #   ./run_all.sh academy    # SamenAcademy: "راهنما" button on every page + courses/wiki (modules/SamenAcademy)
 #
 # Env overrides:  SSH_TARGET=root@212.33.206.241  SSH_PORT=9080  DIRECT_IF=auto|wlp5s0|none   XLS_DIR=...   VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz
@@ -83,6 +84,14 @@ case "$cmd" in
     scp -q "$HERE/i18n/dist/Persian_fa_ir.zip" "$HERE/modules/PersianCalendar/dist/PersianCalendar.zip" "$HERE/modules/SamenTheme/dist/SamenTheme.zip" \
         "$HERE/i18n/install_persian.php" "$HERE/i18n/translate_workflows.php" "$SSH_TARGET:$REMOTE_KIT/ss/"
     ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss && $SUDO cp $REMOTE_KIT/ss/Persian_fa_ir.zip $REMOTE_KIT/ss/PersianCalendar.zip $REMOTE_KIT/ss/SamenTheme.zip $REMOTE_KIT/ss/install_persian.php $REMOTE_KIT/ss/translate_workflows.php /opt/vtiger/ss/ && cd /opt/vtiger && $SUDO docker compose exec -T web sh -c 'php /opt/ss/install_persian.php /opt/ss/Persian_fa_ir.zip /opt/ss/PersianCalendar.zip /opt/ss/SamenTheme.zip ${PERSIAN_ARGS:---all-users} && chown -R www-data:www-data /var/www/html/languages /var/www/html/modules/PersianCalendar /var/www/html/layouts/v7/modules/PersianCalendar /var/www/html/modules/SamenTheme /var/www/html/layouts/v7/modules/SamenTheme /var/www/html/layouts/v7/custom_skins /var/www/html/layouts/v7/modules/Users/Login.tpl /var/www/html/layouts/v7/modules/Vtiger/Footer.tpl /var/www/html/layouts/v7/modules/Reports/PrintReport.tpl /var/www/html/libraries/bootstrap-legacy /var/www/html/test/logo /var/www/html/test/templates_c /var/www/html/user_privileges /var/www/html/config.inc.php'" ;;
+  widgets)
+    # SamenWidgets: reminder bell in the header + dashboard widgets (modules/SamenWidgets)
+    bash "$HERE/modules/SamenWidgets/build.sh"
+    WG="$HERE/modules/SamenWidgets"
+    ssh "$SSH_TARGET" "rm -rf $REMOTE_KIT/widgets && mkdir -p $REMOTE_KIT/widgets"
+    scp -q "$WG/dist/SamenWidgets.zip" "$WG/tools/install_widgets.php" "$SSH_TARGET:$REMOTE_KIT/widgets/"
+    ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss/widgets && $SUDO cp $REMOTE_KIT/widgets/* /opt/vtiger/ss/widgets/ && cd /opt/vtiger && \
+      $SUDO docker compose exec -T web sh -c 'php /opt/ss/widgets/install_widgets.php /opt/ss/widgets/SamenWidgets.zip && chown -R www-data:www-data /var/www/html/modules/SamenWidgets /var/www/html/layouts/v7/modules/SamenWidgets /var/www/html/languages user_privileges tabdata.php parent_tabdata.php'" ;;
   academy)
     # SamenAcademy: "راهنما" on every page + training courses (modules/SamenAcademy)
     bash "$HERE/modules/SamenAcademy/build.sh"

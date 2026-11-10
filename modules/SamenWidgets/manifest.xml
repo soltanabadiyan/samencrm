@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<module>
+	<name>SamenWidgets</name>
+	<label>SamenCRM Widgets</label>
+	<parent></parent>
+	<type>extension</type>
+	<version>1.0.4</version>
+	<dependencies>
+		<vtiger_version>7.0.0</vtiger_version>
+		<vtiger_max_version>8.*</vtiger_max_version>
+	</dependencies>
+	<license>
+		<inline><![CDATA[SamenCRM widgets – reminder bell in the header and dashboard widgets (due tasks/events, Jalali mini
+calendar, charts). Bundles Chart.js 4.4.4 (MIT, (c) Chart.js Contributors).]]></inline>
+	</license>
+</module>
