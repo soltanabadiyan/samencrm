@@ -82,6 +82,18 @@ case "$cmd" in
     scp -q "$HERE/i18n/dist/Persian_fa_ir.zip" "$HERE/modules/PersianCalendar/dist/PersianCalendar.zip" "$HERE/modules/SamenTheme/dist/SamenTheme.zip" \
         "$HERE/i18n/install_persian.php" "$SSH_TARGET:$REMOTE_KIT/ss/"
     ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss && $SUDO cp $REMOTE_KIT/ss/Persian_fa_ir.zip $REMOTE_KIT/ss/PersianCalendar.zip $REMOTE_KIT/ss/SamenTheme.zip $REMOTE_KIT/ss/install_persian.php /opt/vtiger/ss/ && cd /opt/vtiger && $SUDO docker compose exec -T web sh -c 'php /opt/ss/install_persian.php /opt/ss/Persian_fa_ir.zip /opt/ss/PersianCalendar.zip /opt/ss/SamenTheme.zip ${PERSIAN_ARGS:---all-users} && chown -R www-data:www-data /var/www/html/languages /var/www/html/modules/PersianCalendar /var/www/html/layouts/v7/modules/PersianCalendar /var/www/html/modules/SamenTheme /var/www/html/layouts/v7/modules/SamenTheme /var/www/html/layouts/v7/custom_skins /var/www/html/layouts/v7/modules/Users/Login.tpl /var/www/html/test/logo /var/www/html/test/templates_c /var/www/html/user_privileges /var/www/html/config.inc.php'" ;;
+  telegram)
+    # TelegramBot module: build the vtlib zip, back up the DB, install/update it, minute cron on the host
+    bash "$HERE/modules/TelegramBot/build.sh"
+    TG="$HERE/modules/TelegramBot"
+    ssh "$SSH_TARGET" "rm -rf $REMOTE_KIT/telegram && mkdir -p $REMOTE_KIT/telegram"
+    scp -q "$TG/dist/TelegramBot.zip" "$TG/tools/install_telegram.php" "$TG/tools/cron_tick.sh" \
+        "$TG/tests/mock_telegram.php" "$TG/tests/e2e_test.php" "$TG/tests/run_tests.sh" "$SSH_TARGET:$REMOTE_KIT/telegram/"
+    ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss/telegram && $SUDO cp $REMOTE_KIT/telegram/* /opt/vtiger/ss/telegram/ && $SUDO chmod +x /opt/vtiger/ss/telegram/*.sh && cd /opt/vtiger && set -a && . ./.env && set +a && \
+      $SUDO docker compose exec -T db mariadb-dump -uroot -p\$DB_ROOT_PASSWORD --single-transaction \$DB_NAME | gzip > backups/pre_telegram_\$(date +%F_%H%M).sql.gz && echo 'DB backup done' && \
+      $SUDO docker compose exec -T web sh -c 'cd /var/www/html && php /opt/ss/telegram/install_telegram.php /opt/ss/telegram/TelegramBot.zip && mkdir -p storage/TelegramBot && chown -R www-data:www-data modules/TelegramBot layouts/v7/modules/TelegramBot languages cron/modules/TelegramBot storage/TelegramBot user_privileges tabdata.php parent_tabdata.php' && \
+      echo '* * * * * root /opt/vtiger/ss/telegram/cron_tick.sh' | $SUDO tee /etc/cron.d/samencrm-telegram > /dev/null && $SUDO chmod 644 /etc/cron.d/samencrm-telegram && echo 'host cron: /etc/cron.d/samencrm-telegram'"
+    if [ "${1:-}" = test ]; then ssh "$SSH_TARGET" "$SUDO sh /opt/vtiger/ss/telegram/run_tests.sh"; fi ;;
   migrate-fa)
     # one-time: rename English labels of the 2026-11-10 import to Persian (needs output/dataset.en_labels.json)
     ssh "$SSH_TARGET" "cat /opt/vtiger/ss/import_state.json" > "$OUT/import_state.json"

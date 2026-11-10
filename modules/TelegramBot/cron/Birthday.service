@@ -1,0 +1,5 @@
+<?php
+/* TelegramBot cron task: once a day (after the configured hour) queue birthday messages. */
+require_once 'modules/TelegramBot/lib/Service.php';
+$tgN = TelegramBot_Service::runBirthdays();
+echo "\nTelegramBot birthdays queued: $tgN\n";

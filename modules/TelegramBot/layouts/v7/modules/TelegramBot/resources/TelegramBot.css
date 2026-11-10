@@ -1,0 +1,38 @@
+/* TelegramBot – SamenCRM. Uses the Vtiger/Bootstrap classes; colours follow the SamenTheme palette when present. */
+.tg-page { padding: 15px 20px; }
+.tg-page-head h3 { margin-top: 5px; }
+.tg-head-stats .label { font-size: 12px; font-weight: normal; padding: 5px 8px; }
+.tg-tab-content { padding-top: 15px; }
+.tg-table td, .tg-table th { vertical-align: middle !important; }
+.tg-table .nowrap, .tg-page .nowrap { white-space: nowrap; }
+.tg-ellipsis { max-width: 360px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tg-compose textarea.tg-body { resize: vertical; white-space: pre-wrap; }
+.tg-compose .tg-counter { margin: 2px 0 0; font-size: 11px; }
+.tg-modal .modal-body { max-height: 70vh; overflow-y: auto; }
+
+/* campaign status */
+.label.tg-cst-scheduled { background: #7D4F2E; }
+.label.tg-cst-queued, .label.tg-cst-expanding { background: #13606F; }
+.label.tg-cst-done { background: #2e8b57; }
+.label.tg-cst-cancelled { background: #999; }
+.label.tg-cst-failed { background: #c9302c; }
+tr.tg-row-failed td { background: #fff4f4; }
+
+/* conversation */
+.tg-history { padding: 15px 10px; }
+.tg-history .tg-side .panel-body { padding: 10px; }
+.tg-thread { background: #eef3f4; border: 1px solid #dde5e7; border-radius: 6px; padding: 10px; max-height: 520px; overflow-y: auto; margin-bottom: 12px; }
+.tg-msg { display: flex; margin: 6px 0; }
+.tg-msg.tg-out { justify-content: flex-end; }
+.tg-msg.tg-in { justify-content: flex-start; }
+.tg-bubble { max-width: 75%; padding: 7px 10px 5px; border-radius: 10px; box-shadow: 0 1px 1px rgba(0,0,0,.08); background: #fff; }
+.tg-out .tg-bubble { background: #d9f0f3; border: 1px solid #b9dfe5; }
+.tg-in .tg-bubble { background: #fff; border: 1px solid #e3e3e3; }
+.tg-st-failed .tg-bubble { border-color: #e4a0a0; background: #fdeeee; }
+.tg-st-queued .tg-bubble, .tg-st-sending .tg-bubble { opacity: .75; }
+.tg-text { white-space: pre-wrap; word-wrap: break-word; unicode-bidi: plaintext; }
+.tg-meta { font-size: 10.5px; color: #888; margin-top: 3px; text-align: end; }
+.tg-error { color: #c9302c; }
+.tg-media-item img { max-width: 260px; max-height: 220px; border-radius: 6px; display: block; margin-bottom: 4px; }
+.tg-empty { padding: 30px; text-align: center; }
+.related-tabs li.tg-tab .fa-telegram { color: #229ED9; }

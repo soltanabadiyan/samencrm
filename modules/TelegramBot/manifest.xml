@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<module>
+	<name>TelegramBot</name>
+	<label>Telegram</label>
+	<parent>Marketing</parent>
+	<type>extension</type>
+	<version>1.0.0</version>
+	<dependencies>
+		<vtiger_version>7.0.0</vtiger_version>
+		<vtiger_max_version>8.*</vtiger_max_version>
+	</dependencies>
+	<license>
+		<inline><![CDATA[SamenCRM – Telegram Bot API messaging for Vtiger CRM (contacts linking, bulk/scheduled/birthday messages, conversation history).]]></inline>
+	</license>
+</module>

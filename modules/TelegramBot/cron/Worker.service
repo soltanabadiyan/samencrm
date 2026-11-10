@@ -1,0 +1,5 @@
+<?php
+/* TelegramBot cron task (vtigercron.php, every run): getUpdates polling + scheduled campaigns + send queue. */
+require_once 'modules/TelegramBot/lib/Service.php';
+$tgStats = TelegramBot_Service::runWorker();
+echo "\nTelegramBot worker: " . json_encode($tgStats, JSON_UNESCAPED_UNICODE) . "\n";

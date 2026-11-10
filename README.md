@@ -33,6 +33,7 @@ cd /home/morteza/Desktop/projesct/hashemz/codes
 ./run_all.sh install                    # 2. docker stack on the server + automated web installer
 ./run_all.sh import --limit 20          # 3a. optional test import of 20 contacts
 ./run_all.sh import                     # 3b. full import (resumable; re-running skips what exists)
+./run_all.sh telegram                   # Telegram module (see below)
 ```
 If you SSH as `morteza`: `SSH_TARGET=morteza@212.33.206.241` (needs passwordless sudo, or log in as root).
 If the server cannot reach SourceForge, download `vtigercrm8.4.0.tar.gz` on your PC and run
@@ -82,6 +83,31 @@ sub-menu, dropdowns, quick-create, date picker, calendar, settings…) on 1440px
 `tools/contact_sheet.py` turns the screenshots into review sheets. Needs `ssh -D 19080 hashemz_crm` and
 `SESSION=$(tools/get_session.sh)`.
 
+## Telegram messaging  (`./run_all.sh telegram`)
+Module `modules/TelegramBot` (vtlib extension, menu **Marketing > تلگرام**, settings in **Settings > Extensions > ربات تلگرام**).
+Uses the Telegram **Bot API** (bot from @BotFather). `./run_all.sh telegram` builds `dist/TelegramBot.zip`, backs up the DB to
+`/opt/vtiger/backups/pre_telegram_*.sql.gz`, installs/updates the module and adds the host cron `/etc/cron.d/samencrm-telegram`;
+`./run_all.sh telegram test` also runs the end-to-end test against a mock Bot API (62 checks, cleans up after itself).
+
+* **Bots**: one or more tokens, stored only in the CRM DB (`vtiger_telegrambot_bots`), shown masked. Never put tokens in git.
+* **api.telegram.org is blocked from the server** (connection refused, checked 2026-11-10). Set a proxy in the settings
+  (`socks5h://user:pass@host:port` or `http://host:port`) or a reverse-proxy *Bot API address* (e.g. a Cloudflare Worker that forwards
+  `/bot…` and `/file/bot…` to api.telegram.org). "Test connection" checks it. Without one, nothing can be sent or received.
+* **Linking students**: each contact has a personal link `https://t.me/<bot>?start=c<id>_<random>` (Telegram tab of the contact, copy
+  button) – pressing Start links the chat. Students who just open the bot are asked to share their phone number (contact button); it is
+  matched on the last 10 digits of mobile/phone/other phone/WhatsApp (only if exactly one contact matches). `/stop` = opt-out, `/start` again = opt-in.
+* **Sending**: Contact detail view button "ارسال تلگرام" and the **Telegram tab** (conversation with media, link status, opt-out, quick reply);
+  Contacts list > More > "ارسال تلگرام" for the selection; module page for bulk sends by tag, group (level), saved list, picklist value
+  (level/university/major/…), missing information, or all linked contacts. Text, photo, file, video, audio (upload or a Vtiger Document) with caption,
+  templates with merge fields (`$firstname$ $lastname$ $major$ $university$ $level$ $deeplink$` or any `$cf_…$` field), preview.
+* **Scheduling**: "Schedule" with the (Jalali) date picker + time; **birthday messages** once a day at the configured hour (settings).
+* **Queue**: Vtiger cron task "TelegramBot Worker" (`cron/modules/TelegramBot/Worker.service`) polls `getUpdates` (no webhook needed),
+  expands due campaigns and sends with rate limiting (default 25 msg/s, ≥1 s per chat), retries 429 (retry_after) / network / 5xx with backoff
+  (max attempts), marks 403 as blocked. The cron container only runs every 15 min, so the host cron runs that task every minute.
+  "Birthdays" is a second task (every 15 min, sends once a day). Media is uploaded once per send and reused by file_id.
+* Tables: `vtiger_telegrambot_{bots,settings,links,deeplinks,messages,campaigns,templates}`; files in `storage/TelegramBot/{in,out}`.
+  Emoji are stored as `&#x…;` entities because the Vtiger DB connection is utf8 (3-byte).
+
 ## What gets imported
 * **Contacts: 5,995** (9,536 source rows from 23 files / 36 sheets; 8 byte-identical duplicate sheets dropped, rows for the
   same person merged by passport number, then full name (3+ words), then phone). Names stay Persian/Arabic.
@@ -129,6 +155,7 @@ data/fa_labels.py, location.py, enrich.py  Persian data labels; city/country; de
 i18n/                         fa_ir language pack + install_persian.php
 modules/PersianCalendar       Jalali calendar extension
 modules/SamenTheme            custom skin + brand (samencloud.ir)
+modules/TelegramBot           Telegram Bot API messaging (build.sh, tools/install_telegram.php, tests/)
 tools/direct_proxy.py         SSH ProxyCommand that bypasses the VPN
 deploy/                       docker-compose, Dockerfile (php-apache + MariaDB + cron), install.sh, auto_install.sh, post_install.sh
 output/                       generated dataset, students.csv, report.txt, raw_archive.json
