@@ -1,0 +1,612 @@
+[
+	{
+		"id": "tour-overview",
+		"path": "index.php?module=Contacts&view=List&app=MARKETING",
+		"marks": [
+			".app-navigator",
+			".search-link",
+			"#menubar_quickCreate",
+			".fa-calendar",
+			"#samenHelpBtn",
+			".module-breadcrumb",
+			".module-action-bar .navbar-nav button",
+			".sidebar-essentials",
+			"table.listview-table",
+			".app-footer"
+		]
+	},
+	{
+		"id": "tour-menu",
+		"path": "index.php?module=Contacts&view=List&app=MARKETING",
+		"setup": "(async()=>{jQuery('.app-icon').first().trigger('click');await new Promise(r=>setTimeout(r,700));jQuery('.app-modules-dropdown-container').filter((i,e)=>/MARKETING/.test(e.outerHTML.slice(0,400))).first().trigger('mouseenter');await new Promise(r=>setTimeout(r,600));})()",
+		"marks": [
+			".app-menu .app-item",
+			".app-modules-dropdown",
+			{
+				"text": "آکادمی",
+				"sel": ".app-modules-dropdown a"
+			},
+			{
+				"text": "تنظیمات",
+				"sel": ".app-menu .menu-item, .app-menu a"
+			}
+		]
+	},
+	{
+		"id": "tour-mobile",
+		"path": "index.php?module=Contacts&view=List",
+		"viewport": "mobile",
+		"marks": [
+			".app-navigator",
+			".search-link, .fa-search",
+			".samen-help-fab",
+			".module-breadcrumb",
+			".essentials-toggle, .module-action-bar .fa-ellipsis-v"
+		]
+	},
+	{
+		"id": "contacts-list",
+		"path": "index.php?module=Contacts&view=List&app=MARKETING",
+		"marks": [
+			{
+				"sel": "table.listview-table thead th",
+				"nth": 1
+			},
+			"tr.searchRow",
+			".lists-menu",
+			".sidebar-essentials .tag",
+			"tr.listViewEntries",
+			".listview-actions-container",
+			".pageNumbers",
+			{
+				"sel": "tr.listViewEntries input[type=checkbox]"
+			}
+		]
+	},
+	{
+		"id": "contacts-mass",
+		"path": "index.php?module=Contacts&view=List&app=MARKETING",
+		"setup": "(async()=>{const c=[...document.querySelectorAll('tr.listViewEntries input.listViewEntriesCheckBox')].slice(0,3);c.forEach(x=>x.click());await new Promise(r=>setTimeout(r,600));})()",
+		"marks": [
+			{
+				"sel": "tr.listViewEntries input.listViewEntriesCheckBox"
+			},
+			".listview-actions-container .btn-group",
+			{
+				"text": "بیشتر",
+				"sel": ".listview-actions-container button, .listview-actions-container a"
+			}
+		]
+	},
+	{
+		"id": "contacts-filter",
+		"path": "index.php?module=Contacts&view=List&app=MARKETING",
+		"setup": "(async()=>{const a=document.querySelector('.sidebar-essentials .lists-header .fa-plus, .sidebar-essentials [data-url*=CustomView], .sidebar-essentials .addFilter');a&&a.click();await new Promise(r=>setTimeout(r,2500));})()",
+		"marks": [
+			{
+				"sel": "input[name=viewname]"
+			},
+			{
+				"text": "شرایط",
+				"sel": ".modal h4, .modal label, .modal .blockHeader, .modal span"
+			},
+			{
+				"sel": ".modal .conditionList, .modal .filterContainer, .modal .allConditionContainer"
+			},
+			{
+				"sel": ".modal button[type=submit], .modal .btn-success"
+			}
+		]
+	},
+	{
+		"id": "profile-summary",
+		"path": "index.php?module=Contacts&view=Detail&record=2&app=MARKETING",
+		"marks": [
+			".recordLabel",
+			"#Contacts_detailView_basicAction_LBL_EDIT",
+			{
+				"text": "ارسال تلگرام",
+				"sel": ".detailViewButtoncontainer .btn"
+			},
+			{
+				"text": "بیشتر",
+				"sel": ".detailViewButtoncontainer .btn, .detailViewButtoncontainer button"
+			},
+			".tagContainer, .detail-tags",
+			".related-tabs",
+			".summaryView",
+			".activitiesContainer, #relatedActivities",
+			".commentContainer, .widgetContainer_comments"
+		]
+	},
+	{
+		"id": "profile-details",
+		"path": "index.php?module=Contacts&view=Detail&record=2&mode=showDetailViewByMode&requestMode=full&app=MARKETING",
+		"height": 1400,
+		"marks": [
+			{
+				"text": "اطلاعات پایه",
+				"sel": ".block h4, .blockHeader, h4"
+			},
+			{
+				"label": "تلفن همراه"
+			},
+			{
+				"label": "مسئول"
+			},
+			{
+				"text": "مشخصات دانشجو",
+				"sel": ".block h4, .blockHeader, h4"
+			},
+			{
+				"label": "مقطع"
+			},
+			{
+				"label": "دانشگاه"
+			},
+			{
+				"label": "رشته"
+			}
+		]
+	},
+	{
+		"id": "profile-tabs",
+		"path": "index.php?module=Contacts&view=Detail&record=2&app=MARKETING",
+		"marks": [
+			{
+				"text": "خلاصه",
+				"sel": ".related-tabs li, .related-tabs a"
+			},
+			{
+				"text": "جزئیات",
+				"sel": ".related-tabs li, .related-tabs a"
+			},
+			{
+				"text": "به‌روزرسانی",
+				"sel": ".related-tabs li, .related-tabs a"
+			},
+			{
+				"text": "تلگرام",
+				"sel": ".related-tabs li, .related-tabs a"
+			},
+			{
+				"text": "بیشتر",
+				"sel": ".related-tabs li, .related-tabs a, .related-tabs .dropdown-toggle"
+			}
+		]
+	},
+	{
+		"id": "profile-mobile",
+		"path": "index.php?module=Contacts&view=Detail&record=2",
+		"viewport": "mobile",
+		"marks": [
+			".recordLabel",
+			{
+				"text": "ارسال تلگرام",
+				"sel": ".btn"
+			},
+			".tagContainer, .detail-tags",
+			".summaryView, .summaryViewFields"
+		]
+	},
+	{
+		"id": "contact-edit",
+		"path": "index.php?module=Contacts&view=Edit&record=2&app=MARKETING",
+		"height": 1100,
+		"marks": [
+			{
+				"label": "نام"
+			},
+			{
+				"label": "نام خانوادگی"
+			},
+			{
+				"label": "تلفن همراه"
+			},
+			{
+				"label": "منبع سرنخ"
+			},
+			{
+				"label": "ایمیل اصلی"
+			},
+			{
+				"label": "تاریخ تولد"
+			},
+			{
+				"label": "مسئول"
+			},
+			{
+				"sel": ".editViewPageDiv .btn-success, .modal-overlay-footer .btn-success, button[type=submit]"
+			}
+		]
+	},
+	{
+		"id": "contact-edit-student",
+		"path": "index.php?module=Contacts&view=Edit&record=2&app=MARKETING",
+		"height": 1100,
+		"setup": "(async()=>{const h=[...document.querySelectorAll('h4, .blockHeader')].find(e=>/مشخصات دانشجو/.test(e.textContent));h&&h.scrollIntoView({block:'start'});window.scrollBy(0,-110);})()",
+		"marks": [
+			{
+				"label": "شماره پاسپورت"
+			},
+			{
+				"label": "نام کامل (لاتین)"
+			},
+			{
+				"label": "جنسیت"
+			},
+			{
+				"label": "ملیت"
+			},
+			{
+				"label": "کد سااورگ"
+			},
+			{
+				"label": "مقطع"
+			},
+			{
+				"label": "دانشگاه"
+			},
+			{
+				"label": "رشته"
+			}
+		]
+	},
+	{
+		"id": "datepicker",
+		"path": "index.php?module=Contacts&view=Edit&record=2&app=MARKETING",
+		"setup": "(async()=>{const i=[...document.querySelectorAll('.fieldLabel')].find(e=>/تاریخ تولد/.test(e.textContent));const p=i&&i.nextElementSibling&&i.nextElementSibling.querySelector('.pc-jalali-input');p&&p.scrollIntoView({block:'center'});p&&p.focus();p&&p.click();await new Promise(r=>setTimeout(r,900));})()",
+		"marks": [
+			{
+				"label": "تاریخ تولد",
+				"only": true
+			},
+			".pc-head",
+			".pc-grid",
+			".pc-foot"
+		]
+	},
+	{
+		"id": "calendar-week",
+		"path": "index.php?module=Calendar&view=Calendar&app=MARKETING",
+		"marks": [
+			".fc-toolbar .fc-left, .fc-toolbar .fc-right",
+			".fc-today-button",
+			".fc-toolbar h2",
+			{
+				"text": "افزودن رویداد",
+				"sel": "button"
+			},
+			{
+				"text": "افزودن وظیفه",
+				"sel": "button"
+			},
+			".sidebar-essentials, #calendarview-feeds, .calendar-sidebar-tabs"
+		]
+	},
+	{
+		"id": "calendar-mobile",
+		"path": "index.php?module=Calendar&view=Calendar",
+		"viewport": "mobile",
+		"marks": [
+			".fc-toolbar",
+			{
+				"text": "افزودن رویداد",
+				"sel": "button"
+			},
+			{
+				"text": "افزودن وظیفه",
+				"sel": "button"
+			}
+		]
+	},
+	{
+		"id": "task-edit",
+		"path": "index.php?module=Calendar&view=Edit&app=MARKETING",
+		"marks": [
+			{
+				"label": "موضوع"
+			},
+			{
+				"label": "مسئول"
+			},
+			{
+				"label": "تاریخ و زمان شروع"
+			},
+			{
+				"label": "تاریخ سررسید"
+			},
+			{
+				"label": "نام مخاطب"
+			},
+			{
+				"label": "وضعیت"
+			},
+			{
+				"label": "اولویت"
+			},
+			{
+				"label": "ارسال اعلان"
+			}
+		]
+	},
+	{
+		"id": "event-edit",
+		"path": "index.php?module=Calendar&view=Edit&mode=Events&app=MARKETING",
+		"height": 1500,
+		"marks": [
+			{
+				"label": "موضوع"
+			},
+			{
+				"label": "تاریخ و زمان شروع"
+			},
+			{
+				"label": "نوع فعالیت"
+			},
+			{
+				"label": "ارسال یادآوری"
+			},
+			{
+				"label": "تکرار"
+			},
+			{
+				"label": "نام مخاطب"
+			},
+			{
+				"label": "دعوت از کاربران"
+			}
+		]
+	},
+	{
+		"id": "tasks-list",
+		"path": "index.php?module=Calendar&view=List&app=MARKETING",
+		"marks": [
+			{
+				"sel": "table.listview-table thead th",
+				"nth": 1
+			},
+			"tr.searchRow",
+			{
+				"sel": "tr.listViewEntries"
+			},
+			{
+				"sel": "tr.listViewEntries .markAsHeld, tr.listViewEntries .fa-check"
+			}
+		]
+	},
+	{
+		"id": "tags",
+		"path": "index.php?module=Contacts&view=Detail&record=2&app=MARKETING",
+		"setup": "(async()=>{const a=[...document.querySelectorAll('a,button,span')].find(e=>/افزودن برچسب/.test(e.textContent)&&e.offsetWidth);a&&a.click();await new Promise(r=>setTimeout(r,900));})()",
+		"marks": [
+			".tagContainer, .detail-tags",
+			{
+				"text": "برچسب‌های فعلی",
+				"sel": "label, .fieldLabel, div"
+			},
+			{
+				"text": "ایجاد برچسب جدید",
+				"sel": "label, .fieldLabel, div"
+			}
+		]
+	},
+	{
+		"id": "documents-list",
+		"path": "index.php?module=Documents&view=List&app=MARKETING",
+		"marks": [
+			".module-action-bar .navbar-nav button",
+			".sidebar-essentials",
+			"table.listview-table"
+		]
+	},
+	{
+		"id": "reports-list",
+		"path": "index.php?module=Reports&view=List",
+		"marks": [
+			".module-action-bar .navbar-nav button, .module-action-bar .btn",
+			".sidebar-essentials",
+			{
+				"sel": "tr.listViewEntries"
+			}
+		]
+	},
+	{
+		"id": "telegram-compose",
+		"path": "index.php?module=TelegramBot&view=Index&app=MARKETING",
+		"height": 1250,
+		"marks": [
+			".tg-page .nav-tabs",
+			".tg-head-stats",
+			{
+				"text": "انتخاب گیرندگان",
+				"sel": "label"
+			},
+			{
+				"text": "شمارش گیرندگان",
+				"sel": "button"
+			},
+			{
+				"text": "قالب پیام",
+				"sel": "label"
+			},
+			{
+				"text": "متن پیام",
+				"sel": "label"
+			},
+			{
+				"text": "پیوست",
+				"sel": "label"
+			},
+			{
+				"text": "زمان",
+				"sel": "label"
+			},
+			{
+				"text": "ارسال",
+				"sel": "button.btn-primary, button.btn-success"
+			}
+		]
+	},
+	{
+		"id": "telegram-settings",
+		"path": "index.php?module=TelegramBot&view=Settings",
+		"height": 1100,
+		"marks": [
+			".module-breadcrumb",
+			{
+				"text": "ربات‌ها",
+				"sel": ".panel-heading"
+			},
+			".tg-bot-form",
+			{
+				"text": "اتصال",
+				"sel": ".panel-heading"
+			},
+			{
+				"text": "پراکسی",
+				"sel": "label"
+			},
+			{
+				"text": "آزمایش اتصال",
+				"sel": "button"
+			}
+		]
+	},
+	{
+		"id": "help-panel",
+		"path": "index.php?module=Contacts&view=Detail&record=2&app=MARKETING",
+		"setup": "(async()=>{document.querySelector('#samenHelpBtn').click();await new Promise(r=>setTimeout(r,1800));})()",
+		"marks": [
+			".sh-head",
+			".sh-lead",
+			{
+				"sel": ".sh-sec"
+			},
+			{
+				"sel": ".sh-sec",
+				"nth": 1
+			}
+		]
+	},
+	{
+		"id": "help-mobile",
+		"path": "index.php?module=Contacts&view=List",
+		"viewport": "mobile",
+		"setup": "(async()=>{document.querySelector('#samenHelpBtn').click();await new Promise(r=>setTimeout(r,1800));})()",
+		"marks": [
+			".sh-head",
+			".sh-lead"
+		]
+	},
+	{
+		"id": "field-guide",
+		"path": "index.php?module=Contacts&view=Edit&record=2&app=MARKETING",
+		"setup": "(async()=>{document.querySelector('#samenHelpBtn').click();await new Promise(r=>setTimeout(r,1800));document.querySelector('.sh-mark').click();await new Promise(r=>setTimeout(r,600));const l=[...document.querySelectorAll('.fieldLabel.sh-has')].find(e=>/تلفن همراه/.test(e.textContent));l&&l.dispatchEvent(new Event('mouseenter'));await new Promise(r=>setTimeout(r,300));})()",
+		"marks": [
+			{
+				"label": "تلفن همراه",
+				"only": true
+			},
+			".sh-tip",
+			".sh-markbar"
+		]
+	},
+	{
+		"id": "settings-home",
+		"path": "index.php?module=Vtiger&parent=Settings&view=Index",
+		"marks": [
+			".settingsgroup",
+			{
+				"text": "مدیریت کاربران",
+				"sel": ".settingsgroup a, .settingsgroup span"
+			},
+			{
+				"text": "افزونه‌ها",
+				"sel": ".settingsgroup a, .settingsgroup span"
+			},
+			".settingsPageDiv .row, .settingsSummary"
+		]
+	},
+	{
+		"id": "users-list",
+		"path": "index.php?module=Users&parent=Settings&view=List",
+		"marks": [
+			".module-action-bar .navbar-nav button, .module-action-bar .btn",
+			{
+				"sel": "tr.listViewEntries"
+			},
+			{
+				"text": "کاربران فعال",
+				"sel": "button, a, label"
+			}
+		]
+	},
+	{
+		"id": "workflows-list",
+		"path": "index.php?module=Workflows&parent=Settings&view=List",
+		"marks": [
+			".module-action-bar .navbar-nav button, .module-action-bar .btn",
+			{
+				"sel": "tr.listViewEntries"
+			},
+			{
+				"sel": ".bootstrap-switch, input[type=checkbox]"
+			}
+		]
+	},
+	{
+		"id": "layout-editor",
+		"path": "index.php?module=LayoutEditor&parent=Settings&view=Index&sourceModule=Contacts",
+		"marks": [
+			{
+				"sel": ".layoutEditorTabs, .nav-tabs"
+			},
+			{
+				"text": "افزودن فیلد",
+				"sel": "button"
+			},
+			{
+				"sel": ".blockSortable, .editFieldsTable, .block"
+			}
+		]
+	},
+	{
+		"id": "picklist",
+		"path": "index.php?module=Picklist&parent=Settings&view=Index",
+		"marks": [
+			{
+				"sel": "select, .select2-container"
+			},
+			{
+				"sel": "select, .select2-container",
+				"nth": 1
+			}
+		]
+	},
+	{
+		"id": "import-step1",
+		"path": "index.php?module=Contacts&view=Import",
+		"marks": [
+			{
+				"sel": "input[type=file]"
+			},
+			{
+				"text": "بعدی",
+				"sel": "button, .btn"
+			}
+		]
+	},
+	{
+		"id": "academy-home",
+		"path": "index.php?module=SamenAcademy&view=Index",
+		"wait": 3500,
+		"marks": [
+			".ac-nav",
+			".ac-hero",
+			{
+				"sel": ".ac-card"
+			}
+		]
+	}
+]

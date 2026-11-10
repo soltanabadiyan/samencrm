@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<module>
+	<name>SamenAcademy</name>
+	<label>SamenCRM Academy</label>
+	<parent></parent>
+	<type>extension</type>
+	<version>1.0.1</version>
+	<dependencies>
+		<vtiger_version>7.0.0</vtiger_version>
+		<vtiger_max_version>8.*</vtiger_max_version>
+	</dependencies>
+	<license>
+		<inline><![CDATA[SamenCRM Academy – in-app help ("راهنما" on every page) and training courses for SamenCRM users,
+sales staff and administrators (SamenStudent). Content in Persian.]]></inline>
+	</license>
+</module>

@@ -80,7 +80,11 @@
 		// scheduler task names (Settings > Scheduler): referenced by name in code, translated on screen only
 		'Workflow': 'گردش‌کار', 'RecurringInvoice': 'فاکتورهای تکراری', 'SendReminder': 'ارسال یادآوری‌ها', 'MailScanner': 'اسکنر ایمیل',
 		'Scheduled Import': 'ورود اطلاعات زمان‌بندی‌شده', 'ScheduleReports': 'گزارش‌های زمان‌بندی‌شده', 'Oauth2TokenRefresher': 'نوسازی توکن OAuth2',
-		'TelegramBot Worker': 'تلگرام: صف و دریافت پیام‌ها', 'TelegramBot Birthdays': 'تلگرام: پیام‌های تولد'
+		'TelegramBot Worker': 'تلگرام: صف و دریافت پیام‌ها', 'TelegramBot Birthdays': 'تلگرام: پیام‌های تولد',
+		// calendar settings / preferences values
+		'Today': 'امروز', 'This Week': 'این هفته', 'This Month': 'این ماه', 'Planned': 'برنامه‌ریزی‌شده', 'Held': 'برگزارشده',
+		'Not Held': 'برگزارنشده', 'Call': 'تماس', 'Meeting': 'جلسه', 'Minute': 'دقیقه', 'Minutes': 'دقیقه', 'Hours': 'ساعت',
+		'Saturday': 'شنبه', 'Sunday': 'یکشنبه', 'Monday': 'دوشنبه', 'Tuesday': 'سه‌شنبه', 'Wednesday': 'چهارشنبه', 'Thursday': 'پنجشنبه', 'Friday': 'جمعه'
 	};
 	// placeholders / titles Vtiger prints in English
 	var ATTR = { 'Search for List': 'جستجوی فهرست', 'Search for Folders': 'جستجوی پوشه‌ها', 'Search': 'جستجو',

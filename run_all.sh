@@ -7,6 +7,7 @@
 #   ./run_all.sh import --limit 20   # test import of first 20 contacts
 #   ./run_all.sh details    # add derived details (city/country, WhatsApp, operator, title, completeness) to contacts
 #   ./run_all.sh persian    # build + install fa_ir pack, PersianCalendar (Jalali) and SamenTheme (skin/RTL/login), users -> Persian
+#   ./run_all.sh academy    # SamenAcademy: "راهنما" button on every page + courses/wiki (modules/SamenAcademy)
 #
 # Env overrides:  SSH_TARGET=root@212.33.206.241  SSH_PORT=9080  DIRECT_IF=auto|wlp5s0|none   XLS_DIR=...   VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz
 set -euo pipefail
@@ -82,6 +83,14 @@ case "$cmd" in
     scp -q "$HERE/i18n/dist/Persian_fa_ir.zip" "$HERE/modules/PersianCalendar/dist/PersianCalendar.zip" "$HERE/modules/SamenTheme/dist/SamenTheme.zip" \
         "$HERE/i18n/install_persian.php" "$HERE/i18n/translate_workflows.php" "$SSH_TARGET:$REMOTE_KIT/ss/"
     ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss && $SUDO cp $REMOTE_KIT/ss/Persian_fa_ir.zip $REMOTE_KIT/ss/PersianCalendar.zip $REMOTE_KIT/ss/SamenTheme.zip $REMOTE_KIT/ss/install_persian.php $REMOTE_KIT/ss/translate_workflows.php /opt/vtiger/ss/ && cd /opt/vtiger && $SUDO docker compose exec -T web sh -c 'php /opt/ss/install_persian.php /opt/ss/Persian_fa_ir.zip /opt/ss/PersianCalendar.zip /opt/ss/SamenTheme.zip ${PERSIAN_ARGS:---all-users} && chown -R www-data:www-data /var/www/html/languages /var/www/html/modules/PersianCalendar /var/www/html/layouts/v7/modules/PersianCalendar /var/www/html/modules/SamenTheme /var/www/html/layouts/v7/modules/SamenTheme /var/www/html/layouts/v7/custom_skins /var/www/html/layouts/v7/modules/Users/Login.tpl /var/www/html/layouts/v7/modules/Vtiger/Footer.tpl /var/www/html/libraries/bootstrap-legacy /var/www/html/test/logo /var/www/html/test/templates_c /var/www/html/user_privileges /var/www/html/config.inc.php'" ;;
+  academy)
+    # SamenAcademy: "راهنما" on every page + training courses (modules/SamenAcademy)
+    bash "$HERE/modules/SamenAcademy/build.sh"
+    AC="$HERE/modules/SamenAcademy"
+    ssh "$SSH_TARGET" "rm -rf $REMOTE_KIT/academy && mkdir -p $REMOTE_KIT/academy"
+    scp -q "$AC/dist/SamenAcademy.zip" "$AC/tools/install_academy.php" "$SSH_TARGET:$REMOTE_KIT/academy/"
+    ssh "$SSH_TARGET" "$SUDO mkdir -p /opt/vtiger/ss/academy && $SUDO cp $REMOTE_KIT/academy/* /opt/vtiger/ss/academy/ && cd /opt/vtiger && \
+      $SUDO docker compose exec -T web sh -c 'php /opt/ss/academy/install_academy.php /opt/ss/academy/SamenAcademy.zip && chown -R www-data:www-data /var/www/html/modules/SamenAcademy /var/www/html/layouts/v7/modules/SamenAcademy /var/www/html/languages user_privileges tabdata.php parent_tabdata.php'" ;;
   telegram)
     # TelegramBot module: build the vtlib zip, back up the DB, install/update it, minute cron on the host
     bash "$HERE/modules/TelegramBot/build.sh"

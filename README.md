@@ -94,6 +94,22 @@ sub-menu, dropdowns, quick-create, date picker, calendar, settings…) on 1440px
 requests, PHP/Vtiger error text, horizontal overflow and English words left in the Persian UI; screenshots only for
 pages with findings.
 
+## Help and academy  (`./run_all.sh academy`)
+Module `modules/SamenAcademy` (vtlib extension, menu **Marketing / Sales / Tools › آکادمی SamenCRM**):
+- **«راهنما» on every page** (top bar; floating button on phones; keys `?` / `F1`): what the page is for, step-by-step
+  tasks, sales & marketing tips, common mistakes, and an explanation of every field on the page (`resources/help/pages.json`
+  per module:view, `resources/help/fields.json` per module by visible label). «نشان‌دادن راهنما روی فیلدها» marks
+  every field label on the page with its explanation.
+- **Academy** (`index.php?module=SamenAcademy&view=Index`): 5 courses / 39 lessons – getting started, SamenCRM for the
+  salesperson, admin, professional selling, marketing – with annotated screenshots, workflow diagrams, funnels,
+  checklists (progress kept per user in the browser), MathML formulas and calculators (CPL, CAC, LTV, ROI, ROAS,
+  payback, pipeline velocity, weighted forecast, NPS, retention, lead score, A/B z-test and sample size).
+- Lessons are generated from `modules/SamenAcademy/tools/lessons/*.py` (`python3 tools/lessons/build_all.py`).
+- Screenshots: `SESSION=$(tools/get_session.sh) node modules/SamenAcademy/tools/academy_shots.mjs [filter]`
+  (`tools/shots.json` = page + numbered markers). Every personal value on the page is replaced with invented sample data
+  before capture (`tools/page_tools.js`), and a shot is refused if any original value is still visible.
+  Review new images by eye before committing anyway.
+
 ## Telegram messaging  (`./run_all.sh telegram`)
 Module `modules/TelegramBot` (vtlib extension, menu **Marketing > تلگرام**, settings in **Settings > Extensions > ربات تلگرام**).
 Uses the Telegram **Bot API** (bot from @BotFather). `./run_all.sh telegram` builds `dist/TelegramBot.zip`, backs up the DB to
