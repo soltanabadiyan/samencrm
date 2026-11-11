@@ -1,0 +1,86 @@
+/* SamenTheme – first-login pages (Users/SystemSetup.tpl, Users/UserSetup.tpl): SamenCRM brand, Persian RTL, phone width */
+@font-face {
+	font-family: 'Shabnam';
+	src: url('fonts/Shabnam.ttf') format('truetype');
+	font-display: swap;
+}
+html.samen-setup {
+	--samen-teal-500: #13606F;
+	--samen-teal-700: #0F4B57;
+	--samen-bg: #F4F7FB;
+	--samen-border: #D1D5DB;
+	--samen-text: #1F2937;
+	--samen-muted: #6B7280;
+}
+/* the stock UserSetup body is a full-page screenshot of the vtiger dashboard */
+html.samen-setup body {
+	background: var(--samen-bg) url('img/shamseh.png') no-repeat !important;
+	background-position: left -60px bottom -60px !important;
+	background-size: 360px auto !important;
+	font-family: 'Shabnam', Tahoma, sans-serif !important;
+	color: var(--samen-text);
+	min-height: 100vh;
+	accent-color: var(--samen-teal-500);
+}
+html.samen-setup h1, html.samen-setup h2, html.samen-setup h3, html.samen-setup h4, html.samen-setup p,
+html.samen-setup label, html.samen-setup .btn, html.samen-setup input, html.samen-setup select,
+html.samen-setup .select2-container { font-family: inherit !important; }
+html.samen-setup .modal-backdrop { display: none; }
+
+/* ---- UserSetup: the preferences dialog becomes a centred card */
+html.samen-setup .container { width: auto; max-width: 560px; padding: 32px 16px; }
+html.samen-setup .samen-setup-brand { text-align: center; margin: 8px 0 18px; }
+html.samen-setup .samen-setup-brand img { height: 56px; width: auto; }
+html.samen-setup form > .modal {
+	position: static; display: block; width: auto; margin: 0; top: auto; left: auto;
+	background: #fff; border: 1px solid var(--samen-border); border-top: 4px solid var(--samen-teal-500);
+	border-radius: 14px; box-shadow: 0 18px 40px rgb(11 57 67 / .12); overflow: visible;
+}
+html.samen-setup .modal-header { border-bottom-color: #EEF2F6; padding: 16px 22px; }
+html.samen-setup .modal-header h3 { color: var(--samen-teal-700); font-weight: 700; font-size: 20px; margin: 0; }
+html.samen-setup .modal-body { max-height: none; overflow: visible; padding: 18px 22px; }
+html.samen-setup .modal-body .row { margin: 0; }
+html.samen-setup .modal-body [class*="span"] { float: none; width: auto; margin: 0; }
+html.samen-setup .modal-body .control-label strong { color: var(--samen-teal-700); }
+html.samen-setup .modal-body .muted { margin-inline-start: 6px; }
+html.samen-setup .modal-body select, html.samen-setup .modal-body .select2-container { width: 100% !important; max-width: 420px; }
+html.samen-setup .modal-footer { background: #F8FAFC; border-top-color: #EEF2F6; border-radius: 0 0 14px 14px; text-align: left; padding: 14px 22px; }
+
+/* ---- SystemSetup: feature cards */
+html.samen-setup .page-container { width: min(1100px, calc(100% - 32px)); min-width: 0; margin: 16px auto; }
+html.samen-setup .page-container .logo img { height: 52px; width: auto; }
+html.samen-setup .main-container { background: #fff; border: 1px solid var(--samen-border); border-top: 4px solid var(--samen-teal-500); border-radius: 14px;
+	box-shadow: 0 18px 40px rgb(11 57 67 / .10); }
+html.samen-setup .inner-container h3 { float: right !important; color: var(--samen-teal-700); font-weight: 700; }
+html.samen-setup .inner-container h3 + p { float: right !important; }
+html.samen-setup .row-fluid [class*="span"] { float: right; margin-left: 0; margin-right: 2.127659574%; }
+html.samen-setup .row-fluid [class*="span"]:first-child { margin-right: 0; }
+html.samen-setup .pull-right { float: left !important; }
+html.samen-setup .group-container { border-radius: 12px; border-color: var(--samen-border) !important; }
+html.samen-setup .group-heading h4 { color: var(--samen-teal-700); font-weight: 700; }
+html.samen-setup .module_list { left: 0; right: auto; border-radius: 0 12px 0 12px; background: var(--samen-teal-500) !important; }
+html.samen-setup .module_list a { color: #fff !important; }
+html.samen-setup .btn-primary, html.samen-setup .btn-success { background: var(--samen-teal-500) !important; border-color: var(--samen-teal-500) !important;
+	color: #fff !important; text-shadow: none; border-radius: 8px; padding: 8px 26px; font-weight: 600; }
+html.samen-setup .btn-primary:hover, html.samen-setup .btn-success:hover { background: var(--samen-teal-700) !important; }
+html.samen-setup .button-container { text-align: left; }
+/* stock: ".offset2 { left: 17% !important }" and the default-pack box floated right – both land on the title in RTL */
+html.samen-setup .offset2 { left: 0 !important; margin: 4px 0 !important; float: none !important; width: auto !important; text-align: center; color: var(--samen-muted); }
+html.samen-setup .group-heading .basicChkbox { float: left; }
+html.samen-setup .group-heading h4 { margin-inline-end: 8px; }
+
+/* select2 parks its closed lists at left:-10000px: in a right-to-left page that becomes scrollable space */
+html.samen-setup, html.samen-setup body { overflow-x: hidden; }
+
+@media (max-width: 767px) {
+	html.samen-setup .row-fluid [class*="span"] { float: none; width: 100%; margin: 0 0 12px; }
+	html.samen-setup .inner-container h3, html.samen-setup .inner-container h3 + p { float: none !important; display: block !important; }
+	html.samen-setup .page-container .logo img { height: 40px; }
+	/* feature cards: small picture beside the title, description below, room for the "ماژول‌ها" tab */
+	html.samen-setup .group-container { height: auto !important; min-height: 0 !important; overflow: visible; padding: 14px 14px 46px !important; }
+	html.samen-setup .group-container > .row-fluid > [class*="span"]:first-child { float: right; width: 64px; margin: 0 0 0 12px; }
+	html.samen-setup .group-container > .row-fluid > [class*="span"]:first-child img { width: 64px; height: auto; }
+	html.samen-setup .group-container > .row-fluid > [class*="span"] + [class*="span"] { float: none; width: auto; overflow: hidden; margin: 0; }
+	html.samen-setup .group-desc { min-height: 0; padding-bottom: 0; }
+	html.samen-setup .group-desc br { display: none; }
+}

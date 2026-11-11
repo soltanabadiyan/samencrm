@@ -164,6 +164,38 @@ function samen_templates_fa() {
 		$adb->pquery('UPDATE vtiger_emailtemplates SET body=? WHERE templateid=?', array($body, $row['templateid']));
 		$n['bodies']++;
 	}
+	// the twelve sample templates (Vtiger's English letters, vtiger.com addresses, "Powered By Vtiger"): Persian
+	// SamenCRM letters with the same merge fields. Only while the body is still the untouched English sample.
+	$wrap = function ($html) { return '<div dir="rtl" style="text-align:right;font-family:Tahoma,Arial,sans-serif;font-size:14px;line-height:1.9">' . $html . '</div>'; };
+	$dear = '<p>$contacts-firstname$ $contacts-lastname$ گرامی،</p>';
+	$sign = '<p>با سپاس و احترام،<br>$contacts-smownerid$</p>';
+	$bodies = array(
+		'Announcement for Release' => '<p>با سلام،</p><p>خوشحالیم که نسخه جدید خدمات خود را معرفی کنیم. در این نسخه امکانات تازه‌ای برای ارتباط بهتر با شما فراهم شده است:</p>'
+			. '<ul><li>[امکان اول]</li><li>[امکان دوم]</li><li>[امکان سوم]</li></ul><p>برای آشنایی بیشتر یا هر پرسشی با ما در تماس باشید.</p>' . $sign,
+		'Pending Invoices' => $dear . '<p>فاکتورهای زیر هنوز پرداخت نشده‌اند:</p><table border="1" cellpadding="6" style="border-collapse:collapse"><tr><th>ردیف</th><th>شماره فاکتور</th><th>تاریخ</th><th>مبلغ</th></tr><tr><td>۱</td><td></td><td></td><td></td></tr></table>'
+			. '<p>اگر موردی برای بررسی وجود دارد، خوشحال می‌شویم با شما تماس بگیریم. امیدواریم همکاری ما ادامه داشته باشد.</p>' . $sign,
+		'Acceptance Proposal' => $dear . '<p>پیشنهاد شما برای پروژه [نام پروژه] بررسی شد و به‌طور کامل مورد پذیرش است. از فرصت همکاری با شما خرسندیم و برای جلسه آغاز کار با شما هماهنگ خواهیم کرد.</p>' . $sign,
+		'Goods received acknowledgement' => '<p>بدین‌وسیله دریافت و تحویل کالاهای زیر تأیید می‌شود. پرداخت پس از اطمینان از سلامت و انطباق کالا انجام خواهد شد.</p><p>تاریخ: ……………… &nbsp; امضا: ………………</p>',
+		'Accept Order' => $dear . '<p>سفارش شما مطابق فرم خرید دریافت شد و برای هر دو طرف قطعی است. اگر اصلاحی لازم است، لطفاً حداکثر تا ده روز پس از دریافت این پیام اطلاع دهید.</p><p>از اعتماد شما سپاسگزاریم.</p>' . $sign,
+		'Address Change' => $dear . '<p>به اطلاع می‌رساند نشانی دفتر ما تغییر کرده است:</p><p>نشانی جدید: [نشانی]<br>تلفن: [شماره تلفن]</p><p>لطفاً اطلاعات تماس ما را در دفترچه نشانی خود به‌روز کنید.</p>' . $sign,
+		'Follow Up' => $dear . '<p>از فرصتی که برای دیدار با شما و همکارانتان فراهم کردید سپاسگزاریم. همان‌طور که در جلسه گفتیم، خدمات ما با همان کیفیت و دقت ادامه خواهد داشت و برای هر نیازی در کنار شما هستیم.</p>' . $sign,
+		'Target Crossed!' => '<p>تبریک!</p><p>فروش فصل گذشته از هدف تعیین‌شده فراتر رفت. این موفقیت حاصل تلاش همه شماست؛ از همراهی و کار گروهی همه همکاران سپاسگزاریم.</p>' . $sign,
+		'Thanks Note' => $dear . '<p>از اعتماد شما به ما سپاسگزاریم. خوشحالیم که فرصت خدمت به شما را داریم و امیدواریم همکاری بلندمدتی داشته باشیم. هر زمان نیازی بود، با ما تماس بگیرید.</p>' . $sign,
+		'Customer Login Details' => $dear . '<p>به‌عنوان مشتری ما، از پشتیبانی کامل تیم ما برخوردارید. پرتال مشتریان برای شما فعال شد: در آن می‌توانید درخواست یا مشکل ثبت کنید، پاسخ‌ها و درخواست‌های قبلی را ببینید و به پایگاه دانش و اسنادی که با شما به اشتراک گذاشته‌ایم دسترسی داشته باشید.</p>'
+			. '<p>برای ورود به پرتال روی $URL$ کلیک کنید و از این اطلاعات استفاده کنید:</p><p dir="ltr" style="text-align:left">نام کاربری: $login_name$<br>رمز عبور: $password$</p>' . $sign,
+		'Support end notification before a week' => '<p>$logo$</p><p>$contacts-lastname$ گرامی،</p><p>به اطلاع می‌رساند دوره پشتیبانی شما <b>یک هفته دیگر</b> به پایان می‌رسد. برای تمدید با ما تماس بگیرید.</p><p>با احترام،<br>تیم پشتیبانی</p>',
+		'Support end notification before a month' => '<p>$logo$</p><p>$contacts-lastname$ گرامی،</p><p>به اطلاع می‌رساند دوره پشتیبانی شما <b>یک ماه دیگر</b> به پایان می‌رسد. برای تمدید با ما تماس بگیرید.</p><p>با احترام،<br>تیم پشتیبانی</p>',
+	);
+	$r = $adb->pquery('SELECT templateid, templatename, body FROM vtiger_emailtemplates', array());
+	while ($row = $adb->fetch_array($r)) {
+		$name = decode_html($row['templatename']);
+		if (!isset($bodies[$name])) { continue; }
+		$plain = strip_tags(decode_html($row['body']));
+		if (preg_match('/[\x{0600}-\x{06FF}]/u', $plain)) { continue; }      // already Persian or written by a user
+		$adb->pquery('UPDATE vtiger_emailtemplates SET body=? WHERE templateid=?', array($wrap($bodies[$name]), $row['templateid']));
+		$n['bodies']++;
+	}
+
 	// sample profiles and groups (names were renamed by install_persian.php; descriptions were still English)
 	$desc = array(
 		array('vtiger_profile', array('Admin Profile' => 'پروفایل مدیر سیستم', 'Profile Related to Sales' => 'پروفایل کارکنان فروش',

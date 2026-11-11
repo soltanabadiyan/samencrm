@@ -89,5 +89,24 @@
       "Persian Calendar": "تقویم شمسی",
       "PersianCalendar": "تقویم شمسی"
     }
+  },
+  "Migration.php": {
+    "languageStrings": {
+      "LBL_TALK_TO_US_AT_FORUMS": "پرسشی دارید؟ با پشتیبانی SamenCRM در <a href=\"https://samencloud.ir\" target=\"_blank\">samencloud.ir</a> در تماس باشید<br>",
+      "LBL_DISCUSS_WITH_US_AT_BLOGS": "برای آشنایی بیشتر با SamenCRM، دکمه «راهنما» و آکادمی SamenCRM را ببینید",
+      "LBL_CRM_DOCUMENTATION": "راهنمای SamenCRM: آکادمی SamenCRM (دکمه «راهنما» در بالای هر صفحه)<br>",
+      "LBL_RELEASE_NOTES": "برای آشنایی با تازه‌های این نسخه، بخش «تازه‌ها» در آکادمی SamenCRM را ببینید<br>"
+    }
+  },
+  "Settings/Vtiger.php": {
+    "languageStrings": {
+      "LBL_DEFAULT": "اگر سرور ایمیل خروجی (SMTP) تنظیم نشده باشد، ایمیل‌ها از خود سرور SamenCRM فرستاده می‌شوند و ممکن است در پوشه هرزنامه گیرنده قرار گیرند. برای جلوگیری از این کار، یکی از روش‌های زیر را به کار ببرید.",
+      "LBL_OPTIONS2": "اگر از <b>ایمیل فرستنده (مثلاً support@your_company.com)</b> استفاده می‌کنید، سرور SamenCRM را به‌عنوان فرستنده مجاز ایمیل برای دامنه خود <b>(your_company.com)</b> ثبت کنید.<br> - برای اینکه ایمیل‌های شما توسط سرور گیرنده هرزنامه تلقی نشوند، رکورد TXT (SPF) زیر را به رکوردهای DNS دامنه خود اضافه کنید"
+    }
+  },
+  "Settings/PBXManager.php": {
+    "languageStrings": {
+      "LBL_PBXMANAGER_INFO": "پس از نصب رابط Asterisk (Asterisk Connector) روی سرور Asterisk، جزئیات سرور را پیکربندی کنید"
+    }
   }
 }

@@ -6,7 +6,7 @@
 (function (window, document) {
 	'use strict';
 	var BASE = 'layouts/v7/modules/SamenAcademy/resources/content/';
-	var VERSION = '1.1.2';
+	var VERSION = '1.1.3';
 	var root, user, catalog, flat = [], store;
 
 	function q(s, r) { return (r || document).querySelector(s); }

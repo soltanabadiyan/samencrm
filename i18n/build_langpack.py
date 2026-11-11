@@ -142,7 +142,18 @@ def main():
     for b in bad[:40]:
         print("  REJECTED", *b)
     print(f"{len(files)} files -> {zpath}")
-    return 1 if (missing or bad) and "--strict" in sys.argv else 0
+    # the product is SamenCRM: no Persian string may name Vtiger or link to vtiger.com
+    # (technical placeholders such as "(VtigerConnector_port)" are not text)
+    brand = []
+    for rel, body in files.items():
+        for m in re.finditer(r"^\t'([^']+)' => '(.*)',$", body, re.M):
+            v = re.sub(r"\(VtigerConnector_port\)", "", m.group(2))
+            if re.search(r"v ?tiger|ویتایگر|وی‌تایگر", v, re.I):
+                brand.append(f"{rel} {m.group(1)}: {v[:90]}")
+    for b_ in brand:
+        print("  VTIGER LEFT", b_)
+    print(f"brand check: {len(brand)} strings still mention Vtiger")
+    return 1 if (missing or bad or brand) and "--strict" in sys.argv else 0
 
 
 if __name__ == "__main__":

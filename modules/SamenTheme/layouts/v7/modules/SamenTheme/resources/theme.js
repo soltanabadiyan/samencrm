@@ -20,6 +20,7 @@
 
 	// exact-text replacements for strings that Vtiger renders untranslated (data names / hard-coded labels)
 	var FA = {
+		'File Preview': 'پیش‌نمایش فایل',
 		'All': 'همه',
 		'My Dashboard': 'داشبورد من',
 		'Documents': 'اسناد',
@@ -113,12 +114,17 @@
 		'Pending Input': 'منتظر ورودی', 'Planned': 'برنامه‌ریزی‌شده', 'Held': 'برگزارشده', 'Not Held': 'برگزارنشده' };
 	ATTR['User : All'] = 'کاربر: همه';
 	ATTR['Search for an extension..'] = 'جستجوی افزونه...';
+	// the product is SamenCRM: Vtiger's name left in templates (icon tooltips "Vtiger", "Vtiger CRM", "vtiger") is renamed
+	var BRAND_RE = /\bv ?tiger(\s+CRM)?\b/gi;
 	function translateAttrs(root) {
-		var els = [root].concat(Array.prototype.slice.call(root.querySelectorAll('[placeholder], [title], [data-original-title]')));
+		var els = [root].concat(Array.prototype.slice.call(root.querySelectorAll('[placeholder], [title], [data-original-title], img[alt]')));
 		els.forEach(function (e) {
-			['placeholder', 'title', 'data-original-title'].forEach(function (a) {
+			['placeholder', 'title', 'data-original-title', 'alt'].forEach(function (a) {
 				var v = e.getAttribute && e.getAttribute(a);
-				if (v && ATTR.hasOwnProperty(v.trim())) { e.setAttribute(a, ATTR[v.trim()]); }
+				if (!v) { return; }
+				if (ATTR.hasOwnProperty(v.trim())) { e.setAttribute(a, ATTR[v.trim()]); return; }
+				BRAND_RE.lastIndex = 0;
+				if (BRAND_RE.test(v)) { BRAND_RE.lastIndex = 0; e.setAttribute(a, v.replace(BRAND_RE, 'SamenCRM')); }
 			});
 		});
 	}
@@ -159,6 +165,10 @@
 				var s = t.nodeValue;
 				SENTENCES.forEach(function (r) { s = s.replace(r[0], r[1]); });
 				if (s !== t.nodeValue) { t.nodeValue = s; return; }
+			}
+			BRAND_RE.lastIndex = 0;
+			if (BRAND_RE.test(key) && !(t.parentNode && t.parentNode.closest && t.parentNode.closest('textarea, [contenteditable=true], .fieldValue, .value, td.listViewEntryValue, .commentInfoContent'))) {
+				BRAND_RE.lastIndex = 0; t.nodeValue = t.nodeValue.replace(BRAND_RE, 'SamenCRM'); return;
 			}
 			var exact = key && FA.hasOwnProperty(key), mixed = !exact && HAS_FA.test(key) && WORD_RE.test(key);
 			WORD_RE.lastIndex = 0;
@@ -211,6 +221,10 @@
 	}
 
 	function start() {
+		// Extension Store = vtiger.com marketplace (hidden from Settings): extensions are managed in Module Manager
+		if (/[?&]module=ExtensionStore\b/.test(window.location.search)) {
+			window.location.replace('index.php?module=ModuleManager&parent=Settings&view=List'); return;
+		}
 		favicon();
 		navOffset();
 		window.addEventListener('resize', navOffset);

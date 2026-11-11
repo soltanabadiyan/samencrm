@@ -9,7 +9,7 @@
 (function (window, document) {
 	'use strict';
 	var BASE = 'layouts/v7/modules/SamenAcademy/resources/';
-	var VERSION = '1.1.2';
+	var VERSION = '1.1.3';
 	var ACADEMY = 'index.php?module=SamenAcademy&view=Index';
 	var data = null, loading = null;
 

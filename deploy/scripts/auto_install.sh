@@ -53,6 +53,8 @@ echo "== Step7 (creating tables + installing modules, takes a few minutes)"
   -d "auth_key=$AUTH" -d myname= -d myemail= -d "industry=${INDUSTRY:-Education}"
 
 if docker compose exec -T db mariadb -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -N -e "select user_name from vtiger_users where id=1" 2>/dev/null | grep -q admin; then
+  # sender name of the CRM's own e-mails (stock: "your-support name")
+  sed -i "s/^\$HELPDESK_SUPPORT_NAME = 'your-support name';/\$HELPDESK_SUPPORT_NAME = '${COMPANY:-SamenCRM}';/" data/vtiger/config.inc.php
   echo "Vtiger installed.  URL: http://$PUBLIC_HOST/   user: admin   password: in $APP_DIR/.env (VT_ADMIN_PASSWORD)"
 else
   echo "Install did not complete – see output:"; sed 's/<[^>]*>//g' /tmp/vt_step7.html | grep -v '^\s*$' | head -40; exit 1

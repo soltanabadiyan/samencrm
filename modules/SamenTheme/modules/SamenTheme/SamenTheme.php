@@ -13,6 +13,8 @@
  *  4. the company logo (Settings > Company Details) = resources/img/company-logo.png
  *  6. the installation wizard (module=Install): marked hooks in Install/InstallPreProcess.tpl and
  *     InstallPostProcess.tpl load install.css/install.js (SamenCRM logo, Persian RTL, brand footer)
+ *  7. the first-login pages (Users/SystemSetup.tpl, Users/UserSetup.tpl): a marked block in their <head> loads
+ *     setup.css/setup.js (SamenCRM logo and background instead of the vtiger dashboard picture, Persian, RTL)
  *  5. its own page in Settings > Extensions (status + re-apply); the module has no records,
  *     so it is kept out of the app menus (it used to sit in Tools and opened an empty list = "permission denied")
  ************************************************************************************/
@@ -21,7 +23,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.3.4';
+	const VERSION = '1.3.5';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -104,6 +106,7 @@ class SamenTheme {
 		foreach (glob('test/templates_c/v7/*Login.tpl*') ?: array() as $f) { @unlink($f); }
 		foreach (glob('test/templates_c/v7/*Footer.tpl*') ?: array() as $f) { @unlink($f); }
 		foreach (glob('test/templates_c/v7/*Install*.tpl*') ?: array() as $f) { @unlink($f); }
+		foreach (glob('test/templates_c/v7/*Setup.tpl*') ?: array() as $f) { @unlink($f); }
 	}
 
 	/* ---------------------------------------------------------------- installation wizard
@@ -144,6 +147,42 @@ class SamenTheme {
 	}
 
 	const INSTALL_STOCK_FOOTER = "<p>\n\t\t\t\t{vtranslate('POWEREDBY')} {\$VTIGER_VERSION}&nbsp;\n\t\t\t\t&copy; 2004 - {date('Y')}&nbsp;\n\t\t\t\t<a href=\"//www.vtiger.com\" target=\"_blank\">vtiger.com</a>\n\t\t\t\t&nbsp;|&nbsp;\n\t\t\t\t<a href=\"#\" onclick=\"window.open('copyright.html', 'copyright', 'height=115,width=575').moveTo(210, 620)\">{vtranslate('LBL_READ_LICENSE')}</a>\n\t\t\t\t&nbsp;|&nbsp;\n\t\t\t\t<a href=\"https://www.vtiger.com/privacy-policy\" target=\"_blank\">{vtranslate('LBL_PRIVACY_POLICY')}</a>\n\t\t\t</p>";
+
+	/* ---------------------------------------------------------------- first-login pages
+	   Users/SystemSetup.tpl (first admin: "What would you like to use Vtiger CRM for?") and Users/UserSetup.tpl (every new
+	   user: preferences over a picture of the vtiger dashboard) are bare pages with their own <head>. */
+	const SETUP_TPLS = array('layouts/v7/modules/Users/SystemSetup.tpl', 'layouts/v7/modules/Users/UserSetup.tpl');
+	const SETUP_BEGIN = '{* SAMENTHEME:SETUP:BEGIN *}';
+	const SETUP_END = '{* SAMENTHEME:SETUP:END *}';
+
+	static function patchSetup() {
+		$v = self::VERSION; $ok = true;
+		$hook = self::SETUP_BEGIN . '{literal}<style>html:not(.samen-setup-ready) body{visibility:hidden;animation:samenSetupReveal 0s 2.5s forwards}'
+			. '@keyframes samenSetupReveal{to{visibility:visible}}</style>{/literal}'
+			. '<meta name="viewport" content="width=device-width, initial-scale=1">'
+			. '<link rel="stylesheet" href="' . self::RES . 'setup.css?v=' . $v . '">'
+			. '<script src="' . self::RES . 'setup.js?v=' . $v . '" defer></script>' . self::SETUP_END;
+		foreach (self::SETUP_TPLS as $tpl) {
+			if (!is_writable($tpl)) { $ok = false; continue; }
+			$src = self::unpatchedSetup(file_get_contents($tpl));
+			$pos = stripos($src, '</head>');
+			if ($pos === false) { $ok = false; continue; }
+			file_put_contents($tpl, substr($src, 0, $pos) . $hook . substr($src, $pos));
+		}
+		self::clearCompiledTemplates();
+		return $ok;
+	}
+
+	static function unpatchSetup() {
+		foreach (self::SETUP_TPLS as $tpl) {
+			if (is_writable($tpl)) file_put_contents($tpl, self::unpatchedSetup(file_get_contents($tpl)));
+		}
+		self::clearCompiledTemplates();
+	}
+
+	static function unpatchedSetup($src) {
+		return preg_replace('/' . preg_quote(self::SETUP_BEGIN, '/') . '.*?' . preg_quote(self::SETUP_END, '/') . '/s', '', $src);
+	}
 
 	/** InstallPostProcess.tpl with our credit line swapped back for the stock one */
 	static function stockInstallFooter($src) {
@@ -215,6 +254,12 @@ class SamenTheme {
 		$seq = $adb->query_result($adb->pquery('SELECT COALESCE(MAX(sequence),0)+1 s FROM vtiger_settings_field WHERE blockid=?', array($blockid)), 0, 's');
 		$adb->pquery('INSERT INTO vtiger_settings_field (fieldid, blockid, name, iconpath, description, linkto, sequence, active, pinned) VALUES (?,?,?,?,?,?,?,0,0)',
 			array($adb->getUniqueID('vtiger_settings_field'), $blockid, self::SETTINGS_LABEL, '', 'پوسته، راست‌چین، صفحه ورود و لوگو', self::SETTINGS_LINK, $seq));
+	}
+
+	/** Settings › Extension Store lists vtiger.com's marketplace (English, "for Vtiger 7", needs a vtiger.com account): hidden */
+	static function hideExtensionStore($hide = true) {
+		global $adb;
+		$adb->pquery("UPDATE vtiger_settings_field SET active=? WHERE linkto LIKE ?", array($hide ? 1 : 0, '%module=ExtensionStore%'));
 	}
 
 	static function unregisterSettings() {
@@ -310,6 +355,8 @@ class SamenTheme {
 		self::patchFooter();
 		self::patchPrint();
 		self::patchInstall();
+		self::patchSetup();
+		self::hideExtensionStore(true);
 		self::setCompanyLogo();
 		self::registerSettings();
 		self::removeFromAppMenu();
@@ -325,6 +372,8 @@ class SamenTheme {
 			self::unpatchFooter();
 			self::unpatchPrint();
 			self::unpatchInstall();
+			self::unpatchSetup();
+			self::hideExtensionStore(false);
 			self::unregisterSettings();
 		}
 	}
