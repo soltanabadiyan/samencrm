@@ -6,10 +6,10 @@
  *     (brand palette compiled from Vtiger's own LESS + theme + full RTL for Persian users).
  *     Vtiger needs a complete skin tree there, so the stock images/fonts are copied next to it.
  *  2. a HEADERSCRIPT link (theme.js: favicon, html lang/dir, a few untranslatable labels)
- *  3. a marked hook in layouts/v7/modules/Users/Login.tpl that loads login.css/login.js
- *     (brand login page; preselects the "samen" skin, which Users/actions/Login.php keeps in the session).
- *     Vtiger has no extension point for the login page, so this is the only core file touched;
- *     it is re-applied on update and removed when the module is disabled/uninstalled.
+ *  3. the login page: layouts/v7/modules/Users/Login.tpl is replaced by our LoginPage.tpl (Persian SamenCRM page
+ *     rendered on the server – Vtiger's page is never sent, not even for a moment while scripts load; it posts the
+ *     "samen" skin, which Users/actions/Login.php keeps in the session). Vtiger's file is kept as
+ *     Login.tpl.vtiger-stock and put back when the module is disabled/uninstalled.
  *  4. the company logo (Settings > Company Details) = resources/img/company-logo.png
  *  6. the installation wizard (module=Install): marked hooks in Install/InstallPreProcess.tpl and
  *     InstallPostProcess.tpl load install.css/install.js (SamenCRM logo, Persian RTL, brand footer)
@@ -23,7 +23,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.3.5';
+	const VERSION = '1.3.6';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -78,24 +78,28 @@ class SamenTheme {
 			. '<script src="' . self::RES . 'login.js?v=' . $v . '" defer></script>' . self::HOOK_END;
 	}
 
+	const LOGIN_PAGE = 'layouts/v7/modules/SamenTheme/LoginPage.tpl';
+	const LOGIN_MARK = 'SAMENTHEME:LOGIN-TEMPLATE';
+
 	static function patchLogin() {
-		$tpl = self::LOGIN_TPL;
-		if (!is_writable($tpl)) return false;
-		$src = self::unpatchedLogin(file_get_contents($tpl));
-		$pos = strpos($src, '{strip}');
-		$src = ($pos === false) ? self::loginHook() . $src
-			: substr($src, 0, $pos + 7) . "\n\t" . self::loginHook() . substr($src, $pos + 7);
-		file_put_contents($tpl, $src);
+		$tpl = self::LOGIN_TPL; $stock = $tpl . '.vtiger-stock';
+		if (!is_writable($tpl) || !is_readable(self::LOGIN_PAGE)) return false;
+		$cur = file_get_contents($tpl);
+		// keep Vtiger's own page once (without our older script hook) so it can be put back
+		if (strpos($cur, self::LOGIN_MARK) === false && !file_exists($stock)) {
+			file_put_contents($stock, self::unpatchedLogin($cur));
+		}
+		file_put_contents($tpl, str_replace('__SAMEN_V__', self::VERSION, file_get_contents(self::LOGIN_PAGE)));
 		self::clearCompiledTemplates();
 		return true;
 	}
 
 	static function unpatchLogin() {
-		$tpl = self::LOGIN_TPL;
-		if (is_writable($tpl)) {
-			file_put_contents($tpl, self::unpatchedLogin(file_get_contents($tpl)));
-			self::clearCompiledTemplates();
-		}
+		$tpl = self::LOGIN_TPL; $stock = $tpl . '.vtiger-stock';
+		if (!is_writable($tpl)) return;
+		if (file_exists($stock)) { copy($stock, $tpl); @unlink($stock); }
+		else { file_put_contents($tpl, self::unpatchedLogin(file_get_contents($tpl))); }
+		self::clearCompiledTemplates();
 	}
 
 	static function unpatchedLogin($src) {
@@ -293,7 +297,7 @@ class SamenTheme {
 			'skin_ok' => count($apps) > 0,
 			'apps' => $apps,
 			'links' => $links,
-			'login_ok' => strpos($tpl, self::HOOK_BEGIN) !== false,
+			'login_ok' => strpos($tpl, self::LOGIN_MARK) !== false,
 			'login_writable' => is_writable(self::LOGIN_TPL),
 			'session_skin' => isset($_SESSION['authenticated_user_skin']) ? $_SESSION['authenticated_user_skin'] : '',
 			'org_name' => $org ? $org['organizationname'] : '',
