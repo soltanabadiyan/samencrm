@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Run ON THE SERVER (as root, or via sudo):  bash install.sh
-# Installs the Vtiger docker stack into /opt/vtiger. Idempotent.
+# Installs the Vtiger docker stack into $APP_DIR (default /opt/vtiger). Idempotent.
+# Another company on the same server:  APP_DIR=/opt/gama WEB_PORT=9071 COMPANY=GAMA bash install.sh
 set -euo pipefail
 KIT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"      # .../deploy
-APP_DIR=/opt/vtiger
+APP_DIR="${APP_DIR:-/opt/vtiger}"
+WEB_PORT="${WEB_PORT:-9081}"
+COMPANY="${COMPANY:-SamenStudent}"
 VTIGER_VERSION="${VTIGER_VERSION:-8.4.0}"
 SF_URL="https://sourceforge.net/projects/vtigercrm/files/vtiger%20CRM%20${VTIGER_VERSION}/Core%20Product/vtigercrm${VTIGER_VERSION}.tar.gz/download"
 
@@ -27,6 +30,7 @@ if [ ! -f "$APP_DIR/.env" ]; then
   rnd() { head -c 24 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 24; }
   sed -e "s/^DB_PASSWORD=.*/DB_PASSWORD=$(rnd)/" -e "s/^DB_ROOT_PASSWORD=.*/DB_ROOT_PASSWORD=$(rnd)/" \
       "$APP_DIR/.env.example" > "$APP_DIR/.env"
+  { echo "COMPOSE_PROJECT_NAME=$(basename "$APP_DIR")"; echo "WEB_PORT=$WEB_PORT"; echo "PUBLIC_HOST=212.33.206.241:$WEB_PORT"; echo "COMPANY=$COMPANY"; } >> "$APP_DIR/.env"
   chmod 600 "$APP_DIR/.env"
   echo "generated $APP_DIR/.env (random DB passwords)"
 fi
@@ -34,7 +38,7 @@ fi
 echo "== 3/5 Vtiger ${VTIGER_VERSION} source"
 TARBALL="$APP_DIR/web/vtigercrm.tar.gz"
 if [ ! -s "$TARBALL" ]; then
-  for cand in "$KIT_DIR/vtigercrm.tar.gz" "$KIT_DIR/../vtigercrm.tar.gz" /root/vtigercrm.tar.gz "$HOME/vtigercrm.tar.gz"; do
+  for cand in "$KIT_DIR/vtigercrm.tar.gz" "$KIT_DIR/../vtigercrm.tar.gz" /root/vtigercrm.tar.gz /opt/vtiger/web/vtigercrm.tar.gz "$HOME/vtigercrm.tar.gz"; do
     [ -s "$cand" ] && { cp "$cand" "$TARBALL"; echo "using supplied $cand"; break; }
   done
 fi
@@ -55,18 +59,19 @@ fi
 
 echo "== 4/5 build & start"
 cd "$APP_DIR"
-docker compose build web
+docker image inspect samenstudent/vtiger-web:local >/dev/null 2>&1 || docker compose build web
 docker compose up -d db web cron
-echo "waiting for web on :9081 ..."
+set -a; . ./.env; set +a
+echo "waiting for web on :${WEB_PORT:-9081} ..."
 for i in $(seq 1 60); do
-  code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:9081/ || true)
+  code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:${WEB_PORT:-9081}/ || true)
   [ "$code" = "200" ] || [ "$code" = "302" ] && break
   sleep 3
 done
 echo "HTTP $code"
 
 echo "== 5/5 Vtiger web installer (automated)"
-bash "$APP_DIR/scripts/auto_install.sh"
+APP_DIR="$APP_DIR" bash "$APP_DIR/scripts/auto_install.sh"
 cat <<MSG
 
 Next (from your PC):  ./run_all.sh import --limit 20   then   ./run_all.sh import

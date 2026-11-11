@@ -3,6 +3,8 @@
 // and saves a screenshot per step. Chrome DevTools Protocol over Node's built-in WebSocket (no npm deps).
 //   SESSION=$(tools/get_session.sh) node tools/ui_audit.mjs out_dir tools/ui_audit_steps.json [filter]
 // Needs a SOCKS tunnel to the server:  ssh -D 19080 hashemz_crm  (through tools/direct_proxy.py when on VPN).
+// GAMA (/opt/gama, 9071) from outside the router: ssh -L 19071:127.0.0.1:9071 hashemz_crm, then
+//   (CHROME_ARGS: extra Chrome flags separated by ||)  BASE=http://212.33.206.241:9071/ PROXY=direct:// CHROME_ARGS="--host-resolver-rules=MAP 212.33.206.241:9071 127.0.0.1:19071"
 import { spawn } from 'node:child_process';
 import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -21,7 +23,7 @@ const PROFILE = mkdtempSync(join(tmpdir(), 'uiaudit-'));   // removed again when
 const port = 9300 + Math.floor(Math.random() * 500);
 const chrome = spawn('google-chrome', ['--headless=new', `--remote-debugging-port=${port}`, '--no-first-run',
   `--user-data-dir=${PROFILE}`, `--proxy-server=${process.env.PROXY || 'socks5://127.0.0.1:19080'}`,
-  'about:blank'], { stdio: 'ignore' });
+  ...(process.env.CHROME_ARGS ? process.env.CHROME_ARGS.split('||') : []), 'about:blank'], { stdio: 'ignore' });
 chrome.on('exit', () => { try { rmSync(PROFILE, { recursive: true, force: true }); } catch {} });   // no profiles left in /tmp
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let ws, id = 0; const pending = new Map(), waiters = [];

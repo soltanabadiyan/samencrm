@@ -4,7 +4,7 @@
 # Needs /opt/vtiger/ss/{dataset.json,schema.json,setup_vtiger.php,import_to_vtiger.py,ss_schema.py}
 # (run_all.sh on your PC copies them there).
 set -euo pipefail
-APP_DIR=/opt/vtiger
+APP_DIR="${APP_DIR:-/opt/vtiger}"
 cd "$APP_DIR"
 exec 9>"$APP_DIR/ss/.import.lock"
 flock -n 9 || { echo "another import is already running (lock $APP_DIR/ss/.import.lock)"; exit 1; }
