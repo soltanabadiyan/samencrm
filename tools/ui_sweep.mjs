@@ -23,6 +23,8 @@ const VIEW = {
 };
 // SWEEP_VIEWPORTS=desktop,laptop,tablet,mobile  – viewports for the pages marked "mobile" in the page list
 const EXTRA_VP = (process.env.SWEEP_VIEWPORTS || 'mobile').split(',').filter(v => VIEW[v]);
+// SWEEP_RESPONSIVE=1 – every page on the SWEEP_VIEWPORTS only (no desktop pass), for a phone/tablet layout audit
+const RESPONSIVE = process.env.SWEEP_RESPONSIVE === '1';
 const UA = {
   desktop: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
   laptop: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
@@ -116,6 +118,23 @@ const PROBE = `(() => {
         .map(e => e.getBoundingClientRect()).filter(r => r.left > innerWidth / 2).reduce((m, r) => Math.max(m, r.right), 0);
       return { right: Math.round(rail - (b.right - parseFloat(s.paddingRight))), left: Math.round(b.left + parseFloat(s.paddingLeft)), side: Math.round(side) };
     })(),
+    // elements that stick out of the screen (not inside their own horizontal scroller, not off-canvas menus)
+    offenders: (() => {
+      const W = document.documentElement.clientWidth, out = [];
+      const scrolls = el => { for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+        const o = getComputedStyle(p).overflowX; if ((o === 'auto' || o === 'scroll' || o === 'hidden') && p.clientWidth < p.scrollWidth + 1) return true; } return false; };
+      for (const el of document.querySelectorAll('body *')) {
+        if (out.length >= 6) break;
+        const r = el.getBoundingClientRect();
+        if (r.width < 4 || r.height < 4 || (r.right <= W + 2 && r.left >= -2)) continue;
+        const st = getComputedStyle(el);
+        if (st.visibility === 'hidden' || st.display === 'none' || st.position === 'fixed' && (r.right <= 0 || r.left >= W)) continue;
+        if (el.closest('.select2-drop, .select2-offscreen, .modal:not(.in), .hide, [aria-hidden=true], .popover, .tooltip, script, style') || scrolls(el)) continue;
+        if (out.some(o => o.el.contains(el))) continue;
+        out.push({ el, d: (el.id ? '#' + el.id : el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : '')) + ' [' + Math.round(r.left) + '..' + Math.round(r.right) + ' of ' + W + ']' });
+      }
+      return out.map(o => o.d);
+    })(),
     menuJs: !!(window.jQuery && jQuery._data(document.querySelector('.app-icon') || document, 'events')?.click),
   };
 })()`;
@@ -136,11 +155,12 @@ async function visit(url, vp) {
   res.overflow = info.overflow > 2 ? info.overflow : 0;
   res.en = (info.en || []).filter(x => !ALLOWED_EN.test(x));
   res.vt = info.vt || [];
+  res.off = info.offenders || [];
   res.menuJs = info.menuJs;
   res.gap = info.gap;
   res.gapBad = !!(info.gap && (info.gap.right > 60 || info.gap.left > 80));
-  res.bad = !!(res.js.length || res.console.length || res.http.length || res.err || res.overflow || res.gapBad || (res.final.startsWith('index.php') && !/view=Login/.test(res.final) && !res.menuJs && !/action=|mode=|view=(Popup|ComposeEmail)/.test(url)));
-  if (res.bad || res.en.length || res.vt.length) {
+  res.bad = !!(res.off.length || res.js.length || res.console.length || res.http.length || res.err || res.overflow || res.gapBad || (res.final.startsWith('index.php') && !/view=Login/.test(res.final) && !res.menuJs && !/action=|mode=|view=(Popup|ComposeEmail)/.test(url)));
+  if (res.bad || res.en.length || res.vt.length || process.env.SWEEP_SHOTS === 'all') {
     const shot = await send('Page.captureScreenshot', { format: 'png' });
     res.shot = `${String(results.length).padStart(3, '0')}.${vp}.png`;
     writeFileSync(join(out, res.shot), Buffer.from(shot.result.data, 'base64'));
@@ -164,13 +184,14 @@ try {
   }
   const extra = extraFile ? JSON.parse(readFileSync(extraFile, 'utf8')) : [];
   const urls = [...new Set([...extra.map(e => e.url || e), ...links])];
-  const mobileUrls = new Set(extra.filter(e => e.mobile).map(e => e.url));
+  const mobileUrls = new Set(RESPONSIVE ? urls : extra.filter(e => e.mobile).map(e => e.url));
   console.log(`sweeping ${urls.length} pages (+${mobileUrls.size} x ${EXTRA_VP.join('/')})`);
   for (const u of urls) {
-    results.push(await visit(u, 'desktop'));
-    if (mobileUrls.has(u)) for (const vp of EXTRA_VP) results.push(await visit(u, vp));
-    const r = results[results.length - 1];
-    if (r.bad || r.en.length || r.vt.length) console.log(JSON.stringify({ u, vp: r.vp, vt: r.vt.length ? r.vt : undefined, final: r.final !== u ? r.final : undefined, js: r.js, console: r.console, http: r.http, err: r.err, overflow: r.overflow, gap: r.gapBad ? r.gap : undefined, en: r.en, menuJs: r.menuJs, shot: r.shot }));
+    const vps = [...(RESPONSIVE ? [] : ['desktop']), ...(mobileUrls.has(u) ? EXTRA_VP : [])];
+    for (const vp of vps) {
+    const r = await visit(u, vp); results.push(r);
+    if (r.bad || r.en.length || r.vt.length) console.log(JSON.stringify({ u, vp: r.vp, vt: r.vt.length ? r.vt : undefined, off: r.off.length ? r.off : undefined, final: r.final !== u ? r.final : undefined, js: r.js, console: r.console, http: r.http, err: r.err, overflow: r.overflow, gap: r.gapBad ? r.gap : undefined, en: r.en, menuJs: r.menuJs, shot: r.shot }));
+    }
   }
   writeFileSync(join(out, 'sweep.json'), JSON.stringify(results, null, 1));
   const bad = results.filter(r => r.bad), en = results.filter(r => r.en.length), vtp = results.filter(r => r.vt.length);

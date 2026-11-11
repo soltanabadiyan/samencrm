@@ -188,7 +188,7 @@
 	// phones: start list pages with the filter sidebar collapsed so the records are visible first
 	// (same classes Vtiger's own .essentials-toggle switches, so the toggle still opens it)
 	function mobileSidebar() {
-		if (!window.matchMedia || !window.matchMedia('(max-width: 767px)').matches) { return; }
+		if (!window.matchMedia || !window.matchMedia('(max-width: 991px)').matches) { return; }   // phones and tablets
 		var side = document.querySelector('.sidebar-essentials');
 		if (!side || side.classList.contains('hide')) { return; }
 		side.classList.add('hide');

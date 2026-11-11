@@ -23,7 +23,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.3.6';
+	const VERSION = '1.3.8';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -37,6 +37,7 @@ class SamenTheme {
 		$tabid = getTabid('SamenTheme');
 		self::unregisterLinks();
 		Vtiger_Link::addLink($tabid, 'HEADERSCRIPT', 'SamenThemeJs', self::RES . 'theme.js?v=' . self::VERSION, '', 1);
+		Vtiger_Link::addLink($tabid, 'HEADERCSS', 'SamenThemeResponsive', self::RES . 'responsive.css?v=' . self::VERSION, '', 1);
 	}
 
 	static function unregisterLinks() {

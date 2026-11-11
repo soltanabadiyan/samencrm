@@ -80,7 +80,7 @@ ol.flow > li::before { content: counter(f); position: absolute; inset-block-star
 ol.flow > li:not(:last-child)::after { content: "◀"; position: absolute; inset-inline-end: -22px; inset-block-start: 50%; transform: translateY(-50%); color: var(--ac-copper); font-size: 14px; }
 ol.flow > li b { display: block; color: var(--ac-dark); }
 ol.flow.vertical { flex-direction: column; gap: 22px; }
-ol.flow.vertical > li { max-inline-size: 560px; }
+ol.flow.vertical > li { max-inline-size: 560px; flex: none; }   /* in a column the 140px flex-basis became the height */
 ol.flow.vertical > li:not(:last-child)::after { content: "▼"; inset-inline-end: auto; inset-inline-start: 50%; inset-block-start: auto; inset-block-end: -21px; transform: none; }
 ol.flow.cycle > li:last-child::after { content: "↺ بازگشت به ۱"; position: absolute; inset-inline-end: auto; inset-block-start: auto; inset-block-end: -22px; inset-inline-start: 8px; font-size: 11.5px; color: var(--ac-brown); transform: none; }
 ol.flow > li.decision { border-style: dashed; border-color: var(--ac-copper); background: #FDF8F3; }
@@ -141,7 +141,7 @@ ol.callouts li::before { content: counter(c); flex: none; inline-size: 24px; blo
 	.ac-hero h2 { font-size: 21px; }
 	.ac-lesson { font-size: 14.5px; padding: 18px 14px; }
 	ol.flow { flex-direction: column; gap: 22px; }
-	ol.flow > li { max-inline-size: none; }
+	ol.flow > li { max-inline-size: none; flex: none; }
 	ol.flow > li:not(:last-child)::after { content: "▼"; inset-inline-end: auto; inset-inline-start: 50%; inset-block-start: auto; inset-block-end: -21px; transform: none; }
 	.ac-calc-grid { grid-template-columns: minmax(0, 1fr); }
 	.formula { padding: 10px 8px; }

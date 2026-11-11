@@ -1,0 +1,118 @@
+/* SamenTheme – tablet and phone layout (HEADERCSS link, loaded after the skin).
+   Vtiger's v7 layout is built for >= 992px; between 768 and 991px its 12-column header rows add up to more than 12
+   columns and wrap, and on phones the fixed bars cover the page. */
+
+/* dashboard list widgets: the grid gives every <ul> inside a widget its own (desktop) width – 1260px lists in a
+   300px widget were cut off on the left */
+.dashboardWidget .sw-due-list { width: auto !important; max-width: 100%; }
+
+/* ------------------------------------------------------------------ tablets (768–991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+	/* top bar in one row: [menu + logo] [search grows] [icons] */
+	.app-fixed-navbar .global-nav > .row { display: flex; flex-wrap: nowrap; align-items: center; margin: 0; }
+	.app-fixed-navbar .global-nav > .row > [class*="col-"] { float: none; width: auto; flex: none; padding-inline: 4px; }
+	.app-fixed-navbar .global-nav > .row > .col-sm-3 { flex: 1 1 auto; min-width: 120px; }
+	.app-fixed-navbar #search-links-container, .app-fixed-navbar .search-link { width: 100% !important; }
+	.app-fixed-navbar .search-link .keyword-input { width: calc(100% - 44px) !important; }
+	.app-fixed-navbar #navbar { width: auto !important; left: 0; margin: 0; }
+	.app-fixed-navbar #navbar > ul.nav { display: flex; flex-wrap: nowrap; align-items: center; margin: 0; }
+	.app-fixed-navbar #navbar > ul.nav > li { float: none; }
+	.app-fixed-navbar #navbar > ul.nav > li > a, .app-fixed-navbar #navbar > ul.nav > li > div > a { padding-inline: 9px; }
+
+	/* module bar in one row: [module icon] [breadcrumb shrinks] [action buttons] */
+	.app-nav .module-action-bar { position: static; height: auto; }
+	.app-nav .module-action-content { display: flex; flex-wrap: nowrap; align-items: center; min-height: 42px; }
+	.app-nav .module-action-content > [class*="col-"] { float: none; width: auto; padding-inline: 8px; }
+	.app-nav .module-action-content > [class*="col-"]:first-child { flex: 1 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; }
+	.app-nav .module-action-content > [class*="col-"]:last-child { flex: none; }
+	.app-nav #appnav { float: none !important; }
+	/* Vtiger styles the buttons' wrapper as a phone drop-down (grey, 30px padding) up to 991px */
+	.app-nav #appnav .navbar { min-height: 0; }
+	.app-nav #appnav .container-fluid { padding: 0; }
+	.app-nav #appnavcontent { padding: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important; }
+	.app-nav #appnav ul.nav { display: flex; flex-wrap: nowrap; gap: 6px; margin: 0; }
+	.app-nav #appnav ul.nav > li { float: none; }
+	.app-nav #appnav .btn { padding: 5px 9px; white-space: nowrap; }
+	.app-nav #appnav { overflow-x: auto; scrollbar-width: none; }
+	.app-nav #appnav::-webkit-scrollbar { display: none; }
+
+	/* summary / detail fields: label | value side by side like on phones (the stacked layout left each label alone
+	   on a 100px row) */
+	.summary-table tr, .detailview-table tr {
+		display: grid; grid-template-columns: minmax(0, 32%) minmax(0, 1fr); align-items: baseline; column-gap: 12px;
+		padding: 8px 0; border-bottom: 1px solid var(--ui-border, #E2E8F0);
+	}
+	.summary-table td, .detailview-table td {
+		display: block; width: auto !important; min-width: 0 !important; max-width: none !important;
+		padding: 0 !important; border: 0 !important; min-height: 0; overflow-wrap: anywhere;
+	}
+	.summary-table td .value, .detailview-table td .value { max-width: 100%; white-space: normal; }
+	.summary-table .fieldLabel label { margin: 0; }
+}
+
+/* ------------------------------------------------------------------ phones (< 768px) */
+@media (max-width: 767px) {
+	/* the floating help (?) and reminder bell sat on the edit pages' Save / Cancel bar and on form fields */
+	body:has(.modal-overlay-footer) .samen-help-fab { bottom: 84px !important; }
+	body:has(.modal-overlay-footer) .sw-bell-fab { bottom: 142px !important; }
+	.samen-help-fab, .sw-bell-fab { inline-size: 44px !important; block-size: 44px !important; opacity: .92; }
+	/* module bar: title + filter name on one line; buttons that do not fit go below, and the bar grows with them
+	   (Vtiger fixes its height, so wrapped buttons used to hang over the page) */
+	.app-nav .module-action-bar, .app-nav .module-action-content { height: auto !important; max-height: none !important; overflow: visible !important; }
+	.app-nav .module-action-content { flex-wrap: wrap; row-gap: 4px; padding-block: 2px; }
+	.app-nav .module-action-content > [class*="col-"]:first-child { display: flex; align-items: center; gap: 4px; }
+	.app-nav .module-action-content > [class*="col-"]:first-child > * { float: none !important; flex: none; margin: 0; }
+	.app-nav .module-action-content > [class*="col-"]:first-child > .current-filter-name,
+	.app-nav .module-action-content > [class*="col-"]:first-child > .module-breadcrumb { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.app-nav #appnav ul.nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 4px; }
+	.app-nav #appnav ul.nav > li { float: none; }
+	.app-nav #appnav .btn { padding: 4px 8px; font-size: 12.5px; }
+	/* bars without the "⋮" drop-down (calendar, reports, extensions): one line of buttons that scrolls sideways
+	   (they sat in a fixed 42px box and spilled over the page) */
+	.app-nav .module-action-content > [class*="col-"], .app-nav #appnav { height: auto !important; }
+	.app-nav #appnav:not(:has(.navbar-collapse)) { overflow-x: auto; scrollbar-width: none; }
+	.app-nav #appnav:not(:has(.navbar-collapse))::-webkit-scrollbar { display: none; }
+	.app-nav #appnav:not(:has(.navbar-collapse)) ul.nav { flex-wrap: nowrap; align-items: center; margin: 4px 0; }
+	.app-nav #appnav ul.nav > li { margin: 0; height: auto; }
+	.app-nav #appnav .btn { white-space: nowrap; }
+
+	/* Settings home: the summary cards are <span>s whose padding came on top of width:100% (420px on a 390px screen) */
+	.settingsIndexPage .settingsSummary { box-sizing: border-box; display: block; }
+	.settingsIndexPage > .row, .settingsIndexPage .row { margin-inline: 0; }
+	/* … and so are the shortcut cards: inline boxes broke their background into strips */
+	#settingsShortCutsContainer .moduleBlock { display: block; box-sizing: border-box; width: 100% !important; height: auto !important;
+		min-height: 64px; margin: 0 0 8px !important; float: none !important; }
+}
+
+/* ------------------------------------------------------------------ both */
+@media (max-width: 991px) {
+	/* module bar: some pages (calendar, reports, settings, extensions) make the module icon and the bar two
+	   full-width rows – keep [icon][bar] side by side, the bar's title and buttons on one line */
+	.app-nav > .row { display: flex; flex-wrap: nowrap; align-items: stretch; margin: 0; }
+	.app-nav > .row > .app-indicator-icon-container { flex: 0 0 42px; width: 42px !important; float: none; padding: 0; }
+	.app-nav > .row > .module-action-bar { flex: 1 1 auto; min-width: 0; width: auto !important; float: none; position: static; height: auto; }
+	.app-nav .module-action-content { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; min-height: 42px; padding-inline: 8px; }
+	.app-nav .module-action-content > [class*="col-"] { float: none !important; width: auto; padding-inline: 0; }
+	.app-nav .module-action-content > [class*="col-"]:first-child { flex: 1 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+	.app-nav .module-action-content > [class*="col-"]:not(:first-child) { flex: 0 1 auto; min-width: 0; }
+	.app-nav #appnav { float: none !important; max-width: 100%; }
+	/* record title (long event subjects) wraps instead of running off the screen */
+	.detailview-header .recordBasicInfo, .detailview-header .recordLabel, .detailview-header h4 { white-space: normal !important; overflow-wrap: anywhere; }
+	.detailview-header [class*="col-"] { max-width: 100%; }
+	/* dashboard list widgets: cards were wider than the widget and clipped on the left */
+	.dashboardWidget .sw-due-list { padding: 0; margin-inline: 0; }
+	.dashboardWidget .sw-due-list li { box-sizing: border-box; max-width: 100% !important; }
+	.dashboardWidget > .sw-content { overflow-x: hidden !important; }
+	/* settings pages: wide tables scroll inside their box, logos shrink */
+	.settingsPageDiv .table-responsive, .settingsPageDiv table.table { max-width: 100%; }
+	.settingsPageDiv .contents:has(> table.table), .settingsPageDiv .contents > div:has(> table.table) { overflow-x: auto; }
+	.settingsPageDiv img { max-width: 100%; height: auto; }
+	/* Bootstrap rows inside full-width blocks stuck out 15px on the left of edit forms */
+	.editViewPageDiv .editViewContents > .row, .detailViewContainer .row, .editViewHeader > .row { margin-inline: 0; }
+	.companyLogo img, img.alignMiddle { max-width: 100% !important; height: auto; }
+	/* Google sync settings: the table was centred with a -360px margin */
+	.extensionContents table.listview-table { margin: 0 !important; width: 100% !important; }
+	.extensionContents .col-sm-12:has(> table.listview-table) { overflow-x: auto; }
+	.portal-helpdesk-widget-container, .portal-shortcut { max-width: 100%; box-sizing: border-box; margin-inline: 0 !important; }
+	.settingsPageDiv .listViewContentDiv, .settingsPageDiv .listViewEntriesDiv, .settingsPageDiv .contents { max-width: 100%; overflow-x: auto; }
+}
