@@ -1,0 +1,91 @@
+/* SamenTheme – installation wizard (module=Install): SamenCRM brand, Persian RTL, works down to phone width */
+@font-face {
+	font-family: 'Shabnam';
+	src: url('fonts/Shabnam.ttf') format('truetype');
+	font-display: swap;
+}
+html.samen-install {
+	--samen-teal-500: #13606F;
+	--samen-teal-700: #0F4B57;
+	--samen-copper-400: #D99058;
+	--samen-bg: #F4F7FB;
+	--samen-border: #D1D5DB;
+	--samen-text: #1F2937;
+	--samen-muted: #6B7280;
+}
+html.samen-install body {
+	background: var(--samen-bg) url('img/shamseh.png') no-repeat !important;
+	background-position: left -60px bottom -60px !important;
+	background-size: 360px auto !important;
+	font-family: 'Shabnam', Tahoma, sans-serif !important;
+	font-size: 14px !important;
+	color: var(--samen-text);
+	accent-color: var(--samen-teal-500);
+	height: auto; min-height: 100vh;
+}
+html.samen-install h1, html.samen-install h2, html.samen-install h3, html.samen-install h4,
+html.samen-install input, html.samen-install select, html.samen-install button, html.samen-install .btn,
+html.samen-install .select2-container { font-family: inherit !important; }
+
+/* page frame: the stock one is 70% wide with min-width 1100px */
+html.samen-install .page-container { width: min(1100px, calc(100% - 32px)); min-width: 0; min-height: 0; margin: 16px auto; }
+html.samen-install .page-container > .row:first-child { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin: 0; }
+html.samen-install .page-container > .row:first-child > [class*="col-"] { float: none; width: auto; padding: 0; }
+html.samen-install .logo { padding: 8px 0; }
+html.samen-install .logo img { display: block; width: auto; height: 52px; }
+html.samen-install .head { padding: 0; float: none !important; text-align: left; }
+html.samen-install .head h3 { margin: 0; color: var(--samen-teal-700); font-size: 20px; font-weight: 700; }
+html.samen-install .head .samen-sub { margin: 2px 0 0; color: var(--samen-muted); font-size: 12.5px; }
+
+html.samen-install .main-container {
+	margin: 12px 0 0; background: #fff; border: 1px solid var(--samen-border); border-top: 4px solid var(--samen-teal-500);
+	border-radius: 14px; box-shadow: 0 18px 40px rgb(11 57 67 / .10); min-height: 0;
+}
+html.samen-install .inner-container { padding: 20px clamp(16px, 3vw, 32px); }
+html.samen-install .inner-container > .row:first-child h4 { color: var(--samen-teal-700); font-weight: 700; font-size: 17px; }
+html.samen-install hr { border: 0; border-top: 1px solid var(--samen-border); }
+
+/* right-to-left: bootstrap columns and pull-* */
+html.samen-install [class*="col-sm-"] { float: right; }
+html.samen-install .pull-right { float: left !important; }
+html.samen-install .pull-left { float: right !important; }
+html.samen-install .offset2 { margin: 0; }
+html.samen-install .welcome-image { text-align: center; }
+html.samen-install .welcome-image img { max-width: 100%; height: auto; }
+html.samen-install .welcome-div { padding: 8% 0 4%; }
+html.samen-install .welcome-div h3 { color: var(--samen-teal-700); font-weight: 700; font-size: 22px; line-height: 1.6; }
+
+/* tables (requirements, settings, confirmation) */
+html.samen-install .config-table { border: 1px solid var(--samen-border); border-radius: 10px; overflow: hidden; }
+html.samen-install .config-table th { background: #EAF1F3; color: var(--samen-teal-700); }
+html.samen-install .config-table tr th:first-child, html.samen-install .config-table tr td:first-child { text-align: right; }
+html.samen-install .config-table tr + tr td { border-top: 1px solid #EEF2F6; }
+html.samen-install .config-table input[type=text], html.samen-install .config-table input[type=password],
+html.samen-install .config-table input[type=email], html.samen-install .config-table select {
+	direction: ltr; text-align: left; border: 1px solid var(--samen-border); border-radius: 8px; padding: 6px 10px; max-width: 100%;
+}
+html.samen-install .no { color: #B91C1C; }
+html.samen-install .license, html.samen-install .lic-scroll { direction: ltr; text-align: left; border-radius: 10px; }
+
+/* buttons */
+html.samen-install .button-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; padding-block: 12px; }
+html.samen-install .button-container .pull-right, html.samen-install .button-container .pull-left { float: none !important; }
+html.samen-install .btn { border-radius: 8px; padding: 8px 22px; font-weight: 600; }
+html.samen-install .btn-primary { background: var(--samen-teal-500); border-color: var(--samen-teal-500); color: #fff; }
+html.samen-install .btn-primary:hover, html.samen-install .btn-primary:focus-visible { background: var(--samen-teal-700); border-color: var(--samen-teal-700); }
+html.samen-install .btn-default { background: #fff; border-color: var(--samen-border); color: var(--samen-text); }
+html.samen-install a { color: var(--samen-teal-500); }
+
+/* footer */
+html.samen-install footer .vtFooter p { margin: 16px 0; color: var(--samen-muted); font-size: 12.5px; }
+
+@media (max-width: 767px) {
+	html.samen-install [class*="col-sm-"] { float: none; width: 100%; }
+	html.samen-install .head { text-align: right; }
+	html.samen-install .logo img { height: 40px; }
+	html.samen-install .welcome-image img { max-width: 240px; }
+	html.samen-install .config-table, html.samen-install .config-table tbody, html.samen-install .config-table tr { display: block; width: 100%; }
+	html.samen-install .config-table td, html.samen-install .config-table th { display: block; width: 100% !important; text-align: right; }
+	html.samen-install .button-container { justify-content: stretch; }
+	html.samen-install .button-container .btn { flex: 1 1 auto; }
+}

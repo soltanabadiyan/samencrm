@@ -11,6 +11,8 @@
  *     Vtiger has no extension point for the login page, so this is the only core file touched;
  *     it is re-applied on update and removed when the module is disabled/uninstalled.
  *  4. the company logo (Settings > Company Details) = resources/img/company-logo.png
+ *  6. the installation wizard (module=Install): marked hooks in Install/InstallPreProcess.tpl and
+ *     InstallPostProcess.tpl load install.css/install.js (SamenCRM logo, Persian RTL, brand footer)
  *  5. its own page in Settings > Extensions (status + re-apply); the module has no records,
  *     so it is kept out of the app menus (it used to sit in Tools and opened an empty list = "permission denied")
  ************************************************************************************/
@@ -19,7 +21,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.3.3';
+	const VERSION = '1.3.4';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -101,6 +103,56 @@ class SamenTheme {
 	static function clearCompiledTemplates() {
 		foreach (glob('test/templates_c/v7/*Login.tpl*') ?: array() as $f) { @unlink($f); }
 		foreach (glob('test/templates_c/v7/*Footer.tpl*') ?: array() as $f) { @unlink($f); }
+		foreach (glob('test/templates_c/v7/*Install*.tpl*') ?: array() as $f) { @unlink($f); }
+	}
+
+	/* ---------------------------------------------------------------- installation wizard
+	   module=Install renders its own bare pages (Install/Header.tpl, no header links): a marked block after the
+	   page-container start loads install.css/install.js, and the vtiger.com credit line is replaced by ours. */
+	const INSTALL_PRE = 'layouts/v7/modules/Install/InstallPreProcess.tpl';
+	const INSTALL_POST = 'layouts/v7/modules/Install/InstallPostProcess.tpl';
+	const INSTALL_BEGIN = '{* SAMENTHEME:INSTALL:BEGIN *}';
+	const INSTALL_END = '{* SAMENTHEME:INSTALL:END *}';
+
+	static function patchInstall() {
+		$v = self::VERSION; $ok = true;
+		if (is_writable(self::INSTALL_PRE)) {
+			$src = self::unpatchedInstall(file_get_contents(self::INSTALL_PRE));
+			$hook = self::INSTALL_BEGIN . '{literal}<style>html:not(.samen-install-ready) body{visibility:hidden;animation:samenInstallReveal 0s 2.5s forwards}'
+				. '@keyframes samenInstallReveal{to{visibility:visible}}</style>{/literal}'
+				. '<link rel="stylesheet" href="' . self::RES . 'install.css?v=' . $v . '">'
+				. '<script src="' . self::RES . 'install.js?v=' . $v . '" defer></script>' . self::INSTALL_END;
+			file_put_contents(self::INSTALL_PRE, $hook . "\n" . $src);
+		} else $ok = false;
+		if (is_writable(self::INSTALL_POST)) {
+			$src = self::stockInstallFooter(file_get_contents(self::INSTALL_POST));
+			$block = self::INSTALL_BEGIN . '<p class="samen-footer" dir="ltr">Powered by SamenCRM - {$VTIGER_VERSION}&nbsp;&nbsp;© 2004 - {date(\'Y\')}'
+				. '&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://samencloud.ir" target="_blank" rel="noopener">SamenCloud Co.</a></p>' . self::INSTALL_END;
+			$new = preg_replace('#(<div class="vtFooter">\s*)<p>.*?</p>#s', '$1' . str_replace('$', '\\$', $block), $src, 1, $n);
+			if ($n) file_put_contents(self::INSTALL_POST, $new); else $ok = false;
+		} else $ok = false;
+		self::clearCompiledTemplates();
+		return $ok;
+	}
+
+	static function unpatchInstall() {
+		if (is_writable(self::INSTALL_PRE)) file_put_contents(self::INSTALL_PRE, self::unpatchedInstall(file_get_contents(self::INSTALL_PRE)));
+		if (is_writable(self::INSTALL_POST)) {
+			file_put_contents(self::INSTALL_POST, self::stockInstallFooter(file_get_contents(self::INSTALL_POST)));
+		}
+		self::clearCompiledTemplates();
+	}
+
+	const INSTALL_STOCK_FOOTER = "<p>\n\t\t\t\t{vtranslate('POWEREDBY')} {\$VTIGER_VERSION}&nbsp;\n\t\t\t\t&copy; 2004 - {date('Y')}&nbsp;\n\t\t\t\t<a href=\"//www.vtiger.com\" target=\"_blank\">vtiger.com</a>\n\t\t\t\t&nbsp;|&nbsp;\n\t\t\t\t<a href=\"#\" onclick=\"window.open('copyright.html', 'copyright', 'height=115,width=575').moveTo(210, 620)\">{vtranslate('LBL_READ_LICENSE')}</a>\n\t\t\t\t&nbsp;|&nbsp;\n\t\t\t\t<a href=\"https://www.vtiger.com/privacy-policy\" target=\"_blank\">{vtranslate('LBL_PRIVACY_POLICY')}</a>\n\t\t\t</p>";
+
+	/** InstallPostProcess.tpl with our credit line swapped back for the stock one */
+	static function stockInstallFooter($src) {
+		return preg_replace_callback('/' . preg_quote(self::INSTALL_BEGIN, '/') . '.*?' . preg_quote(self::INSTALL_END, '/') . '/s',
+			function () { return SamenTheme::INSTALL_STOCK_FOOTER; }, $src);
+	}
+
+	static function unpatchedInstall($src) {
+		return preg_replace('/\n?' . preg_quote(self::INSTALL_BEGIN, '/') . '.*?' . preg_quote(self::INSTALL_END, '/') . '\n?/s', '', $src);
 	}
 
 	/* ---------------------------------------------------------------- footer
@@ -146,7 +198,8 @@ class SamenTheme {
 		$name = 'samen-company-logo.png';
 		if (!is_dir('test/logo')) mkdir('test/logo', 0755, true);
 		copy(self::RES . 'img/company-logo.png', 'test/logo/' . $name);
-		$adb->pquery('UPDATE vtiger_organizationdetails SET logoname=?, organizationname=? WHERE organization_id=(SELECT id FROM (SELECT MIN(organization_id) id FROM vtiger_organizationdetails) t)',
+		$adb->pquery("UPDATE vtiger_organizationdetails SET logoname=?, organizationname=IF(organizationname IN ('', 'vtiger', 'Vtiger'), ?, organizationname)
+			WHERE organization_id=(SELECT id FROM (SELECT MIN(organization_id) id FROM vtiger_organizationdetails) t)",
 			array($name, 'SamenCRM'));
 		// drop Vtiger's sample company address (Bangalore, vtiger.com) – only while it is still the sample
 		$adb->pquery("UPDATE vtiger_organizationdetails SET address='', city='', state='', code='', country=?, phone='', fax='', website=?
@@ -256,6 +309,7 @@ class SamenTheme {
 		self::patchLogin();
 		self::patchFooter();
 		self::patchPrint();
+		self::patchInstall();
 		self::setCompanyLogo();
 		self::registerSettings();
 		self::removeFromAppMenu();
@@ -270,6 +324,7 @@ class SamenTheme {
 			self::unpatchLogin();
 			self::unpatchFooter();
 			self::unpatchPrint();
+			self::unpatchInstall();
 			self::unregisterSettings();
 		}
 	}
