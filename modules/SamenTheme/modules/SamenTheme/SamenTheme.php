@@ -23,7 +23,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenTheme {
 
-	const VERSION = '1.3.8';
+	const VERSION = '1.4.0';
 	const SETTINGS_LINK = 'index.php?module=SamenTheme&view=Settings&app=SETTINGS';
 	const SETTINGS_LABEL = 'پوسته SamenCRM';
 	const RES = 'layouts/v7/modules/SamenTheme/resources/';
@@ -72,7 +72,7 @@ class SamenTheme {
 		$v = self::VERSION;
 		// keep the stock page from flashing: nothing of it is painted until login.js has applied the brand
 		// (html gets .samen-login-ready); the animation reveals it anyway after 2.5 s if the script failed
-		$guard = '{literal}<style>html:not(.samen-login-ready){background:#F4F7FB!important}'
+		$guard = '{literal}<style>html:not(.samen-login-ready){background:#FCFCF8!important}'
 			. 'html:not(.samen-login-ready) body{visibility:hidden;animation:samenLoginReveal 0s 2.5s forwards}'
 			. '@keyframes samenLoginReveal{to{visibility:visible}}</style>{/literal}';
 		return self::HOOK_BEGIN . $guard . '<link rel="stylesheet" href="' . self::RES . 'login.css?v=' . $v . '">'

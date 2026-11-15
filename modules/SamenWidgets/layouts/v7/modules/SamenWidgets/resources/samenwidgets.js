@@ -7,7 +7,7 @@
 	var BASE = 'layouts/v7/modules/SamenWidgets/resources/';
 	var VERSION = '1.1.1';
 	var POLL = 120000;
-	var COLORS = ['#13606F', '#D99058', '#7D4F2E', '#4F7CAC', '#0F766E', '#E11D48', '#A3C2E0', '#F59E0B', '#64748B', '#22C55E', '#8B5CF6', '#0EA5E9'];
+	var COLORS = ['#124E5E', '#B0664F', '#714133', '#4F7CAC', '#0F766E', '#E11D48', '#8EBECC', '#F59E0B', '#7A6A64', '#22C55E', '#8B5CF6', '#0EA5E9'];
 
 	function q(s, r) { return (r || document).querySelector(s); }
 	function qa(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -183,7 +183,7 @@
 			return;
 		}
 		loadChart().then(function (Chart) {
-			Chart.defaults.font.family = 'Shabnam, Tahoma, sans-serif';
+			Chart.defaults.font.family = 'Vazir, Tahoma, sans-serif';
 			Chart.defaults.color = '#475569';
 			var labels, datasets, type = spec.type, opts = { responsive: true, maintainAspectRatio: false, locale: 'fa-IR',
 				plugins: { legend: { rtl: true, position: 'bottom', labels: { boxWidth: 12, usePointStyle: true } },
@@ -218,8 +218,8 @@
 			if (type === 'bar' || type === 'line') {
 				var tick = { callback: function (v) { var l = this.getLabelForValue ? this.getLabelForValue(v) : v; l = fa(String(l)); return l.length > 22 ? l.slice(0, 21) + '…' : l; } };
 				var num = { callback: function (v) { return fa(v); }, precision: 0 };
-				opts.scales = opts.indexAxis === 'y' ? { x: { ticks: num, beginAtZero: true, grid: { color: '#EEF2F6' } }, y: { ticks: tick, position: 'right', grid: { display: false } } }
-					: { x: { ticks: tick, reverse: true, grid: { display: false } }, y: { ticks: num, beginAtZero: true, position: 'right', grid: { color: '#EEF2F6' } } };
+				opts.scales = opts.indexAxis === 'y' ? { x: { ticks: num, beginAtZero: true, grid: { color: '#F4F2EC' } }, y: { ticks: tick, position: 'right', grid: { display: false } } }
+					: { x: { ticks: tick, reverse: true, grid: { display: false } }, y: { ticks: num, beginAtZero: true, position: 'right', grid: { color: '#F4F2EC' } } };
 			}
 			if (box._chart) { box._chart.destroy(); }
 			box._chart = new Chart(canvas, { type: type, data: { labels: labels, datasets: datasets }, options: opts });

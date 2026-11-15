@@ -1,8 +1,8 @@
 /* SamenAcademy – academy page and lesson components */
 #samenAcademy {
-	--ac-teal: var(--samen-teal-500, #13606F); --ac-dark: var(--samen-teal-900, #0B3943); --ac-brown: var(--samen-brown-500, #7D4F2E);
-	--ac-copper: var(--samen-copper-400, #D99058); --ac-sky: var(--samen-sky-200, #A3C2E0); --ac-ink: var(--samen-ink, #121721);
-	--ac-muted: #5B6472; --ac-line: #E2E8F0; --ac-soft: #F4F7FB;
+	--ac-teal: var(--samen-teal-500, #124E5E); --ac-dark: var(--samen-teal-900, #162B31); --ac-brown: var(--samen-brown-500, #714133);
+	--ac-copper: var(--samen-copper-400, #B0664F); --ac-sky: var(--samen-sky-200, #8EBECC); --ac-ink: var(--samen-ink, #3A231D);
+	--ac-muted: #7A6A64; --ac-line: #DAD9CD; --ac-soft: #FCFCF8;
 	color: var(--ac-ink); padding-block: 16px 48px;
 }
 .ac-layout { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 24px; align-items: start; }
@@ -26,7 +26,7 @@
 /* home */
 .ac-hero { display: flex; gap: 24px; align-items: center; justify-content: space-between; background: linear-gradient(135deg, var(--ac-dark), var(--ac-teal)); color: #fff; border-radius: 18px; padding: 28px 32px; margin-block-end: 20px; }
 .ac-hero h2 { color: #fff; margin: 0 0 8px; font-size: 26px; font-weight: 800; }
-.ac-hero p { max-inline-size: 70ch; color: #EAF1F8; line-height: 2; }
+.ac-hero p { max-inline-size: 70ch; color: #F4F2EC; line-height: 2; }
 .ac-hero img { background: #fff; border-radius: 20px; padding: 10px; flex: none; }
 .ac-progress { block-size: 8px; border-radius: 999px; background: rgb(255 255 255 / .25); overflow: hidden; margin-block: 10px 4px; max-inline-size: 420px; }
 .ac-progress span { display: block; block-size: 100%; background: var(--ac-copper); border-radius: inherit; }
@@ -75,7 +75,7 @@
 
 /* flow diagram: <ol class="flow"><li>step</li>…</ol>  (add class "vertical" for a column) */
 ol.flow { list-style: none; display: flex; flex-wrap: wrap; gap: 28px; padding: 6px 0; margin: 16px 0; counter-reset: f; }
-ol.flow > li { position: relative; counter-increment: f; background: #fff; border: 2px solid var(--ac-teal); border-radius: 12px; padding: 10px 14px 8px; min-inline-size: 120px; flex: 1 1 140px; max-inline-size: 240px; font-size: 13.5px; line-height: 1.8; box-shadow: 0 2px 6px rgb(19 96 111 / .08); }
+ol.flow > li { position: relative; counter-increment: f; background: #fff; border: 2px solid var(--ac-teal); border-radius: 12px; padding: 10px 14px 8px; min-inline-size: 120px; flex: 1 1 140px; max-inline-size: 240px; font-size: 13.5px; line-height: 1.8; box-shadow: 0 2px 6px rgb(18 78 94 / .08); }
 ol.flow > li::before { content: counter(f); position: absolute; inset-block-start: -12px; inset-inline-start: 10px; background: var(--ac-teal); color: #fff; inline-size: 22px; block-size: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; }
 ol.flow > li:not(:last-child)::after { content: "◀"; position: absolute; inset-inline-end: -22px; inset-block-start: 50%; transform: translateY(-50%); color: var(--ac-copper); font-size: 14px; }
 ol.flow > li b { display: block; color: var(--ac-dark); }

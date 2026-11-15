@@ -8,8 +8,8 @@ res = os.path.join(here, "..", "layouts/v7/modules/SamenTheme/resources")
 H = 120
 emblem = Image.open(os.path.join(res, "img/emblem.png")).convert("RGBA")
 emblem = emblem.resize((round(emblem.width * H / emblem.height), H), Image.LANCZOS)
-font = ImageFont.truetype(os.path.join(res, "fonts/Shabnam.ttf"), 64, layout_engine=ImageFont.Layout.RAQM)
-small = ImageFont.truetype(os.path.join(res, "fonts/Shabnam.ttf"), 26, layout_engine=ImageFont.Layout.RAQM)
+font = ImageFont.truetype(os.path.join(res, "../../../../../tools/fonts/Shabnam.ttf"), 64, layout_engine=ImageFont.Layout.RAQM)
+small = ImageFont.truetype(os.path.join(res, "../../../../../tools/fonts/Shabnam.ttf"), 26, layout_engine=ImageFont.Layout.RAQM)
 title, sub = "SamenCRM", "سامانه مدیریت ارتباط با مشتری"
 d0 = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
 tw = d0.textlength(title, font=font)

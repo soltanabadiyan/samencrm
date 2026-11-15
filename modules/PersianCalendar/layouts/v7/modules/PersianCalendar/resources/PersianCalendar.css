@@ -23,10 +23,10 @@
 	width: 252px;
 	padding: 8px;
 	background: #fff;
-	border: 1px solid #ccd3dd;
+	border: 1px solid #C9C7B8;
 	border-radius: 6px;
 	box-shadow: 0 6px 18px rgba(0, 0, 0, .16);
-	font-family: 'Shabnam', Tahoma, sans-serif;
+	font-family: 'Vazir', Tahoma, sans-serif;
 	font-size: 13px;
 	color: #2c3e50;
 	user-select: none;
@@ -37,15 +37,15 @@
 .pc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
 .pc-title { display: flex; gap: 4px; }
 .pc-msel, .pc-ysel {
-	height: 26px; padding: 0 4px; border: 1px solid #ccd3dd; border-radius: 4px; background: #fff; font-family: inherit; font-size: 13px;
+	height: 26px; padding: 0 4px; border: 1px solid #C9C7B8; border-radius: 4px; background: #fff; font-family: inherit; font-size: 13px;
 }
 .pc-ysel { width: 64px; direction: ltr; text-align: center; }
 .pc-nav {
-	width: 28px; height: 26px; border: 0; border-radius: 4px; background: #f1f4f8; cursor: pointer; font-size: 18px; line-height: 1;
+	width: 28px; height: 26px; border: 0; border-radius: 4px; background: #F4F2EC; cursor: pointer; font-size: 18px; line-height: 1;
 }
-.pc-nav:hover { background: #e2e8f0; }
+.pc-nav:hover { background: #DAD9CD; }
 .pc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-.pc-wd { font-size: 11px; color: #7b8794; padding: 4px 0; }
+.pc-wd { font-size: 11px; color: #7A6A64; padding: 4px 0; }
 .pc-day {
 	height: 30px; border: 0; border-radius: 4px; background: transparent; cursor: pointer; font-size: 13px; color: inherit;
 }
@@ -54,10 +54,10 @@
 .pc-day.pc-today { box-shadow: inset 0 0 0 1px #2d7be5; font-weight: bold; }
 .pc-day.pc-inrange { background: #e8f0fe; border-radius: 0; }
 .pc-day.pc-sel { background: #2d7be5; color: #fff; }
-.pc-foot { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-top: 8px; border-top: 1px solid #eef1f5; padding-top: 6px; }
-.pc-btn { border: 1px solid #ccd3dd; background: #fff; border-radius: 4px; padding: 2px 10px; cursor: pointer; font-size: 12px; }
-.pc-btn:hover { background: #f1f4f8; }
-.pc-hint { width: 100%; font-size: 11px; color: #7b8794; }
+.pc-foot { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-top: 8px; border-top: 1px solid #F4F2EC; padding-top: 6px; }
+.pc-btn { border: 1px solid #C9C7B8; background: #fff; border-radius: 4px; padding: 2px 10px; cursor: pointer; font-size: 12px; }
+.pc-btn:hover { background: #F4F2EC; }
+.pc-hint { width: 100%; font-size: 11px; color: #7A6A64; }
 
 /* ---------------------------------------------------------------- Calendar module (FullCalendar) */
 body[data-language^="fa"] .fc .fc-day-number { display: flex; justify-content: space-between; align-items: baseline; gap: 4px; float: none !important; }

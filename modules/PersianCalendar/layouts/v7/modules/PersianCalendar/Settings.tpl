@@ -3,7 +3,7 @@
 <div class="main-container clearfix">
 <div class="content-area full-width samen-ext" id="persianCalendarSettings" data-module="PersianCalendar">
 	<div class="samen-ext-head">
-		<span class="samen-ext-logo" aria-hidden="true"><i class="fa fa-calendar" style="font-size:30px;color:#13606F;line-height:36px;display:block;text-align:center"></i></span>
+		<span class="samen-ext-logo" aria-hidden="true"><i class="fa fa-calendar" style="font-size:30px;color:#124E5E;line-height:36px;display:block;text-align:center"></i></span>
 		<div>
 			<h3>{vtranslate('LBL_PC_TITLE', 'PersianCalendar')}</h3>
 			<p class="samen-ext-sub">{vtranslate('LBL_PC_SUBTITLE', 'PersianCalendar')} <span class="samen-ext-ver" dir="ltr">v{$PC.version}</span></p>

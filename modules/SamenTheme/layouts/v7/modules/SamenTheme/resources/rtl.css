@@ -17,30 +17,23 @@ body[data-language^="fa"] :is(.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12) { 
 body[data-language^="fa"] .text-left { text-align: right !important; }
 body[data-language^="fa"] .text-right { text-align: left !important; }
 
-/* ---------------------------------------------------------------- app menu (hamburger drawer)
+/* ---------------------------------------------------------------- app menu (drawer on phones, rail on desktop)
    Vtiger.js sets inline style="left:0" on .app-menu and style="left:<menu width>" on each
    .app-modules-dropdown, so only !important can move them to the right side. */
-body[data-language^="fa"] .app-menu {
-	left: auto !important;
-	right: 0 !important;
-	border-left: 1px solid rgb(255 255 255 / .08);
-}
-body[data-language^="fa"] .app-menu .app-modules-dropdown {
-	left: auto !important;
-	right: 222px !important;          /* menu max-width (230px) – 8px, as Vtiger does for LTR */
-	box-shadow: var(--ui-shadow-pop);
-}
-body[data-language^="fa"] .app-menu .fa-chevron-right { transform: scaleX(-1); }
+body[data-language^="fa"] .app-menu, body[data-language^="fa"] .app-menu.hide { left: auto !important; right: 0 !important; }
 body[data-language^="fa"] .app-menu :is(.app-item, .menu-item) { text-align: right; }
-body[data-language^="fa"] .app-menu .app-item .fa,
-body[data-language^="fa"] .app-menu .app-item [class*="vicon-"] { margin-left: 10px; margin-right: 0; }
-
-/* module rail on the right edge, content shifted away from it */
-body[data-language^="fa"] .main-container .module-nav { left: auto; right: 0; }
-body[data-language^="fa"] .module-nav .modules-menu ul li.active a {
-	border-left: 0 !important;
-	border-right: 3px solid var(--color-highlight) !important;
+@media (min-width: 992px) {
+	body[data-language^="fa"] .app-menu .app-modules-dropdown {
+		left: auto !important;
+		right: var(--rail-width) !important;
+		border-radius: 16px 0 0 16px;
+		box-shadow: -6px 2px 15px rgb(83 78 34 / .12) !important;
+	}
+	body[data-language^="fa"] .app-menu :is(.app-item, .menu-item) { text-align: center; }
 }
+
+/* the module strip keeps its place on the right edge (its width is the page gutter on desktop) */
+body[data-language^="fa"] .main-container .module-nav { left: auto; right: 0; }
 
 /* ---------------------------------------------------------------- dropdowns
    Bootstrap opens .dropdown-menu at left:0 – in RTL they must hang from the right edge of the
@@ -89,7 +82,8 @@ body[data-language^="fa"] .select2-search-choice-close { left: auto; right: 3px;
 
 /* list view: action icons column and horizontal scrollbar start on the right */
 body[data-language^="fa"] .table-actions { text-align: right; }
-body[data-language^="fa"] .listview-table td, body[data-language^="fa"] .listview-table th { text-align: right; }
+body[data-language^="fa"] .listview-table td, body[data-language^="fa"] .listview-table th { text-align: center; }
+body[data-language^="fa"] .listview-table td.listViewRecordActions, body[data-language^="fa"] .listview-table td:first-child { text-align: right; }
 
 /* qtip / popovers */
 body[data-language^="fa"] .qtip, body[data-language^="fa"] .popover { direction: rtl; text-align: right; }
@@ -104,24 +98,8 @@ body[data-language^="fa"] a[href^="tel:"], body[data-language^="fa"] .phoneField
 	text-align: right;
 }
 
-/* active/hover markers on the reading-start (right) edge */
-body[data-language^="fa"] .app-menu .app-item:hover, body[data-language^="fa"] .app-menu .active-app-item,
-body[data-language^="fa"] .app-menu .open > .app-item,
-body[data-language^="fa"] .module-nav .modules-menu ul li.active a,
-body[data-language^="fa"] .settingsgroup ul li a.settingsgroup-menu-color { box-shadow: inset -3px 0 0 var(--color-highlight) !important; }
 body[data-language^="fa"] .settingsgroup ul li a { text-align: right; }
 body[data-language^="fa"] .settingsgroup .settingsgroup-accordion a i { margin-right: 0; margin-left: 6px; }
-
-/* phones: the sub-menu sits beside the 222px drawer – let it use only the space left and wrap long names
-   ("مدیریت تلفن (PBX)" was cut at the screen edge) */
-@media (max-width: 767px) {
-	body[data-language^="fa"] .app-menu .app-modules-dropdown {
-		max-width: calc(100vw - 230px) !important;
-		min-width: 0 !important;
-	}
-	body[data-language^="fa"] .app-menu .app-modules-dropdown li a { white-space: normal !important; line-height: 1.5; }
-	body[data-language^="fa"] .app-menu .app-modules-dropdown li a span { overflow-wrap: anywhere; }
-}
 
 /* Full-width pages (no filter sidebar) kept Vtiger's 283px sidebar gutter on the right: the mirrored
    ".main-container .content-area { padding-right: 283px }" is more specific than ".full-width { padding-right: 0 }".

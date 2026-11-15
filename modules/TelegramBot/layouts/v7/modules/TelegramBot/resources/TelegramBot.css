@@ -11,8 +11,8 @@
 .tg-modal .modal-body { max-height: 70vh; overflow-y: auto; }
 
 /* campaign status */
-.label.tg-cst-scheduled { background: #7D4F2E; }
-.label.tg-cst-queued, .label.tg-cst-expanding { background: #13606F; }
+.label.tg-cst-scheduled { background: #714133; }
+.label.tg-cst-queued, .label.tg-cst-expanding { background: #124E5E; }
 .label.tg-cst-done { background: #2e8b57; }
 .label.tg-cst-cancelled { background: #999; }
 .label.tg-cst-failed { background: #c9302c; }
@@ -21,7 +21,7 @@ tr.tg-row-failed td { background: #fff4f4; }
 /* conversation */
 .tg-history { padding: 15px 10px; }
 .tg-history .tg-side .panel-body { padding: 10px; }
-.tg-thread { background: #eef3f4; border: 1px solid #dde5e7; border-radius: 6px; padding: 10px; max-height: 520px; overflow-y: auto; margin-bottom: 12px; }
+.tg-thread { background: #F4F2EC; border: 1px solid #dde5e7; border-radius: 6px; padding: 10px; max-height: 520px; overflow-y: auto; margin-bottom: 12px; }
 .tg-msg { display: flex; margin: 6px 0; }
 .tg-msg.tg-out { justify-content: flex-end; }
 .tg-msg.tg-in { justify-content: flex-start; }

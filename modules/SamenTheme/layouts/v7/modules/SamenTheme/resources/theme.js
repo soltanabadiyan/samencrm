@@ -1,6 +1,7 @@
 /*+**********************************************************************************
  * SamenTheme – small runtime helpers for the SamenCRM theme (HEADERSCRIPT link).
  *  - brand favicon
+ *  - navigation: the app and module in use, sub-menu titles (rail / drawer are drawn by theme.css)
  *  - <html lang="fa" dir="rtl"> for Persian users (screen readers, native form controls)
  *  - Persian for the few labels Vtiger prints without vtranslate() (filter "All", widget titles...)
  ************************************************************************************/
@@ -220,6 +221,64 @@
 		if (gap > 8) { main.style.marginTop = Math.ceil(gap) + 'px'; }
 	}
 
+	// navigation (theme.css draws the app menu as a rail on desktop and a drawer on phones): mark the app and the
+	// module in use, and title each sub-menu with its app
+	function navigation() {
+		var menu = document.querySelector('.app-menu');
+		if (!menu) { return; }
+		var q = new URLSearchParams(window.location.search), module = q.get('module') || 'Home', app = q.get('app'),
+			settings = q.get('parent') === 'Settings';
+		function each(sel, fn) { Array.prototype.forEach.call(menu.querySelectorAll(sel), fn); }
+		function param(href, name) { var m = new RegExp('[?&]' + name + '=([^&#]*)').exec(href || ''); return m ? decodeURIComponent(m[1]) : ''; }
+		each('.samen-active', function (e) { e.classList.remove('samen-active'); });
+		var owner = null, ownerByApp = null;
+		each('.app-modules-dropdown-container', function (c) {
+			var item = c.querySelector('.app-item'), ul = c.querySelector('.app-modules-dropdown');
+			if (!item || !ul) { return; }
+			if (!ul.querySelector('.samen-sub-title')) {
+				var li = document.createElement('li');
+				li.className = 'samen-sub-title';
+				li.textContent = ((item.querySelector('.app-name') || item).textContent || '').trim();
+				var box = ul.querySelector('.mCSB_container') || ul;
+				box.insertBefore(li, box.firstChild);
+			}
+			if (c.classList.contains('dropdown-compact')) { if (settings) { owner = ownerByApp = item; } return; }
+			if (settings) { return; }
+			Array.prototype.forEach.call(ul.querySelectorAll('a[href]'), function (a) {
+				var h = a.getAttribute('href');
+				if (param(h, 'module') !== module) { return; }
+				if (app && param(h, 'app') === app) { a.classList.add('samen-active'); ownerByApp = item; }
+				else if (!owner) { owner = item; a.setAttribute('data-samen-first', '1'); }
+			});
+		});
+		if (!ownerByApp && owner && !settings) {       // no app in the address: the first app that lists the module
+			var first = owner.parentNode.querySelector('a[data-samen-first]');
+			if (first) { first.classList.add('samen-active'); }
+		}
+		var active = ownerByApp || owner;
+		each('.app-item[data-default-url]', function (item) {
+			var u = item.getAttribute('data-default-url');
+			if (u && u !== '#' && !settings && param(u, 'module') === module) { active = item; }
+		});
+		if (active) { active.classList.add('samen-active'); }
+	}
+
+	// dashboard: Vtiger sizes the widget columns from the window width; with the rail beside the page that is
+	// 100px too wide, so the last column wrapped and left a gap – report the width that is really available
+	function dashboardWidth() {
+		var $ = window.jQuery;
+		if (!$ || $.fn.samenWidth || !(/[?&]view=DashBoard\b/.test(window.location.search) || document.querySelector('.gridster, .dashBoardContainer'))) { return; }
+		var width = $.fn.samenWidth = $.fn.width;
+		$.fn.width = function () {
+			if (!arguments.length && this[0] === window && window.matchMedia && window.matchMedia('(min-width: 992px)').matches) {
+				var rail = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('--rail-width'), 10) || 0;
+				return width.call(this) - rail;
+			}
+			return width.apply(this, arguments);
+		};
+	}
+	dashboardWidth();
+
 	function start() {
 		// Extension Store = vtiger.com marketplace (hidden from Settings): extensions are managed in Module Manager
 		if (/[?&]module=ExtensionStore\b/.test(window.location.search)) {
@@ -231,8 +290,10 @@
 		if (window.ResizeObserver && document.querySelector('.app-fixed-navbar')) {
 			new ResizeObserver(navOffset).observe(document.querySelector('.app-fixed-navbar'));
 		}
+		dashboardWidth();
 		brandTitle();
 		mobileSidebar();
+		navigation();
 		var fa = /^fa/i.test(document.body.getAttribute('data-language') || '');
 		document.documentElement.classList.add('samen-theme');
 		if (!fa) { return; }

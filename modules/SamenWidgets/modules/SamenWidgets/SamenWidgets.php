@@ -11,7 +11,7 @@ require_once 'vtlib/Vtiger/Link.php';
 
 class SamenWidgets {
 
-	const VERSION = '1.1.1';
+	const VERSION = '1.1.2';
 	// (a literal '?' inside SQL would be taken as a placeholder by PearDatabase – patterns go in as parameters)
 	const LIKE = 'index.php?module=SamenWidgets&%';
 	const RES = 'layouts/v7/modules/SamenWidgets/resources/';

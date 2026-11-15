@@ -145,8 +145,8 @@ body > .mCSB_inside > .mCSB_container {
     top: 0;
     left: 0;
     min-height: 100%;
-    background-color: #0F4B57;
-    background: #0F4B57;
+    background-color: #0F4350;
+    background: #0F4350;
   }
   .main-container .sidebar-essentials {
     display: inline-block;
@@ -158,7 +158,7 @@ body > .mCSB_inside > .mCSB_container {
     left: 42px;
     min-height: 100%;
     background: #FFFFFF;
-    border-right: 1px solid #E2E8F0;
+    border-right: 1px solid #DAD9CD;
     overflow: auto;
     border-width: thin;
   }
@@ -267,7 +267,7 @@ body > .mCSB_inside > .mCSB_container {
   padding: 0px 10px;
   text-decoration: none;
   vertical-align: top;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   border-width: thin;
 }
 .search-link .adv-search {
@@ -349,7 +349,7 @@ body > .mCSB_inside > .mCSB_container {
 }
 .module-action-bar .module-title {
   font-family: Oswald, "OpenSans-Semibold", "Helvetica Neue", Helvetica, sans-serif;
-  color: #0F4B57;
+  color: #0F4350;
   margin: 12px 0;
   white-space: nowrap;
   overflow: hidden;
@@ -404,29 +404,29 @@ body > .mCSB_inside > .mCSB_container {
   line-height: 40px;
 }
 .app-SALES {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .app-MARKETING {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .app-OTHER {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .app-SUPPORT {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .app-INVENTORY {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .app-PROJECT {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .app-TOOLS {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .app-DEFAULT,
 .app-DASHBOARD {
-  background: #13606F !important;
+  background: #124E5E !important;
 }
 .module-nav .mod-switcher-container {
   display: inline-block;
@@ -446,14 +446,14 @@ body > .mCSB_inside > .mCSB_container {
   background-color: #010101 !important;
 }
 .app-switcher-container .app-navigator {
-  background-color: #0F4B57;
+  background-color: #0F4350;
 }
 .app-switcher-container .app-navigator .app-icon {
   color: white;
   opacity: 0.8;
 }
 .global-nav .app-switcher-container .app-navigator:hover {
-  background: #13606F;
+  background: #124E5E;
   opacity: 1;
 }
 .global-nav .app-switcher-container .app-navigator:hover .app-icon {
@@ -480,12 +480,12 @@ body > .mCSB_inside > .mCSB_container {
   border: 0;
   top: 0px !important;
   box-shadow: 0px 5px 14px #555;
-  background: #0F4B57;
+  background: #0F4350;
   z-index: 1102;
   display: none;
 }
 .app-menu hr {
-  border-top: 1px solid #0F4B57;
+  border-top: 1px solid #0F4350;
   padding: 1%;
 }
 .app-menu .app-name {
@@ -548,26 +548,26 @@ a.menu-item:hover {
 .active-app-item,
 .app-item:hover {
   opacity: 1;
-  background: #13606F;
+  background: #124E5E;
   color: #f2f1f1;
 }
 .app-item-color-MARKETING {
-  border-left: 4px solid #13606F;
+  border-left: 4px solid #124E5E;
 }
 .app-item-color-SALES {
-  border-left: 4px solid #13606F;
+  border-left: 4px solid #124E5E;
 }
 .app-item-color-INVENTORY {
-  border-left: 4px solid #13606F;
+  border-left: 4px solid #124E5E;
 }
 .app-item-color-SUPPORT {
-  border-left: 4px solid #13606F;
+  border-left: 4px solid #124E5E;
 }
 .app-item-color-PROJECT {
-  border-left: 4px solid #13606F;
+  border-left: 4px solid #124E5E;
 }
 .app-item-color-TOOLS {
-  border-left: 4px solid #13606F;
+  border-left: 4px solid #124E5E;
 }
 .app-item .fa {
   font-size: 1.5em;
@@ -589,7 +589,7 @@ a.menu-item:hover {
   height: 100vh;
   font-size: 1.2em;
   overflow-x: hidden;
-  background-color: #0F4B57;
+  background-color: #0F4350;
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -616,7 +616,7 @@ a.menu-item:hover {
 }
 .app-menu .app-modules-dropdown li:hover {
   opacity: 1;
-  background: #13606F;
+  background: #124E5E;
   color: #f2f1f1;
 }
 .app-menu .app-modules-dropdown li:hover .module-icon {
@@ -931,7 +931,7 @@ input[type="password"].inputElement {
   width: 100%;
   height: 100%;
   float: left;
-  background: #0F4B57;
+  background: #0F4350;
   position: absolute;
   z-index: 10;
   left: 0;
@@ -988,7 +988,7 @@ input[type="password"].inputElement {
   white-space: nowrap;
 }
 .modules-menu ul li:hover {
-  background: #13606F;
+  background: #124E5E;
   opacity: 1;
 }
 .modules-menu ul li:hover a {
@@ -1006,7 +1006,7 @@ input[type="password"].inputElement {
   width: 80%;
   float: left;
   background: #FFFFFF;
-  border-right: 1px solid #E2E8F0;
+  border-right: 1px solid #DAD9CD;
   height: 100%;
   left: 20%;
   position: relative;
@@ -1148,7 +1148,7 @@ input[type="password"].inputElement {
 .search-list {
   width: 100%;
   background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   margin: 5px 0 10px;
   padding: 5px 10px;
 }
@@ -1297,10 +1297,10 @@ ul.unstyled {
   padding-left: 0px;
 }
 .coloredBorderBottom {
-  border-bottom: 1px solid #13606F;
+  border-bottom: 1px solid #124E5E;
 }
 .coloredBorderTop {
-  border-top: 1px solid #13606F;
+  border-top: 1px solid #124E5E;
 }
 .redColor {
   color: red;
@@ -1906,7 +1906,7 @@ th {
 .detailViewContainer .recordImage.bgcontacts,
 .overlayDetailHeader .recordImage.bgcontacts,
 .quickPreviewModuleHeader .recordImage.bgcontacts {
-  background: #13606F;
+  background: #124E5E;
 }
 .detailViewContainer .recordImage.bghelpdesk,
 .overlayDetailHeader .recordImage.bghelpdesk,
@@ -1976,7 +1976,7 @@ th {
 .detailViewContainer .recordImage.bg_Calendar,
 .overlayDetailHeader .recordImage.bg_Calendar,
 .quickPreviewModuleHeader .recordImage.bg_Calendar {
-  background: #7D4F2E;
+  background: #714133;
 }
 .detailViewContainer .recordImage.bg_Campaigns,
 .overlayDetailHeader .recordImage.bg_Campaigns,
@@ -1994,7 +1994,7 @@ th {
   font-size: 35px;
 }
 .detailViewContainer {
-  background: #F4F7FB;
+  background: #FCFCF8;
   min-height: inherit;
 }
 .detailViewContainer .block {
@@ -2026,7 +2026,7 @@ th {
   bottom: 0;
   right: 0;
   left: auto;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   box-shadow: none;
   background: white;
 }
@@ -2110,7 +2110,7 @@ th {
 .overlayFooter {
   position: fixed;
   bottom: 0;
-  background: #F4F7FB;
+  background: #FCFCF8;
   width: 100%;
   height: 60px;
   right: 0;
@@ -2364,7 +2364,7 @@ th {
   width: 42px;
 }
 #massEditHeader {
-  color: #13606F;
+  color: #124E5E;
 }
 .fieldLabel {
   color: #2c3b49;
@@ -2441,7 +2441,7 @@ th {
 }
 .fieldBlockHeader {
   margin-top: 0;
-  color: #0F4B57;
+  color: #0F4350;
 }
 .quickCreateContent .referencefield-wrapper {
   width: 210px;
@@ -2591,7 +2591,7 @@ th {
 }
 .extensionWidgetContainer {
   background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   min-height: 200px;
   padding: 2%;
 }
@@ -2605,7 +2605,7 @@ th {
 .extensionWidgetContainer .extension_header .font-x-x-large {
   font-size: 1.5em;
   font-weight: bold;
-  color: #13606F;
+  color: #124E5E;
 }
 .extensionWidgetContainer .extensionDescription {
   line-height: 20px;
@@ -2671,7 +2671,7 @@ th {
   height: 45px;
   margin: 0 9px;
   border-right: 3px solid #FFFFFF;
-  border-left: 3px solid #E2E8F0;
+  border-left: 3px solid #DAD9CD;
 }
 .extensionContents {
   padding-bottom: 30px;
@@ -2752,11 +2752,11 @@ th {
 ********************************************/
 .modal-header {
   padding: 5px 15px;
-  background: #0F4B57;
+  background: #0F4350;
   color: #FFFFFF;
 }
 .modal-footer {
-  background: #F4F7FB;
+  background: #FCFCF8;
 }
 #overlayPage.fade {
   max-height: 0;
@@ -2776,7 +2776,7 @@ th {
   display: inline-block;
   width: 100%;
   float: left;
-  background: #13606F;
+  background: #124E5E;
   /*    height: 100%;*/
 }
 .settings-menu {
@@ -2787,7 +2787,7 @@ th {
   height: 100%;
 }
 .settings-flip {
-  background: none repeat scroll 0 0 #13606F;
+  background: none repeat scroll 0 0 #124E5E;
   font-size: 14px;
   margin: auto;
   padding: 5px;
@@ -2807,7 +2807,7 @@ th {
 }
 .importOverLayHeader {
   background: white;
-  color: #0F4B57;
+  color: #0F4350;
   border-color: transparent;
   max-height: 50px;
 }
@@ -2823,14 +2823,14 @@ th {
 }
 #selectAllMsgDiv {
   font-size: 18px;
-  color: #13606F;
+  color: #124E5E;
 }
 #deSelectAllMsgDiv {
   font-size: 18px;
-  color: #13606F;
+  color: #124E5E;
 }
 .greenColor {
-  color: #13606F;
+  color: #124E5E;
 }
 .breadcrumb {
   height: auto;
@@ -2882,11 +2882,11 @@ th {
 }
 .crumbs li.active {
   height: 0;
-  border-top: 20px solid #13606F;
-  border-bottom: 20px solid #13606F;
+  border-top: 20px solid #124E5E;
+  border-bottom: 20px solid #124E5E;
 }
 .crumbs li.active:after {
-  border-left: 20px solid #13606F !important;
+  border-left: 20px solid #124E5E !important;
 }
 .crumbs li a {
   display: block;
@@ -2921,7 +2921,7 @@ th {
   overflow: hidden;
   font-size: 20px;
   vertical-align: middle;
-  color: #13606F;
+  color: #124E5E;
 }
 /* .squaredFour */
 .squaredFour {
@@ -2965,7 +2965,7 @@ th {
   opacity: 1;
 }
 .importBlockContainer {
-  color: #13606F;
+  color: #124E5E;
 }
 /******************************************* 
 ************* Social Buttons *************** 
@@ -3108,10 +3108,10 @@ th {
   background-color: #6cc4b9;
 }
 .bg-info-calendar {
-  background-color: #7D4F2E;
+  background-color: #714133;
 }
 .bg-info-contacts {
-  background-color: #13606F;
+  background-color: #124E5E;
 }
 .bg-info-documents {
   background-color: #789048;
@@ -3165,7 +3165,7 @@ th {
   background-color: #CCCC99;
 }
 .alert-static {
-  border-color: #F4F7FB;
+  border-color: #FCFCF8;
   white-space: nowrap;
   vertical-align: super;
   padding-bottom: 0px;
@@ -3284,7 +3284,7 @@ th {
   color: #FFFFFF;
 }
 .settingsgroup div.panel-collapse {
-  background-color: #0F4B57;
+  background-color: #0F4350;
 }
 .settingsgroup-accordion {
   color: #FFFFFF;
@@ -3302,11 +3302,11 @@ th {
   text-transform: uppercase;
 }
 .settingsgroup {
-  background: #0F4B57;
+  background: #0F4350;
   height: 100%;
 }
 .settingsgroup .panel-group .panel {
-  background-color: #0F4B57;
+  background-color: #0F4350;
 }
 .userDefaultIcon {
   font-size: 30px;
@@ -3322,7 +3322,7 @@ th {
 }
 .settingsIndexPage .settingsSummary a {
   display: inline-block;
-  background: #F4F7FB;
+  background: #FCFCF8;
   color: #444444;
   border-radius: 2px;
   min-width: 200px;
@@ -3364,7 +3364,7 @@ th {
   border: 1px solid #DDDDDD;
 }
 #settingsShortCutsContainer .moduleBlock:hover {
-  background: #F4F7FB;
+  background: #FCFCF8;
 }
 .companydetailsedit .company-logo-content {
   padding: 10px;
@@ -3554,7 +3554,7 @@ th {
   padding-left: 40px;
 }
 .portal-dashboard {
-  border: 1px solid #13606F !important;
+  border: 1px solid #124E5E !important;
   border-left: 0px !important;
   min-height: 500px;
   padding-left: 15px;
@@ -3567,7 +3567,7 @@ th {
   border: 1px solid #D7D7D7;
 }
 .portal-annoucement-widget {
-  background: #0F4B57;
+  background: #0F4350;
   color: #FFFFFF;
   min-height: 20px;
   padding: 5px;
@@ -3580,7 +3580,7 @@ th {
   padding: 10px;
 }
 .portal-chart-header {
-  background: #0F4B57;
+  background: #0F4350;
   color: #FFFFFF;
   min-height: 20px;
   padding: 5px;
@@ -3594,7 +3594,7 @@ th {
   margin-bottom: 10px;
 }
 .portal-record-widget-content {
-  background: #0F4B57;
+  background: #0F4350;
   color: #FFFFFF;
   min-height: 10px;
   padding: 4px;
@@ -3607,7 +3607,7 @@ th {
   width: 285px !important;
 }
 .portal-shortcuts-header {
-  background: #0F4B57;
+  background: #0F4350;
   color: #FFFFFF;
   min-height: 20px;
   padding: 5px;
@@ -3625,7 +3625,7 @@ th {
   width: 285px !important;
 }
 .portal-helpdesk-widget-header {
-  background: #0F4B57;
+  background: #0F4350;
   color: #FFFFFF;
   min-height: 20px;
   padding: 5px;
@@ -3634,7 +3634,7 @@ th {
   margin: 15px;
 }
 .portal-fields-content {
-  border-right: 1px solid #13606F !important;
+  border-right: 1px solid #124E5E !important;
   min-height: 500px;
 }
 .portal-slider-legend {
@@ -3650,11 +3650,11 @@ th {
   margin-left: 45px!important;
 }
 .portalModuleRow {
-  border-left: 4px solid #13606F !important;
+  border-left: 4px solid #124E5E !important;
 }
 .portalMenuHeader {
-  border-bottom: 1px solid #13606F !important;
-  border-right: 1px solid #13606F !important;
+  border-bottom: 1px solid #124E5E !important;
+  border-right: 1px solid #124E5E !important;
   font-size: 22px;
 }
 .portalModuleRow .active {
@@ -4095,7 +4095,7 @@ tr.file > td.fileOwnerData {
   width: 185px;
   padding: 10px 15px 10px;
   margin: 0px 8px 8px 0px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   position: relative;
 }
 .engagementsSummary {
@@ -4123,7 +4123,7 @@ tr.file > td.fileOwnerData {
 }
 .engagementsContainer .summary.selected .count {
   font-weight: bold;
-  color: #7D4F2E;
+  color: #714133;
   font-size: 15px;
 }
 .engagement_contentempty {
@@ -4187,8 +4187,8 @@ tr.file > td.fileOwnerData {
 }
 .mailroomSelectedButton.disabled,
 .mailroomSelectedButton.disabled:hover {
-  background: #69d1e5;
-  border: 1px solid #22abc6;
+  background: #5cc4e0;
+  border: 1px solid #2295b4;
 }
 .conditionBlock {
   border: 1px solid #ddd;
@@ -4378,7 +4378,7 @@ tr.file > td.fileOwnerData {
 }
 .whiteContainer {
   background: #FFFFFF;
-  border: 1px solid #D1D5DB;
+  border: 1px solid #C9C7B8;
   padding: 20px;
 }
 .n_label_checkbox label {
@@ -4532,7 +4532,7 @@ form[name="notification_settings"] .select2-choice {
 }
 .tagContainer .tag-contents {
   display: inline-block;
-  border-right: 1px solid #E2E8F0;
+  border-right: 1px solid #DAD9CD;
   padding-right: 8px;
 }
 .tagContainer #addTagContainer {
@@ -4541,7 +4541,7 @@ form[name="notification_settings"] .select2-choice {
 .moreTags {
   margin: 0px 10px;
   text-decoration: underline !important;
-  color: #13606F;
+  color: #124E5E;
   /*font-size : 12px;*/
 }
 .tag {
@@ -4611,7 +4611,7 @@ form[name="notification_settings"] .select2-choice {
   margin-bottom: 5px;
 }
 .detailShowAllModal .selectTagContainerborder {
-  border-left: 3px solid #E2E8F0;
+  border-left: 3px solid #DAD9CD;
 }
 .detailShowAllModal .currentTag {
   height: 100px;
@@ -4684,7 +4684,7 @@ form[name="notification_settings"] .select2-choice {
   padding-left: 0;
 }
 .collectiveGroupMembers {
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   border-top: 0px;
   padding-left: 0px;
   padding-right: 0px;
@@ -4711,9 +4711,9 @@ form[name="notification_settings"] .select2-choice {
   margin: 0px;
 }
 .collectiveGroupMembers ul li.groupLabel {
-  background-color: #F4F7FB;
-  border-bottom: 1px solid #E2E8F0;
-  border-top: 1px solid #E2E8F0;
+  background-color: #FCFCF8;
+  border-bottom: 1px solid #DAD9CD;
+  border-top: 1px solid #DAD9CD;
   padding: 10px 5px;
   margin: 0px;
   color: #444444;
@@ -4787,7 +4787,7 @@ li.dashboardWidget {
 }
 .dashBoardWidgetFooter .footerIcons {
   padding: 8px 15px 0px 0px;
-  color: #D1D5DB;
+  color: #C9C7B8;
 }
 .dashBoardWidgetFooter .filterContainer {
   position: absolute;
@@ -4796,7 +4796,7 @@ li.dashboardWidget {
   height: auto;
   width: 100%;
   background: white;
-  border: 1px solid #D1D5DB;
+  border: 1px solid #C9C7B8;
   bottom: 30px;
   font-size: 11px;
 }
@@ -4858,7 +4858,7 @@ li.dashboardWidget {
 }
 .dashBoardContainer .dashboard_notebookWidget_viewarea {
   background-color: #FFFFFF;
-  border: 1px solid #D1D5DB;
+  border: 1px solid #C9C7B8;
   min-height: 150px;
 }
 .dashBoardContainer .dashboard_notebookWidget_textarea {
@@ -4899,7 +4899,7 @@ li.dashboardWidget {
   background: #F3F3F3;
 }
 #dependencyGraph .dependencyMapping .pickListDependencyTable .selectedCell {
-  background: #69d1e5;
+  background: #5cc4e0;
 }
 /******************************************* 
 ********** Rewriting select2 for consistency********
@@ -4996,7 +4996,7 @@ hr {
 .modal-overlay-footer {
   position: fixed;
   bottom: 0;
-  background: #F4F7FB;
+  background: #FCFCF8;
   /*width:100%;*/
   border-left: 42px solid #2c3b49;
   height: 60px;
@@ -5074,7 +5074,7 @@ hr {
   padding: 4px 6px;
 }
 .panel-collapse ul li a:hover {
-  background: #13606F;
+  background: #124E5E;
   opacity: 1;
 }
 .panel-collapse ul li a:hover a {
@@ -5161,7 +5161,7 @@ TN-34230 .row .nav > li > a:hover {
   margin-bottom: 10px;
 }
 .border1px {
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
 }
 .padding10 {
   padding: 10px;
@@ -5187,7 +5187,7 @@ TN-34230 .row .nav > li > a:hover {
   vertical-align: middle;
 }
 .layoutContent li.dummyRow {
-  border: 1px dotted #E2E8F0;
+  border: 1px dotted #DAD9CD;
   min-height: 116px;
   height: auto;
 }
@@ -5224,7 +5224,7 @@ TN-34230 .row .nav > li > a:hover {
 }
 #addRelationContainer .relationImages img.selected,
 #addRelationContainer .relationImages img:hover {
-  border: 5px solid #E2E8F0;
+  border: 5px solid #DAD9CD;
 }
 #addRelationContainer .relationImages h5 {
   margin-left: 20px;
@@ -5233,7 +5233,7 @@ TN-34230 .row .nav > li > a:hover {
 .layoutContent .addButton,
 .relatedTabModulesList .addButton {
   border-radius: 2px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   text-transform: uppercase;
   color: #666666;
   background: #FFFFFF;
@@ -5245,7 +5245,7 @@ TN-34230 .row .nav > li > a:hover {
 .relatedTabModulesList .addButton:focus,
 .relatedTabModulesList .addButton:active {
   background-color: #f9f9f9;
-  border: 1px solid #D1D5DB;
+  border: 1px solid #C9C7B8;
 }
 .layoutContent .blockFieldsList ul {
   list-style-type: none;
@@ -5263,7 +5263,7 @@ TN-34230 .row .nav > li > a:hover {
 .layoutContent .editFields {
   min-height: 116px;
   height: auto;
-  border-right: 1px solid #E2E8F0;
+  border-right: 1px solid #DAD9CD;
 }
 .layoutContent .fieldLabelContainer {
   padding-top: 15px;
@@ -5277,7 +5277,7 @@ TN-34230 .row .nav > li > a:hover {
   opacity: 1;
 }
 .relatedTabModulesList .relationListInfo {
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   border-left: 3px solid #6565D9;
 }
 .relatedTabModulesList .relatedListInfoHeader {
@@ -5369,10 +5369,10 @@ TN-34230 .row .nav > li > a:hover {
   padding: 6px 12px;
 }
 .weekDaySelect .ui-selecting {
-  background: #A3C2E0;
+  background: #8EBECC;
 }
 .weekDaySelect .ui-selected {
-  background: #13606F;
+  background: #124E5E;
   color: #FFFFFF;
 }
 .qtip {
@@ -5395,7 +5395,7 @@ TN-34230 .row .nav > li > a:hover {
   margin-bottom: 6px;
 }
 .dashboardHeading .dahBoardTabContainer {
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid #DAD9CD;
 }
 .module-filters.active {
   background: #F7F7F7;
@@ -5409,7 +5409,7 @@ TN-34230 .row .nav > li > a:hover {
   font-size: 16px;
 }
 .dashboardHeading .dahBoardTabContainer {
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid #DAD9CD;
 }
 .contactAdd {
   border: 1px solid #eee;
@@ -5873,7 +5873,7 @@ TN-34230 .row .nav > li > a:hover {
   min-height: 600px;
 }
 .portal-fields-container-wrapper {
-  border-right: 1px solid #E2E8F0;
+  border-right: 1px solid #DAD9CD;
   min-height: 600px;
 }
 .addFieldsBlock {
@@ -6002,7 +6002,7 @@ div.tooltip-inner {
 }
 .menuEditorItem {
   padding: 15px 5px;
-  background: #E2E8F0;
+  background: #DAD9CD;
   text-align: center;
   font-size: 1em;
   color: #FFFFFF;
@@ -6018,8 +6018,8 @@ div.tooltip-inner {
   font-size: 2em;
 }
 .menuEditorModuleItem {
-  background: #0F4B57;
-  border-bottom: 1px solid #E2E8F0;
+  background: #0F4350;
+  border-bottom: 1px solid #DAD9CD;
   cursor: move;
 }
 .menuEditorItem.menuEditorAddItem {
@@ -6055,7 +6055,7 @@ div.tooltip-inner {
 .editViewPageDiv .content-area,
 .editViewPageDiv.content-area,
 .editViewPageDiv .reports-content-area {
-  background: #F4F7FB;
+  background: #FCFCF8;
 }
 .detailViewContainer .HistoryContainer,
 .detailViewContainer .recentActivitiesContainer,
@@ -6271,7 +6271,7 @@ table#lineItemTab tbody tr > :nth-child(4) {
   vertical-align: middle;
 }
 .blockHeader {
-  border-color: #EAF1F8 #EAF1F8 #b1cbe5;
+  border-color: #F4F2EC #F4F2EC #d8d1bc;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   background-color: #474747;
   background-image: -moz-linear-gradient(top, #555555, #333333);
@@ -6457,7 +6457,7 @@ table#lineItemTab tbody tr > :nth-child(4) {
 .overlayEdit form .modal-body {
   padding-left: 10px;
   padding-right: 0px;
-  background: #F4F7FB;
+  background: #FCFCF8;
   height: 574px;
   overflow: auto;
 }
@@ -6625,7 +6625,7 @@ a.cp-modules:hover {
   left: -1px;
   cursor: pointer;
   width: 14px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   border-left: 0;
   display: inline-block;
 }
@@ -6724,7 +6724,7 @@ li.select2-search-choice div {
   left: -1px;
   cursor: pointer;
   width: 14px;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DAD9CD;
   border-left: 0;
   display: inline-block;
 }
@@ -7228,7 +7228,7 @@ input:focus:-ms-input-placeholder {
 }
 #OnBoardLayout #OnBoardPageContainer .step-tracker {
   padding: 1%;
-  background: #0F4B57;
+  background: #0F4350;
   min-height: 100px;
   width: 100%;
   z-index: 1;
@@ -7319,7 +7319,7 @@ input:focus:-ms-input-placeholder {
   padding: 1%;
 }
 #OnBoardLayout #OnBoardPageContainer .crmGoals .item:hover {
-  border-color: #0F4B57;
+  border-color: #0F4350;
 }
 #OnBoardLayout #OnBoardPageContainer .crmGoals .item:hover p {
   opacity: 1;
@@ -7355,7 +7355,7 @@ input:focus:-ms-input-placeholder {
   margin-top: 10px;
 }
 #OnBoardLayout #OnBoardPageContainer .PickRoles .item {
-  border: 1px solid #0F4B57;
+  border: 1px solid #0F4350;
   height: 100px;
   cursor: pointer;
   text-align: center;
@@ -7434,7 +7434,7 @@ input:focus:-ms-input-placeholder {
   text-align: center;
 }
 #OnBoardLayout #OnBoardPageContainer a.help {
-  color: #13606F;
+  color: #124E5E;
 }
 .importServiceSelectionContainer .app-item {
   text-align: center;
@@ -7783,7 +7783,7 @@ body .fc {
   width: 90%;
 }
 .modules-menu ul li.active a {
-  border-left: 3px solid #13606F;
+  border-left: 3px solid #124E5E;
   opacity: 1;
 }
 #vt-mask {
@@ -7927,64 +7927,104 @@ div.flip {
 
 /* ===== theme.css ===== */
 /*+**********************************************************************************
- * SamenTheme – SamenCRM brand for Vtiger CRM 8 (v7 layout), after samencloud.ir.
- * Load order (HEADERCSS links): brand.generated.css → theme.css → rtl.generated.css → rtl.css
- *  - brand.generated.css : Vtiger's own LESS skin recompiled with the brand palette (diff only)
- *  - theme.css (this)    : design tokens + modern component polish, all languages
- *  - rtl*.css            : right-to-left layout, only for body[data-language^="fa"]
+ * SamenTheme – SamenCRM look for Vtiger CRM 8 (v7 layout).
+ * The design follows the Samen cloud panel (SamenCloudSecurity front): cream surfaces, brown text, one teal
+ * accent; a header with the logo, a permanent icon rail of the apps with a slide-out sub-menu of their modules,
+ * soft "frame" cards, pill buttons, striped tables with a dark header rule; Vazir + Simple Line Icons.
+ * This file is appended to the compiled skin (tools/build_skin.py): skin LESS → theme.css → generated RTL → rtl.css
+ *  - theme.css (this) : design tokens + components, all languages
+ *  - rtl*.css         : right-to-left layout, only for body[data-language^="fa"]
  * Note: Vtiger's stylesheets are not in cascade layers, so this file is deliberately unlayered
  * (any @layer rule would lose to them).
  ************************************************************************************/
 
 /* ------------------------------------------------------------------ tokens */
 :root {
-	/* tier 1 – samencloud.ir palette */
-	--samen-teal-50: #EAF1F8;
-	--samen-teal-100: #D4E6EA;
-	--samen-teal-500: #13606F;
-	--samen-teal-700: #0F4B57;
-	--samen-teal-900: #0B3943;
-	--samen-brown-500: #7D4F2E;
-	--samen-brown-600: #6A4227;
-	--samen-copper-400: #D99058;
-	--samen-sky-200: #A3C2E0;
-	--samen-gray-50: #F4F7FB;
-	--samen-gray-200: #E2E8F0;
-	--samen-gray-300: #D1D5DB;
-	--samen-gray-500: #6B7280;
-	--samen-ink: #121721;
+	/* tier 1 – palette of the Samen cloud panel */
+	--olive-20: #FCFCF8;
+	--olive-40: #F4F2EC;
+	--olive-60: #FAF9F0;
+	--olive-100: #F1EFDA;
+	--olive-200: #E9E6C9;
+	--teal-900: #162B31;
+	--teal-800: #244650;
+	--teal-700: #124E5E;
+	--teal-500: #417E90;
+	--teal-200: #8EBECC;
+	--teal-100: #AED0DB;
+	--brown-900: #3A231D;
+	--brown-800: #502E24;
+	--brown-700: #714133;
+	--brown-500: #B0664F;
+	--red-700: #A30000;
+	--green-800: #008554;
+	/* names used by the other SamenCRM modules (calendar, widgets, academy, Telegram) */
+	--samen-teal-50: var(--olive-40);
+	--samen-teal-100: var(--olive-200);
+	--samen-teal-500: var(--teal-700);
+	--samen-teal-700: #0F4350;
+	--samen-teal-900: var(--teal-900);
+	--samen-brown-500: var(--brown-700);
+	--samen-brown-600: var(--brown-800);
+	--samen-copper-400: var(--brown-500);
+	--samen-sky-200: var(--teal-200);
+	--samen-gray-50: var(--olive-20);
+	--samen-gray-200: #DAD9CD;
+	--samen-gray-300: #C9C7B8;
+	--samen-gray-500: #7A6A64;
+	--samen-ink: var(--brown-900);
 
 	/* tier 2 – semantic */
-	--color-primary: var(--samen-teal-500);
-	--color-primary-strong: var(--samen-teal-700);
-	--color-primary-soft: var(--samen-teal-50);
-	--color-accent: var(--samen-brown-500);
-	--color-accent-strong: var(--samen-brown-600);
-	--color-highlight: var(--samen-copper-400);
-	--color-text: #1F2933;
-	--color-text-muted: var(--samen-gray-500);
-	--font-fa: 'Shabnam', Tahoma, 'Segoe UI', sans-serif;
+	--color-primary: var(--teal-700);
+	--color-primary-strong: var(--teal-800);
+	--color-primary-soft: var(--olive-40);
+	--color-accent: var(--brown-700);
+	--color-accent-strong: var(--brown-800);
+	--color-highlight: var(--teal-700);
+	--color-text: var(--brown-900);
+	--color-text-muted: rgb(58 35 29 / .62);
+	--color-on-primary: var(--olive-60);
+	--font-fa: 'Vazir', Tahoma, 'Segoe UI', sans-serif;
 
 	/* tier 3 – UI */
-	--surface-page: var(--samen-gray-50);
-	--surface-card: #FFFFFF;
-	--surface-rail: var(--samen-teal-700);
-	--ui-border: var(--samen-gray-200);
-	--ui-border-strong: var(--samen-gray-300);
-	--ui-radius: 10px;
+	--surface-page: var(--olive-20);
+	--surface-card: var(--olive-20);
+	--surface-bar: var(--olive-40);
+	--surface-menu: var(--olive-60);
+	--surface-rail: var(--olive-40);
+	--ui-border: rgb(83 78 34 / .2);
+	--ui-border-strong: rgb(83 78 34 / .34);
+	--ui-hover: rgb(147 140 60 / .1);
+	--ui-row-even: rgb(244 242 236 / .4);
+	--ui-row-hover: rgb(50 48 21 / .08);
+	--ui-radius: 12px;
 	--ui-radius-sm: 6px;
-	--ui-shadow: 0 1px 2px rgb(15 75 87 / .06), 0 4px 14px rgb(15 75 87 / .06);
-	--ui-shadow-pop: 0 10px 30px rgb(11 57 67 / .18);
-	--ui-focus: 0 0 0 3px rgb(19 96 111 / .22);
-	--topbar-height: 48px;
+	--ui-shadow: 1px 1px 6px rgb(83 78 34 / .2), inset 1px 1px 5px rgb(244 242 236 / .8);
+	--ui-shadow-bar: 1px 1px 10px rgb(115 109 47 / .2);
+	--ui-shadow-pop: 0 2px 15px rgb(83 78 34 / .16);
+	--ui-shadow-modal: 0 12px 34px rgb(50 48 21 / .2);
+	--ui-focus: 0 0 0 3px rgb(18 78 94 / .18);
+	--topbar-height: 46px;
+	--rail-width: 0px;
+	--subnav-width: 200px;
+}
+@media (min-width: 992px) {
+	:root { --topbar-height: 68px; --rail-width: 100px; }
 }
 
 @font-face {
-	font-family: 'Shabnam';
-	src: url('../../../modules/SamenTheme/resources/fonts/Shabnam.ttf') format('truetype');
+	font-family: 'Vazir';
+	src: url('../../../modules/SamenTheme/resources/fonts/Vazir-Variable.woff2') format('woff2');
 	font-weight: 100 900;
 	font-style: normal;
 	font-display: swap;
+}
+@font-face {
+	font-family: 'simple-line-icons';
+	src: url('../../../modules/SamenTheme/resources/fonts/Simple-Line-Icons.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
 }
 
 /* ------------------------------------------------------------------ base */
@@ -7995,22 +8035,21 @@ body {
 }
 a { color: var(--color-primary); }
 a:hover, a:focus { color: var(--color-primary-strong); }
-::selection { background: var(--samen-teal-100); }
+::selection { background: var(--teal-100); }
+hr { border-top-color: var(--ui-border); }
 
-/* ------------------------------------------------------------------ top bar */
+/* ------------------------------------------------------------------ header
+   [logo] ............ [search] [help] [bell] [+] [calendar] [reports] [tasks] [user] */
 .app-fixed-navbar {
-	background: var(--surface-card) !important;
-	border-bottom: 1px solid var(--ui-border) !important;
-	box-shadow: 0 1px 0 rgb(125 79 46 / .25), var(--ui-shadow);
+	background: var(--surface-page) !important;
+	border: 0 !important;
+	box-shadow: none;
 }
-.app-fixed-navbar::after {             /* thin brand line under the bar */
-	content: '';
-	position: absolute;
-	inset-inline: 0;
-	inset-block-end: -3px;
-	height: 2px;
-	background: linear-gradient(90deg, var(--samen-teal-500), var(--samen-copper-400), var(--samen-brown-500));
-	pointer-events: none;
+.app-fixed-navbar .global-nav {
+	background: var(--surface-bar);
+	box-shadow: var(--ui-shadow-bar);
+	position: relative;
+	z-index: 3;
 }
 .app-fixed-navbar .logo-container .company-logo img {
 	max-height: 38px;
@@ -8018,217 +8057,514 @@ a:hover, a:focus { color: var(--color-primary-strong); }
 	margin-top: 4px;
 }
 .app-fixed-navbar .search-link {
-	border-radius: 999px;
-	background: var(--surface-page);
-	border-color: var(--ui-border) !important;
+	border: 1px solid var(--ui-border) !important;
+	border-radius: var(--ui-radius-sm);
+	background: transparent;
+	color: var(--color-text-muted);
 	transition: box-shadow .15s, border-color .15s;
 }
+.app-fixed-navbar .search-link .keyword-input { background: transparent; color: var(--color-text); }
+.app-fixed-navbar .search-link .keyword-input::placeholder { color: var(--color-text-muted); }
 .app-fixed-navbar .search-link:focus-within {
 	border-color: var(--color-primary) !important;
 	box-shadow: var(--ui-focus);
-	background: #fff;
+	background: var(--surface-page);
 }
 .app-fixed-navbar .global-actions .nav > li > a,
+.app-fixed-navbar .global-actions .nav > li > div > a,
 .app-fixed-navbar .global-actions .fa,
-.app-fixed-navbar .global-actions [class^="vicon-"] { color: var(--samen-teal-700); }
-.app-fixed-navbar .global-actions .nav > li > a:hover { background: var(--color-primary-soft); border-radius: var(--ui-radius-sm); }
-#appnavigator { background: var(--surface-rail) !important; }
-#appnavigator .app-icon { color: #fff; }
+.app-fixed-navbar .global-actions [class^="vicon-"] { color: var(--color-text); transition: color .2s; }
+.app-fixed-navbar .global-actions .nav > li > a:hover,
+.app-fixed-navbar .global-actions .nav > li > div > a:hover,
+.app-fixed-navbar .global-actions .nav > li > a:hover .fa,
+.app-fixed-navbar .global-actions .nav > li:hover > div > a { color: var(--color-primary); background: transparent; }
+.app-fixed-navbar .navbar-toggle, .app-fixed-navbar .navbar-toggle .fa { color: var(--color-text); background: transparent !important; }
+#appnavigator { background: transparent !important; }
+#appnavigator .app-navigator { background: transparent !important; }
+#appnavigator .app-icon { color: var(--color-text) !important; opacity: 1 !important; }
+.global-nav .app-switcher-container .app-navigator:hover { background: var(--ui-hover) !important; }
 
-/* ------------------------------------------------------------------ navigation: app drawer, sub-menus, rail
-   Vtiger's stock rules dim everything (opacity .7–.8, slate #2C3B49 boxes, text-shadow); replaced with
-   high-contrast white text, sky icons and a copper marker for the active/hover item. */
-.app-menu {
-	background: var(--samen-teal-900) !important;
-	color: #fff;
-	box-shadow: var(--ui-shadow-pop);
-	padding-block: 6px 50px;
+/* module bar under the header: module icon, breadcrumb, page actions */
+.app-fixed-navbar .app-nav { background: var(--surface-page); }
+.app-nav .module-action-bar .module-action-content,
+.module-action-bar, .detailview-header-block, .settingsPageDiv .module-action-bar {
+	background: var(--surface-page) !important;
+	border-bottom: 1px solid var(--ui-border);
 }
-.app-menu hr, .app-menu .app-list-divider { border-top: 1px solid rgb(255 255 255 / .12); margin: 6px 12px; padding: 0; }
+.app-nav .app-indicator-icon-container { background: transparent !important; color: var(--color-primary) !important; }
+.app-nav .app-indicator-icon-container .app-indicator-icon,
+.app-nav .app-indicator-icon-container .fa, .app-nav .app-indicator-icon-container [class*="vicon-"] { color: var(--color-primary) !important; }
+.module-action-bar .module-title, .module-breadcrumb a, .current-filter-name { color: var(--color-text); font-weight: 700; }
+.module-breadcrumb a:hover { color: var(--color-primary); }
+
+/* ------------------------------------------------------------------ navigation – shared (drawer on phones/tablets, rail on desktop)
+   .app-menu > .app-list > (.app-item | .app-modules-dropdown-container > .app-item + ul.app-modules-dropdown) */
+.app-menu {
+	background: var(--surface-menu) !important;
+	color: var(--color-text);
+	box-shadow: var(--ui-shadow-pop);
+}
+.app-menu hr, .app-menu .app-list-divider { border-top: 1px solid var(--ui-border); margin: 0; padding: 0; }
 .app-menu .app-item, .app-menu .menu-item.app-item {
 	background: transparent !important;
 	opacity: 1 !important;
 	text-shadow: none !important;
-	color: #fff !important;
-	margin: 2px 8px !important;
-	padding: 10px 12px !important;
+	color: var(--color-text) !important;
 	border: 0 !important;
-	border-radius: 8px;
-	font-size: 14px;
-	line-height: 1.5;
-	transition: background-color .15s, box-shadow .15s;
+	border-radius: 0;
+	cursor: pointer;
+	position: relative;
+	transition: color .2s, background-color .2s;
 }
-.app-menu .app-item > div, .app-menu .app-item .row { display: flex; align-items: center; gap: 10px; margin: 0; }
-.app-menu .app-item [class*="col-"] { float: none; width: auto; padding: 0; }
-.app-menu .app-item .app-name { flex: 1; max-width: none; padding: 0; color: #fff; font-weight: 500; }
+.app-menu .app-item .app-name { color: inherit; }
 .app-menu .app-item .fa, .app-menu .app-item .app-icon-list, .app-menu .app-item [class*="vicon-"] {
-	color: var(--samen-sky-200) !important;
+	color: inherit !important;
 	opacity: 1 !important;
-	font-size: 18px;
-	width: 22px;
-	text-align: center;
 }
-.app-menu .app-item .fa-chevron-right, .app-menu .app-item .fa-chevron-left { font-size: 11px; width: auto; color: rgb(255 255 255 / .55) !important; padding: 0; }
-.app-menu .app-item:hover, .app-menu .active-app-item, .app-menu .open > .app-item {
-	background: rgb(255 255 255 / .09) !important;
-	box-shadow: inset 3px 0 0 var(--color-highlight);
+.app-menu .app-item:hover, .app-menu .active-app-item, .app-menu .open > .app-item, .app-menu .app-item.samen-active { color: var(--color-primary) !important; }
+/* the app in use: a rounded marker on the reading-start edge (as in the panel) */
+.app-menu .app-item.samen-active::after {
+	content: '';
+	position: absolute;
+	inset-inline-start: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 5px;
+	height: 65%;
+	border-radius: 10px;
+	background: var(--color-primary);
 }
-.app-menu .app-item:hover .fa, .app-menu .active-app-item .fa { color: #fff !important; }
+/* line icons for the apps (FontAwesome glyphs replaced) */
+.app-menu .app-item > div > .app-icon-list { font-family: 'simple-line-icons' !important; font-weight: 400; font-style: normal; line-height: 1; -webkit-font-smoothing: antialiased; }
+.app-menu .app-item > div > .app-icon-list > i { display: none; }
+.app-menu .app-item > div > .app-icon-list::before { content: "\e06a"; }
+.app-menu .app-item[data-app-name="MARKETING"] > div > .app-icon-list::before { content: "\e001"; }
+.app-menu .app-item[data-app-name="SALES"] > div > .app-icon-list::before { content: "\e077"; }
+.app-menu .app-item[data-app-name="INVENTORY"] > div > .app-icon-list::before { content: "\e04d"; }
+.app-menu .app-item[data-app-name="SUPPORT"] > div > .app-icon-list::before { content: "\e056"; }
+.app-menu .app-item[data-app-name="PROJECT"] > div > .app-icon-list::before { content: "\e04b"; }
+.app-menu .app-item[data-app-name="TOOLS"] > div > .app-icon-list::before { content: "\e052"; }
+.app-menu .app-item[data-default-url*="module=MailManager"] > div > .app-icon-list::before { content: "\e086"; }
+.app-menu .app-item[data-default-url*="module=Documents"] > div > .app-icon-list::before { content: "\e040"; }
+.app-menu .dropdown-compact > .app-item > div > .app-icon-list::before { content: "\e09a"; }
+/* Extension Store = vtiger.com marketplace: not part of SamenCRM (theme.js redirects it too) */
+.app-menu .app-item[data-default-url*="ExtensionStore"] { display: none !important; }
 
-/* app sub-menu (modules of the hovered app) */
+/* sub-menu: the modules of an app */
 .app-menu .app-modules-dropdown {
-	background: var(--samen-teal-700) !important;
+	background: var(--surface-page) !important;
 	border: 0 !important;
-	box-shadow: var(--ui-shadow-pop) !important;
-	padding: 8px 0 !important;
+	text-shadow: none !important;
 	font-size: 14px;
-	text-shadow: none !important;
+	margin: 0;
 }
-.app-menu .app-modules-dropdown li { opacity: 1 !important; padding: 0 8px !important; background: transparent !important; }
+.app-menu .app-modules-dropdown li { opacity: 1 !important; padding: 0 !important; background: transparent !important; list-style: none; }
 .app-menu .app-modules-dropdown li a {
-	color: #fff !important;
+	color: var(--color-text) !important;
 	text-shadow: none !important;
-	padding: 10px 12px !important;
-	border-radius: 8px;
+	background: transparent !important;
+	padding: 8px 12px !important;
 	display: flex !important;
 	align-items: center;
-	gap: 10px;
-	transition: background-color .15s;
+	gap: 8px;
+	position: relative;
+	line-height: 1.6;
+	transition: color .3s;
 }
 .app-menu .app-modules-dropdown li a .module-icon, .app-menu .app-modules-dropdown li a .fa,
 .app-menu .app-modules-dropdown li a [class*="vicon-"], .app-menu .app-modules-dropdown li a i {
-	color: var(--samen-sky-200) !important;
+	color: inherit !important;
 	opacity: 1 !important;
-	font-size: 17px;
-	width: 22px;
+	font-size: 16px;
+	width: 20px;
 	text-align: center;
+	flex: none;
 }
-.app-menu .app-modules-dropdown li a .module-name, .app-menu .app-modules-dropdown li a span { color: #fff !important; padding: 0 !important; max-width: none; }
-.app-menu .app-modules-dropdown li:hover a, .app-menu .app-modules-dropdown li a:focus-visible {
-	background: rgb(255 255 255 / .10) !important;
-	outline: 0;
+.app-menu .app-modules-dropdown li a .module-name, .app-menu .app-modules-dropdown li a span { color: inherit !important; padding: 0 !important; max-width: none; }
+.app-menu .app-modules-dropdown li:hover a, .app-menu .app-modules-dropdown li a:focus-visible,
+.app-menu .app-modules-dropdown li a.samen-active { color: var(--color-primary) !important; outline: 0; }
+.app-menu .app-modules-dropdown li a.samen-active { font-weight: 700; }
+.app-menu .app-modules-dropdown li a.samen-active::after {
+	content: '';
+	position: absolute;
+	inset-inline-start: 2px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--color-primary);
 }
-.app-menu .app-modules-dropdown li:hover a .module-icon, .app-menu .app-modules-dropdown li:hover a i { color: #fff !important; }
-
-/* module rail */
-.module-nav, .main-container .module-nav { background: var(--samen-teal-700) !important; }
-.module-nav .modules-menu ul li a { color: #fff; opacity: .72; transition: background-color .15s, opacity .15s; }
-.module-nav .modules-menu ul li a .fa, .module-nav .modules-menu ul li a [class*="vicon-"] { color: #fff; }
-.module-nav .modules-menu ul li:hover a, .module-nav .modules-menu ul li.active a { background: var(--samen-teal-900); opacity: 1; }
-.module-nav .modules-menu ul li.active a { box-shadow: inset 3px 0 0 var(--color-highlight); border: 0 !important; }
-
-/* settings sidebar */
-.settingsgroup, .settingsgroup .panel-collapse, .settingsgroup div.panel-collapse, .settingsgroup .panel-group .panel {
-	background: var(--samen-teal-700) !important;
-}
-.settingsgroup .settingsgroup-accordion a { color: #fff !important; font-weight: 600; padding: 11px 16px; }
-.settingsgroup .settingsgroup-accordion a span { text-transform: none; }
-.settingsgroup .settingsgroup-accordion .fa { color: var(--samen-sky-200); }
-.settingsgroup ul.list-group { padding: 2px 8px 8px; background: var(--samen-teal-900); margin: 0; }
-.settingsgroup ul li a, .settingsgroup ul li a.menuItemLabel {
-	color: rgb(255 255 255 / .9) !important;
-	padding: 8px 14px !important;
-	border-radius: 7px;
-	margin-block: 1px;
-	transition: background-color .15s;
-}
-.settingsgroup ul li a:hover { background: rgb(255 255 255 / .08); color: #fff !important; }
-.settingsgroup ul li a.settingsgroup-menu-color, .settingsgroup .settingsgroup-menu-color {
-	background: rgb(255 255 255 / .14) !important;
-	color: #fff !important;
-	box-shadow: inset 3px 0 0 var(--color-highlight);
-	font-weight: 600;
-}
-.settingsgroup input[type="text"], .settingsgroup .form-control { background: rgb(255 255 255 / .1); border-color: transparent; color: #fff; }
-.settingsgroup input::placeholder { color: rgb(255 255 255 / .6); }
-
-/* ------------------------------------------------------------------ page chrome */
-.module-action-bar, .detailview-header-block, .settingsPageDiv .module-action-bar {
-	background: var(--surface-card);
+.app-menu .app-modules-dropdown li.samen-sub-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 14px 14px 10px !important;
+	margin-bottom: 4px;
+	color: var(--color-text);
+	font-weight: 300;
 	border-bottom: 1px solid var(--ui-border);
 }
-.module-action-bar .module-title, .module-breadcrumb a, .current-filter-name { color: var(--samen-teal-700); font-weight: 600; }
-.sidebar-essentials { background: var(--surface-card); border-color: var(--ui-border) !important; }
-.sidebar-essentials .lists-menu li a:hover, .sidebar-essentials .lists-menu li.active a { color: var(--color-primary); background: var(--color-primary-soft); }
+.app-menu .app-modules-dropdown li.samen-sub-title::before {     /* chevron of the panel's accordion titles */
+	content: '';
+	width: 9px; height: 9px;
+	border-inline-end: 2px solid var(--color-text);
+	border-bottom: 2px solid var(--color-text);
+	transform: rotate(45deg);
+	margin-top: -4px;
+	flex: none;
+}
+.app-menu .mCSB_scrollTools { display: none !important; }
+.app-menu .mCustomScrollBox, .app-menu .mCSB_container { height: auto !important; max-height: none !important; overflow: visible !important; margin: 0 !important; top: 0 !important; }
 
-/* cards: list, detail blocks, widgets, modals */
+/* ---- phones and tablets: a drawer; the sub-menu opens inside it under its app */
+@media (max-width: 991px) {
+	.app-menu { width: min(82vw, 320px) !important; max-width: none !important; overflow-y: auto !important; padding: 0 0 40px !important; }
+	.app-menu > .container-fluid > .row:first-child { border-bottom: 1px solid var(--ui-border); margin: 0; }
+	.app-menu .app-switcher-container .app-navigator { background: transparent !important; }
+	.app-menu .app-switcher-container .app-icon { color: var(--color-text) !important; opacity: 1 !important; }
+	.app-menu .app-list { margin: 0 !important; }
+	.app-menu .app-item, .app-menu .menu-item.app-item { margin: 0 !important; padding: 12px 16px !important; border-bottom: 1px solid var(--ui-border) !important; font-size: 15px; }
+	.app-menu .app-item > div { display: flex; align-items: center; gap: 12px; padding: 0; }
+	.app-menu .app-item .app-icon-list { font-size: 20px; width: 24px; text-align: center; flex: none; }
+	.app-menu .app-item .app-name { flex: 1; max-width: none; padding: 0; }
+	.app-menu .app-item .fa-chevron-right { font-size: 11px; width: auto; padding: 0; transform: rotate(90deg); transition: transform .3s; }
+	.app-menu .open > .app-item .fa-chevron-right { transform: rotate(-90deg); }
+	.app-menu .app-modules-dropdown {
+		position: static !important; float: none; width: 100% !important; max-width: none !important; height: auto !important;
+		display: none; box-shadow: none !important; background: var(--surface-bar) !important; padding: 4px 0 !important;
+		border-bottom: 1px solid var(--ui-border) !important; overflow: visible !important;
+	}
+	.app-menu .open > .app-modules-dropdown { display: block; }
+	.app-menu .app-modules-dropdown li a { padding: 9px 30px !important; }
+	.app-menu .app-modules-dropdown li.samen-sub-title { display: none; }
+	.app-menu .app-item.samen-active::after { height: 60%; }
+}
+
+/* ---- desktop: the menu is a permanent rail under the header, its sub-menu a panel beside it */
+@media (min-width: 992px) {
+	#appnavigator { display: none !important; }
+	.app-fixed-navbar .global-nav { height: var(--topbar-height); padding-inline: 24px; }
+	.app-fixed-navbar .global-nav > .row { display: flex; align-items: center; height: 100%; margin: 0; }
+	.app-fixed-navbar .global-nav > .row > [class*="col-"] { float: none !important; width: auto; padding-inline: 8px; }
+	.app-fixed-navbar .global-nav > .row > .app-navigator-container { flex: none; height: auto; padding-inline-start: 0; }
+	.app-fixed-navbar .global-nav > .row > .app-navigator-container > .row { margin: 0; display: flex; align-items: center; }
+	.app-fixed-navbar .global-nav .logo-container { float: none !important; width: auto !important; padding: 0 !important; margin: 0; }
+	.app-fixed-navbar .global-nav .logo-container > .row { margin: 0; }
+	.app-fixed-navbar .logo-container .company-logo img { max-height: 46px; margin: 0; display: block; }
+	.app-fixed-navbar .global-nav > .row > .navbar-header { display: none; }
+	.app-fixed-navbar .global-nav > .row > .col-sm-3 { flex: 0 1 380px; margin-inline-start: auto; }
+	.app-fixed-navbar #search-links-container { padding: 0 !important; display: block !important; height: auto !important; }
+	.app-fixed-navbar .search-link { float: none; display: flex; align-items: center; gap: 6px; height: 40px; margin: 0; width: 100%; }
+	.app-fixed-navbar .search-link .keyword-input { flex: 1; width: auto; margin: 0; height: 36px; }
+	.app-fixed-navbar .search-link .adv-search { margin: 0; float: none !important; }
+	.app-fixed-navbar .global-nav > .row > #navbar { flex: none; display: block !important; height: auto !important; padding-inline-end: 0; margin: 0; }
+	.app-fixed-navbar #navbar > ul.nav { display: flex; align-items: center; gap: 2px; margin: 0; float: none; }
+	.app-fixed-navbar #navbar > ul.nav > li { float: none; }
+	.app-fixed-navbar #navbar > ul.nav > li > a, .app-fixed-navbar #navbar > ul.nav > li > div > a {
+		display: flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; padding: 0 10px; border-radius: var(--ui-radius-sm);
+	}
+	.app-fixed-navbar #navbar > ul.nav > li > a:hover, .app-fixed-navbar #navbar > ul.nav > li > div > a:hover { background: var(--ui-hover) !important; }
+	/* the signed-in user: a bordered box at the end of the header, like the panel's profile box */
+	.app-fixed-navbar #navbar > ul.nav > li:last-child > a, .app-fixed-navbar #navbar > ul.nav > li:last-child > div > a,
+	.app-fixed-navbar #navbar > ul.nav > li.samen-user > a {
+		border: 1px solid var(--ui-border); min-width: 44px; margin-inline-start: 6px;
+	}
+
+	.app-fixed-navbar .app-nav { margin-inline-start: var(--rail-width); }
+	#page { padding-top: calc(var(--topbar-height) + 42px) !important; padding-inline-start: var(--rail-width); }
+	body > .app-footer, body > footer { margin-inline-start: var(--rail-width); }
+
+	.app-menu, .app-menu.hide {
+		display: block !important;
+		position: fixed !important;
+		top: var(--topbar-height) !important;
+		left: 0 !important; right: auto !important;
+		width: var(--rail-width) !important;
+		max-width: var(--rail-width) !important;
+		height: calc(100vh - var(--topbar-height)) !important;
+		max-height: none !important;
+		opacity: 1 !important;
+		overflow: visible !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		background: var(--surface-rail) !important;
+		border: 0 !important;
+		border-inline-end: 1px solid var(--ui-border) !important;
+		box-shadow: none !important;
+		z-index: 1096;            /* above the fixed header (1095), below Vtiger's overlays */
+	}
+	.app-menu > .container-fluid { padding: 0; height: 100%; position: relative; z-index: 1; background: var(--surface-rail); }
+	.app-menu > .container-fluid > .row:first-child { display: none; }
+	.app-menu .app-list {
+		margin: 0 !important; height: 100%; display: flex; flex-direction: column;
+		overflow-x: hidden; overflow-y: auto; scrollbar-width: none;
+	}
+	.app-menu .app-list::-webkit-scrollbar { display: none; }
+	.app-menu .app-list > .app-item, .app-menu .app-list > .app-modules-dropdown-container {
+		flex: 1 0 auto; min-height: 68px; max-height: 104px; border-bottom: 1px solid var(--ui-border) !important; float: none; width: 100%;
+	}
+	.app-menu .app-modules-dropdown-container { display: flex; }
+	.app-menu .app-modules-dropdown-container > .app-item { flex: 1; }
+	.app-menu .app-item, .app-menu .menu-item.app-item {
+		margin: 0 !important; padding: 4px 2px !important; display: flex; align-items: center; justify-content: center; font-size: 13px;
+	}
+	.app-menu .app-item > div { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0 !important; width: 100%; }
+	.app-menu .app-item .app-icon-list { font-size: 24px; width: auto; max-width: none; margin: 0 !important; }
+	.app-menu .app-item .app-name {
+		display: block; max-width: 92px; padding: 0 !important; margin: 0; white-space: normal; text-align: center;
+		line-height: 1.35; font-size: 13px; font-weight: 400; overflow: visible;
+	}
+	.app-menu .app-item .fa-chevron-right, .app-menu .app-item .fa-chevron-left { display: none !important; }
+	.app-menu .app-list-divider { display: none; }
+
+	.app-menu .app-modules-dropdown {
+		position: fixed !important;
+		top: var(--topbar-height) !important;
+		left: var(--rail-width) !important; right: auto !important;
+		width: var(--subnav-width) !important;
+		height: calc(100vh - var(--topbar-height)) !important;
+		padding: 0 0 12px !important;
+		border-radius: 0 16px 16px 0;
+		box-shadow: 6px 2px 15px rgb(83 78 34 / .12) !important;
+		overflow-x: hidden !important; overflow-y: auto !important;
+		z-index: 0;
+	}
+	.app-menu .app-modules-dropdown li a { margin-inline: 12px; padding-inline: 10px !important; }
+
+	/* the old 42px strip of module icons is replaced by the rail's sub-menu; its width stays as the page gutter */
+	.main-container .module-nav, .module-nav .modules-menu, .module-nav .mod-switcher-container { background: transparent !important; }
+	.module-nav .modules-menu > ul, .module-nav .modules-menu .mCustomScrollBox { visibility: hidden; }
+}
+
+/* ------------------------------------------------------------------ settings sidebar: cream, accordion titles, teal for the page in use */
+.settingsgroup, .settingsgroup .panel-collapse, .settingsgroup div.panel-collapse, .settingsgroup .panel-group .panel,
+.settingsNav, .settingsgroup .panel-heading {
+	background: var(--surface-bar) !important;
+	color: var(--color-text);
+}
+.settingsgroup .panel { border: 0 !important; box-shadow: none !important; border-bottom: 1px solid var(--ui-border) !important; border-radius: 0 !important; margin: 0 !important; }
+.settingsgroup .settingsgroup-accordion a { color: var(--color-text) !important; font-weight: 500; padding: 11px 16px; }
+.settingsgroup .settingsgroup-accordion a:hover { color: var(--color-primary) !important; }
+.settingsgroup .settingsgroup-accordion a span { text-transform: none; }
+.settingsgroup .settingsgroup-accordion .fa { color: inherit; }
+.settingsgroup ul.list-group { padding: 0 8px 8px; background: transparent; margin: 0; }
+.settingsgroup ul li, .settingsgroup .list-group-item { background: transparent !important; border: 0 !important; }
+.settingsgroup ul li a, .settingsgroup ul li a.menuItemLabel {
+	color: var(--color-text) !important;
+	padding: 7px 14px !important;
+	border-radius: var(--ui-radius-sm);
+	margin-block: 1px;
+	position: relative;
+	transition: color .3s;
+}
+.settingsgroup ul li a:hover { background: transparent; color: var(--color-primary) !important; }
+.settingsgroup ul li a.settingsgroup-menu-color, .settingsgroup .settingsgroup-menu-color {
+	background: transparent !important;
+	color: var(--color-primary) !important;
+	box-shadow: none !important;
+	font-weight: 700;
+}
+.settingsgroup ul li a.settingsgroup-menu-color::after {
+	content: ''; position: absolute; inset-inline-start: 4px; top: 50%; transform: translateY(-50%);
+	width: 4px; height: 4px; border-radius: 50%; background: var(--color-primary);
+}
+.settingsgroup input[type="text"], .settingsgroup .form-control { background: var(--surface-page); border-color: var(--ui-border); color: var(--color-text); }
+.settingsgroup input::placeholder { color: var(--color-text-muted); }
+
+/* ------------------------------------------------------------------ page chrome */
+.sidebar-essentials { background: var(--surface-page); border-color: var(--ui-border) !important; }
+.sidebar-essentials .sidebar-header, .sidebar-essentials .lists-header, .sidebar-essentials h5, .sidebar-essentials h6 { color: var(--color-text); font-weight: 700; }
+.sidebar-essentials .lists-menu li a { color: var(--color-text); transition: color .3s; }
+.sidebar-essentials .lists-menu li a:hover, .sidebar-essentials .lists-menu li.active a { color: var(--color-primary); background: transparent; }
+.sidebar-essentials .lists-menu li.active a { font-weight: 700; }
+.essentials-toggle { background: var(--surface-page); border-color: var(--ui-border); color: var(--color-text); }
+.detailViewContainer .content-area, .editViewPageDiv .content-area, .editViewPageDiv.content-area, .content-area { background: transparent; }
+
+/* frames: list, detail blocks, widgets (the panel's .frame: rounded-xl, soft double shadow, no border) */
 .listViewPageDiv .listViewEntriesDiv, .list-content, .block, .summaryView, .summaryWidgetContainer,
 .dashboardWidget, .details .block, .editViewContents .fieldBlockContainer, .detailview-content .block {
 	background: var(--surface-card);
-	border: 1px solid var(--ui-border) !important;
+	border: 0 !important;
 	border-radius: var(--ui-radius);
 	box-shadow: var(--ui-shadow);
 }
 .block > div > h4, .fieldBlockHeader, .summaryWidgetContainer .widget_header h4,
 .dashboardWidgetHeader .dashboardTitle, .detailview-content .block h4 {
-	color: var(--samen-teal-700);
+	color: var(--color-text);
 	font-weight: 700;
 }
-.dashboardWidgetHeader { background: var(--color-primary-soft) !important; border-radius: var(--ui-radius) var(--ui-radius) 0 0; }
-.modal-content { border-radius: var(--ui-radius); border: 0; box-shadow: var(--ui-shadow-pop); overflow: hidden; }
-.modal-header { background: var(--samen-teal-700) !important; color: #fff; }
-.modal-header .close, .modal-header .fa { color: #fff; opacity: .9; }
-.modal-footer { background: var(--surface-page) !important; }
+.dashboardWidgetHeader { background: transparent !important; border-bottom: 1px solid var(--ui-border); border-radius: var(--ui-radius) var(--ui-radius) 0 0; }
+.dashboardWidget .dashboardWidgetFooter, .dashboardWidget .widgeticons { background: transparent !important; }
+.fieldLabel, .fieldLabel label, td.fieldLabel, .summary-table .fieldLabel label { color: var(--color-text-muted); }
 
-/* tables */
+/* dialogs: cream card, plain title with a rule under it, actions at the end */
+.modal-content { border-radius: var(--ui-radius); border: 0; box-shadow: var(--ui-shadow-modal); overflow: hidden; background: var(--surface-page); }
+.modal-header { background: var(--surface-page) !important; color: var(--color-text) !important; border-bottom: 1px solid var(--ui-border) !important; }
+.modal-header :is(h1, h2, h3, h4, h5, .modal-title, .pull-left, span) { color: var(--color-text) !important; font-weight: 700; }
+.modal-header .close, .modal-header .fa, .modal-header button.close { color: var(--brown-800) !important; opacity: .8; text-shadow: none; }
+.modal-body { background: var(--surface-page); }
+.modal-footer { background: var(--surface-page) !important; border-top: 1px solid var(--ui-border) !important; }
+.modal-backdrop.in { background: var(--olive-20); opacity: .6; }
+.popover, .qtip { border-color: var(--ui-border); box-shadow: var(--ui-shadow-pop); background: var(--surface-menu); color: var(--color-text); }
+
+/* tables: header on the page colour with a dark rule, striped rows, soft hover */
 .listview-table > thead > tr > th, .listViewEntriesTable thead th, .table > thead > tr > th {
-	background: var(--color-primary-soft);
-	color: var(--samen-teal-700);
-	font-weight: 600;
-	border-bottom: 1px solid var(--samen-teal-100) !important;
+	background: var(--surface-page);
+	color: var(--color-text);
+	font-weight: 700;
+	border-bottom: 2px solid var(--brown-800) !important;
+	border-top: 0 !important;
+	white-space: nowrap;
 }
-.listview-table > tbody > tr:hover > td, .listViewEntries:hover > td { background: var(--surface-page) !important; }
-.listViewEntryValue a, .listview-table td a { color: var(--samen-teal-700); }
+.table > tbody > tr > td, .listview-table > tbody > tr > td { border-top: 0; border-bottom: 1px solid var(--ui-border); color: var(--color-text); }
+.listview-table > tbody > tr:nth-child(even) > td, .table-striped > tbody > tr:nth-child(even) > td { background: var(--ui-row-even); }
+.listview-table > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > td { background: var(--surface-page); }
+.listview-table > tbody > tr:hover > td, .listViewEntries:hover > td, .table-hover > tbody > tr:hover > td { background: var(--ui-row-hover) !important; }
+.listViewEntryValue a, .listview-table td a { color: var(--color-primary); }
+.table-bordered, .table-bordered > thead > tr > th, .table-bordered > tbody > tr > td { border-color: var(--ui-border); }
 
-/* tabs (detail view related tabs) */
+/* tabs */
 .related-tabs .nav-tabs > li.active > a, .related-tabs .nav-tabs > li.active, .nav-tabs > li.active > a {
 	color: var(--color-primary) !important;
 	border-bottom-color: var(--color-primary) !important;
+	background: transparent !important;
 }
 .related-tabs .nav-tabs > li.active { border-bottom: 3px solid var(--color-primary) !important; }
+.nav-tabs { border-bottom-color: var(--ui-border); }
+.nav-tabs > li > a { color: var(--color-text); }
+.nav-tabs > li > a:hover { color: var(--color-primary); background: transparent; border-color: transparent; }
 
-/* ------------------------------------------------------------------ controls */
-.btn { border-radius: var(--ui-radius-sm); transition: background-color .15s, border-color .15s, box-shadow .15s; }
+/* ------------------------------------------------------------------ controls
+   filled = teal pill, outlined = teal 2px border pill (the panel's .filled-btn / .outlined-btn) */
+.btn { border-radius: 999px; transition: background-color .2s, border-color .2s, color .2s, box-shadow .2s; text-shadow: none !important; background-image: none !important; box-shadow: none; }
 .btn:focus-visible { box-shadow: var(--ui-focus); outline: 0; }
-.btn-success, .btn-primary, .btn-submit, .saveButton {
+.btn-success, .btn-primary, .btn-submit, .saveButton, .btn-info {
 	background: var(--color-primary) !important;
-	border-color: var(--color-primary-strong) !important;
-	color: #fff !important;
-	background-image: none !important;
+	border-color: var(--color-primary) !important;
+	color: var(--color-on-primary) !important;
 }
-.btn-success:hover, .btn-primary:hover, .saveButton:hover { background: var(--color-primary-strong) !important; }
-.btn-default { background: var(--surface-card); border-color: var(--ui-border-strong); color: var(--samen-teal-700); }
-.btn-default:hover { background: var(--color-primary-soft); border-color: var(--samen-sky-200); }
-.btn-danger { background: #B4432F; border-color: #973725; }
-.cancelLink, .cancelLink:hover { color: var(--color-accent) !important; }
+.btn-success:hover, .btn-primary:hover, .saveButton:hover, .btn-info:hover,
+.btn-success:focus, .btn-primary:focus { background: var(--color-primary-strong) !important; border-color: var(--color-primary-strong) !important; }
+.btn-default, .btn-default:focus {
+	background: transparent;
+	border: 1.5px solid var(--color-primary);
+	color: var(--color-primary);
+	font-weight: 700;
+}
+.btn-default:hover, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+	background: var(--ui-hover) !important; border-color: var(--color-primary) !important; color: var(--color-primary) !important; box-shadow: none !important;
+}
+.btn-default .fa, .btn-default [class^="vicon-"], .btn-default .caret { color: inherit; }
+.btn-default[disabled], .btn-default.disabled { border-color: var(--ui-border-strong); color: var(--color-text-muted); }
+.btn-danger { background: var(--red-700) !important; border-color: var(--red-700) !important; color: #fff !important; }
+.btn-warning { background: var(--brown-500) !important; border-color: var(--brown-500) !important; color: #fff !important; }
+.btn-link, .cancelLink, .cancelLink:hover { color: var(--color-primary) !important; font-weight: 700; }
+.btn-group > .btn + .btn { margin-inline-start: -1.5px; }
+/* record page actions (Follow, Edit, Send e-mail, More…): separate outlined pills */
+.detailViewButtoncontainer .btn-group { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.detailViewButtoncontainer .btn, .detailViewButtoncontainer button.btn { border-radius: 999px !important; margin: 0 !important; float: none; }
+/* page actions in the module bar (Add, Import, Customize…): outlined pills, the main action filled */
+.module-action-bar .btn, #appnav .btn, .module-action-bar .module-buttons {
+	border-radius: 999px !important; border: 1.5px solid var(--color-primary) !important; background: transparent !important;
+	color: var(--color-primary) !important; font-weight: 700; padding: 4px 14px; line-height: 1.6;
+}
+.module-action-bar .btn:hover, #appnav .btn:hover { background: var(--ui-hover) !important; }
+.module-action-bar .btn .fa, .module-action-bar .btn [class*="vicon-"], .module-action-bar .btn .caret { color: inherit !important; }
+#appnav ul.nav > li:first-child > .btn.addButton, #appnav ul.nav > li:first-child > button.btn:not(.dropdown-toggle) {
+	background: var(--color-primary) !important; color: var(--color-on-primary) !important;
+}
+#appnav ul.nav > li:first-child > .btn.addButton:hover { background: var(--color-primary-strong) !important; }
 
-.form-control, .inputElement, .select2-container .select2-choice, .select2-container-multi .select2-choices {
+.form-control, .inputElement, .select2-container .select2-choice, .select2-container-multi .select2-choices,
+textarea, select, input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="url"], input[type="search"] {
 	border-radius: var(--ui-radius-sm) !important;
 	border-color: var(--ui-border-strong);
+	background-color: var(--surface-page);
+	background-image: none !important;
+	color: var(--color-text);
+	box-shadow: none;
 }
+.form-control::placeholder, .inputElement::placeholder { color: var(--color-text-muted); font-size: 13px; }
 .form-control:focus, .inputElement:focus, .select2-container-active .select2-choice, .select2-container-active .select2-choices {
 	border-color: var(--color-primary) !important;
 	box-shadow: var(--ui-focus) !important;
 }
-.input-group-addon { background: var(--color-primary-soft); color: var(--samen-teal-700); border-color: var(--ui-border-strong); }
+.select2-container .select2-choice .select2-arrow { background: transparent !important; border: 0 !important; }
+.select2-drop, .select2-drop-active { background: var(--surface-menu); border-color: var(--ui-border-strong) !important; box-shadow: var(--ui-shadow-pop); color: var(--color-text); }
+.select2-results .select2-highlighted { background: var(--ui-hover) !important; color: var(--color-primary) !important; }
+.select2-search-choice { background: var(--color-primary) !important; color: var(--color-on-primary) !important; border: 0 !important; border-radius: 999px !important; background-image: none !important; box-shadow: none !important; }
+.input-group-addon { background: var(--surface-bar); color: var(--color-text); border-color: var(--ui-border-strong); }
 
-/* tags / badges */
+/* menus */
+.dropdown-menu {
+	background: var(--surface-menu);
+	border: 1px solid var(--ui-border);
+	border-radius: 8px;
+	box-shadow: var(--ui-shadow-pop);
+	overflow: hidden;
+}
+.dropdown-menu > li > a { color: var(--color-text); transition: background-color .3s; }
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > .active > a { background: var(--ui-hover) !important; color: var(--color-text) !important; background-image: none !important; }
+.dropdown-menu .divider { background: var(--ui-border); }
+.global-actions .dropdown-menu::before, .global-actions .dropdown-menu::after { display: none; }
+.app-menu .dropdown-menu { overflow: visible; border-radius: 0; }
+
+/* tags / badges: teal pills */
 .tag, .tagLabel, .detailview-header .tag {
-	background: var(--color-primary-soft) !important;
-	color: var(--samen-teal-700) !important;
-	border: 1px solid var(--samen-teal-100) !important;
+	background: var(--color-primary) !important;
+	color: var(--color-on-primary) !important;
+	border: 0 !important;
 	border-radius: 999px !important;
 }
-.badge, .label-info { background: var(--color-accent); }
+.tag a, .tag .fa, .tag span { color: inherit !important; }
+.badge, .label-info, .label-primary { background: var(--color-primary); color: var(--color-on-primary); border-radius: 999px; font-weight: 500; }
+.label-success { background: var(--green-800); }
+.label-danger, .label-important { background: var(--red-700); }
+.alert-info { background: var(--surface-bar); border-color: var(--ui-border); color: var(--color-text); }
+.pagination > li > a, .pager li > a { background: transparent; border-color: var(--ui-border); color: var(--color-text); }
+.pagination > .active > a, .pagination > .active > a:hover { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary); }
+
+/* settings home: summary and shortcut cards are frames */
+.settingsIndexPage .settingsSummary, #settingsShortCutsContainer .moduleBlock {
+	background: var(--surface-card) !important;
+	border: 0 !important;
+	border-radius: var(--ui-radius);
+	box-shadow: var(--ui-shadow);
+	color: var(--color-text);
+	transition: box-shadow .2s;
+}
+.settingsIndexPage .settingsSummary a, #settingsShortCutsContainer .moduleBlock a, #settingsShortCutsContainer .moduleBlock { color: var(--color-text); }
+.settingsIndexPage .settingsSummary a .summaryCount { color: var(--color-primary); }
+#settingsShortCutsContainer .moduleBlock:hover { background: var(--surface-bar) !important; }
+
+/* calendar (FullCalendar): header on the bar colour, pill view buttons, soft "today" */
+.fc .fc-widget-header, .fc th, .fc thead th { background: var(--surface-bar) !important; color: var(--color-text) !important; border-color: var(--ui-border) !important; text-shadow: none; }
+.fc td, .fc .fc-widget-content, .fc .fc-row { border-color: var(--ui-border) !important; }
+.fc .fc-today, .fc td.fc-today { background: var(--ui-hover) !important; }
+.fc button, .fc .fc-button {
+	background: transparent !important; background-image: none !important; border: 1.5px solid var(--color-primary) !important;
+	color: var(--color-primary) !important; box-shadow: none !important; text-shadow: none !important; font-weight: 700; height: auto; padding: 3px 12px;
+}
+.fc .fc-button.fc-state-active, .fc .fc-button.fc-state-down, .fc .fc-button:hover:not(.fc-state-disabled) { background: var(--color-primary) !important; color: var(--color-on-primary) !important; }
+.fc .fc-button.fc-state-disabled { opacity: .45; }
+.fc .fc-button-group > .fc-button:first-child, .fc .fc-toolbar > div > .fc-button:first-child { border-start-start-radius: 999px; border-end-start-radius: 999px; }
+.fc .fc-button-group > .fc-button:last-child, .fc .fc-toolbar > div > .fc-button:last-child { border-start-end-radius: 999px; border-end-end-radius: 999px; }
+.fc .fc-toolbar h2 { color: var(--color-text); font-weight: 700; }
+
+/* edit / detail pages: a gutter at the reading-end edge too */
+@media (min-width: 992px) {
+	.editViewPageDiv .editViewContents, .editViewPageDiv .editViewHeader, .detailViewContainer .detailview-content { padding-inline-end: 18px; }
+}
 
 /* record avatar (contact image placeholder) */
-.recordImage, .recordImage.bgContacts, .recordImage.bgcontacts { background: var(--color-primary) !important; border-radius: var(--ui-radius); }
+.recordImage, .recordImage.bgContacts, .recordImage.bgcontacts { background: var(--color-primary) !important; color: var(--color-on-primary); border-radius: var(--ui-radius); }
 
 /* footer */
 .app-footer, .app-footer p { background: transparent !important; color: var(--color-text-muted); border: 0; }
 
-/* scrollbars */
-html { scrollbar-color: var(--samen-sky-200) transparent; }
+/* scrollbars: thin, border colour (as in the panel) */
+* { scrollbar-width: thin; scrollbar-color: var(--ui-border-strong) transparent; }
 
 /* ------------------------------------------------------------------ Persian typography */
 body[data-language^="fa"] {
@@ -8255,8 +8591,6 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 	.app-fixed-navbar .global-nav { width: 100%; padding-inline: 0; }
 	.app-fixed-navbar .global-nav > .row, .app-fixed-navbar .navbar-header { margin-inline: 0; width: 100%; }
 	.app-fixed-navbar .logo-container .company-logo img { max-height: 30px; }
-	.app-menu { max-width: 82vw !important; width: 82vw !important; }
-	.app-menu .app-modules-dropdown { width: 82vw !important; }
 
 	/* summary / detail field tables: label and value side by side, compact */
 	.summary-table tr, .detailview-table tr {
@@ -8288,12 +8622,12 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 .settingsgroup-accordion a span,
 .module-title, .module-breadcrumb { text-transform: none; }
 
-/* module icons: add-on modules without a font icon get Vtiger's 2-letter badge (was white on white),
-   modules that ship layouts/v7/modules/<Module>/<Module>.png get an <img> – size both like the font icons */
+/* module icons: add-on modules without a font icon get Vtiger's 2-letter badge, modules that ship
+   layouts/v7/modules/<Module>/<Module>.png get an <img> – size both like the font icons */
 .app-menu .module-icon .custom-module,
 .module-nav .custom-module {
-	background: rgb(255 255 255 / .12) !important;
-	color: var(--samen-sky-200) !important;
+	background: var(--ui-hover) !important;
+	color: inherit !important;
 	border-radius: 6px;
 	font-size: 11px;
 	line-height: 20px;
@@ -8303,24 +8637,24 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 	text-align: center;
 	padding: 0 3px;
 }
-.app-menu .module-icon img, .module-nav .module-icon img, .modules-menu img { width: 20px; height: 20px; object-fit: contain; vertical-align: middle; }
+.app-menu .module-icon img, .module-nav .module-icon img, .modules-menu img { width: 18px; height: 18px; object-fit: contain; vertical-align: middle; }
 
 /* header buttons of extension pages (ModuleHeader.tpl of TelegramBot / SamenTheme / PersianCalendar) */
 .module-action-bar .samen-head-btn { margin-block-start: 5px; margin-inline-end: 8px; }
 
 /* ---------------------------------------------------------------- Task Management (header ✓ icon)
    Vtiger sets fixed pixel widths inline (filters 550px, columns 400px) – override for a responsive kanban */
-#taskManagementContainer { background: var(--samen-gray-50, #F4F7FB); }
-#taskManagementContainer .overlayHeader .modal-header { background: var(--samen-teal-900, #0B3943) !important; border: 0; padding: 14px 20px; }
+#taskManagementContainer { background: var(--samen-gray-50, #FCFCF8); }
+#taskManagementContainer .overlayHeader .modal-header { background: var(--samen-teal-900, #162B31) !important; border: 0; padding: 14px 20px; }
 #taskManagementContainer .overlayHeader h4 { color: #fff !important; font-size: 18px; font-weight: 700; text-transform: none; margin: 0; }
 #taskManagementContainer .overlayHeader .close, #taskManagementContainer .overlayHeader .fa-close { color: #fff !important; opacity: .9; text-shadow: none; }
 #taskManagementContainer > hr { display: none; }
 #taskManagementContainer .modal-body { padding: 16px 20px 24px; }
 #taskManagementContainer .data-header { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between;
-	background: #fff; border: 1px solid var(--samen-gray-200, #E2E8F0); border-radius: 12px; padding: 12px; }
+	background: #fff; border: 1px solid var(--samen-gray-200, #DAD9CD); border-radius: 12px; padding: 12px; }
 #taskManagementContainer .data-header > * { float: none !important; }
 #taskManagementContainer .dateFilters .btn { border-radius: 0; }
-#taskManagementContainer .dateFilters .btn.active { background: var(--samen-teal-500, #13606F) !important; color: #fff !important; border-color: var(--samen-teal-500, #13606F) !important; }
+#taskManagementContainer .dateFilters .btn.active { background: var(--samen-teal-500, #124E5E) !important; color: #fff !important; border-color: var(--samen-teal-500, #124E5E) !important; }
 #taskManagementContainer #taskManagementOtherFilters { width: auto !important; flex: 1 1 420px; max-width: 620px; display: flex; gap: 8px; align-items: flex-start; }
 #taskManagementContainer #taskManagementOtherFilters .field { width: auto !important; flex: 1 1 0; padding: 0 !important; min-width: 0; }
 #taskManagementContainer #taskManagementOtherFilters .select2-container { width: 100% !important; }
@@ -8328,7 +8662,7 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 #taskManagementContainer .data-body { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
 #taskManagementContainer .data-body::before, #taskManagementContainer .data-body::after { display: none; }
 #taskManagementContainer .contentsBlock { width: auto !important; float: none !important; padding: 0 !important; background: #fff;
-	border: 1px solid var(--samen-gray-200, #E2E8F0); border-radius: 14px; overflow: hidden; --tm: #13606F; --tm-soft: #EAF1F8; }
+	border: 1px solid var(--samen-gray-200, #DAD9CD); border-radius: 14px; overflow: hidden; --tm: #124E5E; --tm-soft: #F4F2EC; }
 #taskManagementContainer .contentsBlock[data-priority="High"] { --tm: #DC2626; --tm-soft: #FEF2F2; }
 #taskManagementContainer .contentsBlock[data-priority="Medium"] { --tm: #D97706; --tm-soft: #FFFBEB; }
 #taskManagementContainer .contentsBlock[data-priority="Low"] { --tm: #0F766E; --tm-soft: #F0FDFA; }
@@ -8342,14 +8676,14 @@ body[data-language^="fa"] :is([class^="vicon-"], [class*=" vicon-"]) { font-fami
 #taskManagementContainer .contentsBlock .quickTask { width: auto; display: flex; align-items: center; border-radius: 8px !important; margin-inline-start: 6px; background: var(--tm-soft); border-color: var(--tm) !important; }
 #taskManagementContainer .contentsBlock .quickTask a { color: var(--tm); }
 #taskManagementContainer .dataEntries { width: 100% !important; height: auto !important; max-height: 62vh; min-height: 120px; padding: 0 !important; }
-#taskManagementContainer .task { background: #fff; border: 1px solid var(--samen-gray-200, #E2E8F0) !important; border-inline-start: 4px solid var(--tm) !important; border-left-width: 1px !important;
-	border-radius: 10px; padding: 10px 12px; margin-block-end: 8px; box-shadow: 0 1px 2px rgb(18 23 33 / .05); }
-#taskManagementContainer .task:hover { box-shadow: 0 4px 12px rgb(18 23 33 / .08); }
+#taskManagementContainer .task { background: #fff; border: 1px solid var(--samen-gray-200, #DAD9CD) !important; border-inline-start: 4px solid var(--tm) !important; border-left-width: 1px !important;
+	border-radius: 10px; padding: 10px 12px; margin-block-end: 8px; box-shadow: 0 1px 2px rgb(58 35 29 / .05); }
+#taskManagementContainer .task:hover { box-shadow: 0 4px 12px rgb(58 35 29 / .08); }
 #taskManagementContainer .task .task-body { display: flex; gap: 8px; align-items: flex-start; }
 #taskManagementContainer .task .taskSubject { width: auto !important; flex: 1; float: none !important; white-space: normal; line-height: 1.8; }
-#taskManagementContainer .task .taskSubject a { color: var(--samen-ink, #121721); font-weight: 600; }
-#taskManagementContainer .task .taskStatus { float: none !important; flex: none; font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--samen-gray-50, #F4F7FB); color: var(--samen-gray-500, #6B7280) !important; white-space: nowrap; }
-#taskManagementContainer .task .other-details { color: var(--samen-gray-500, #6B7280); font-size: 12.5px; margin-block-start: 6px; }
+#taskManagementContainer .task .taskSubject a { color: var(--samen-ink, #3A231D); font-weight: 600; }
+#taskManagementContainer .task .taskStatus { float: none !important; flex: none; font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--samen-gray-50, #FCFCF8); color: var(--samen-gray-500, #7A6A64) !important; white-space: nowrap; }
+#taskManagementContainer .task .other-details { color: var(--samen-gray-500, #7A6A64); font-size: 12.5px; margin-block-start: 6px; }
 @media (max-width: 991px) {
 	#taskManagementContainer .data-body { grid-template-columns: minmax(0, 1fr); }
 	#taskManagementContainer .dataEntries { max-height: none; }
@@ -9078,7 +9412,7 @@ body[data-language^="fa"] .global-nav .global-actions { padding-left: 15px; padd
   body[data-language^="fa"] .app-nav .module-action-bar { padding-left: 0; padding-right: 42px; }
   body[data-language^="fa"] .app-nav .module-action-bar .module-action-content .navbar-right { margin-left: 0; }
   body[data-language^="fa"] .main-container .module-nav { right: 0; left: auto; }
-  body[data-language^="fa"] .main-container .sidebar-essentials { right: 42px; left: auto; border-left: 1px solid #E2E8F0; border-right: none; }
+  body[data-language^="fa"] .main-container .sidebar-essentials { right: 42px; left: auto; border-left: 1px solid #DAD9CD; border-right: none; }
   body[data-language^="fa"] .main-container .content-area { padding-right: 283px; padding-left: 0; }
   body[data-language^="fa"] .main-container .settingsPageDiv { padding-right: 230px; padding-left: 0; }
   body[data-language^="fa"] .app-nav .module-action-bar-full { padding-right: 0; }
@@ -9107,12 +9441,12 @@ body[data-language^="fa"] .module-action-bar .module-breadcrumb a { float: right
 body[data-language^="fa"] .app-menu .app-name { padding-right: 2%; padding-left: 0; }
 body[data-language^="fa"] .app-list .mCSB_outside + .mCSB_scrollTools { left: -4px; right: auto; }
 body[data-language^="fa"] .app-item { margin-right: 2px; margin-left: 0; }
-body[data-language^="fa"] .app-item-color-MARKETING { border-right: 4px solid #13606F; border-left: none; }
-body[data-language^="fa"] .app-item-color-SALES { border-right: 4px solid #13606F; border-left: none; }
-body[data-language^="fa"] .app-item-color-INVENTORY { border-right: 4px solid #13606F; border-left: none; }
-body[data-language^="fa"] .app-item-color-SUPPORT { border-right: 4px solid #13606F; border-left: none; }
-body[data-language^="fa"] .app-item-color-PROJECT { border-right: 4px solid #13606F; border-left: none; }
-body[data-language^="fa"] .app-item-color-TOOLS { border-right: 4px solid #13606F; border-left: none; }
+body[data-language^="fa"] .app-item-color-MARKETING { border-right: 4px solid #124E5E; border-left: none; }
+body[data-language^="fa"] .app-item-color-SALES { border-right: 4px solid #124E5E; border-left: none; }
+body[data-language^="fa"] .app-item-color-INVENTORY { border-right: 4px solid #124E5E; border-left: none; }
+body[data-language^="fa"] .app-item-color-SUPPORT { border-right: 4px solid #124E5E; border-left: none; }
+body[data-language^="fa"] .app-item-color-PROJECT { border-right: 4px solid #124E5E; border-left: none; }
+body[data-language^="fa"] .app-item-color-TOOLS { border-right: 4px solid #124E5E; border-left: none; }
 body[data-language^="fa"] .app-menu .fa-chevron-right { padding-left: 10px; padding-right: 0; }
 body[data-language^="fa"] .app-menu .app-modules-dropdown { right: 229px; left: auto; }
 body[data-language^="fa"] .app-menu .app-modules-dropdown li a { padding-right: 20px; padding-left: 0; }
@@ -9139,7 +9473,7 @@ body[data-language^="fa"] .modules-menu ul li a { padding-right: 8px; padding-le
 body[data-language^="fa"] .modules-menu ul li a i { padding-right: 3px; padding-left: 0; float: right; }
 body[data-language^="fa"] .modules-menu ul li a > span { margin-right: 10px; margin-left: 0; }
 body[data-language^="fa"] .modules-menu ul li.active a { padding-right: 8px; padding-left: 0; }
-body[data-language^="fa"] .module-nav .sidebar-menu { right: 20%; left: auto; border-left: 1px solid #E2E8F0; border-right: none; float: right; }
+body[data-language^="fa"] .module-nav .sidebar-menu { right: 20%; left: auto; border-left: 1px solid #DAD9CD; border-right: none; float: right; }
 body[data-language^="fa"] .module-nav .sidebar-menu-full { right: 0%; left: auto; }
 body[data-language^="fa"] .lists-menu-container .toggleFilterSize { padding-left: 20px; padding-right: 0; }
 body[data-language^="fa"] .lists-menu-container .menu-scroller .mCSB_inside > .mCSB_container,
@@ -9227,7 +9561,7 @@ body[data-language^="fa"] .mandatoryField { float: right; }
 body[data-language^="fa"] .btn + input { margin-right: 5px; margin-left: 0; }
 body[data-language^="fa"] .extensionWidgetContainer .extension_contents .slimScrollDiv { padding-left: 10px; padding-right: 0; }
 body[data-language^="fa"] .tabbable-line > .nav-tabs > li > a { margin-left: 0; }
-body[data-language^="fa"] .nav .divider-vertical { border-left: 3px solid #FFFFFF; border-right: 3px solid #E2E8F0; }
+body[data-language^="fa"] .nav .divider-vertical { border-left: 3px solid #FFFFFF; border-right: 3px solid #DAD9CD; }
 body[data-language^="fa"] .relatedViewActions #PageJumpDropDown { margin-right: -5px; margin-left: 0; }
 body[data-language^="fa"] .relatedViewBasicAction .relatedViewPagingInputSubmit { margin-right: -4px; margin-left: 0; }
 body[data-language^="fa"] .relatedViewActions .btn-group { margin-left: 15px; margin-right: 0; }
@@ -9238,7 +9572,7 @@ body[data-language^="fa"] .crumbs li:after { left: -20px; right: auto; border-ri
 body[data-language^="fa"] .crumbs li { border-right: 20px solid transparent; border-left: none; }
 body[data-language^="fa"] .crumbs li:first-child { border-right: 0; }
 body[data-language^="fa"] .crumbs li:hover:after { border-right: 20px solid #FFFFFF !important; border-left: none !important; }
-body[data-language^="fa"] .crumbs li.active:after { border-right: 20px solid #13606F !important; border-left: none !important; }
+body[data-language^="fa"] .crumbs li.active:after { border-right: 20px solid #124E5E !important; border-left: none !important; }
 body[data-language^="fa"] .crumbs li:first-child a .stepNum { margin-right: 8px; margin-left: 0; }
 body[data-language^="fa"] .squaredFour label { right: 0; left: auto; }
 body[data-language^="fa"] .squaredFour label:after { right: 4px; left: auto; border-left: none; }
@@ -9272,12 +9606,12 @@ body[data-language^="fa"] .mini-slider-control[data-value="2"] .ui-slider-handle
 body[data-language^="fa"] .portal-home-module { padding-right: 40px; padding-left: 0; }
 body[data-language^="fa"] .portal-dashboard { padding-right: 15px; padding-left: 0; border-right: 0px !important; }
 body[data-language^="fa"] .portal-dashboard > .hrHeader { margin-right: 18px; margin-left: 0; }
-body[data-language^="fa"] .portal-fields-content { border-left: 1px solid #13606F !important; border-right: none !important; }
+body[data-language^="fa"] .portal-fields-content { border-left: 1px solid #124E5E !important; border-right: none !important; }
 body[data-language^="fa"] .portal-slider-legend { margin-right: 5px; margin-left: 0; }
 body[data-language^="fa"] .FieldSet { margin-right: 5px; margin-left: 0; }
 body[data-language^="fa"] .portal-field-delete { margin-right: 45px!important; margin-left: 0 !important; }
-body[data-language^="fa"] .portalModuleRow { border-right: 4px solid #13606F !important; border-left: none !important; }
-body[data-language^="fa"] .portalMenuHeader { border-left: 1px solid #13606F !important; border-right: none !important; }
+body[data-language^="fa"] .portalModuleRow { border-right: 4px solid #124E5E !important; border-left: none !important; }
+body[data-language^="fa"] .portalMenuHeader { border-left: 1px solid #124E5E !important; border-right: none !important; }
 body[data-language^="fa"] .portalModuleRow .active { border-top-left-radius: 10px; border-top-right-radius: 0; }
 body[data-language^="fa"] .nav-tabs .cp-modules > .active > a,
 body[data-language^="fa"] .nav-tabs .cp-modules > .active > a:hover { border-top-left-radius: 0px; }
@@ -9319,11 +9653,11 @@ body[data-language^="fa"] .mention_followup .recordImage { margin-left: 55px; ma
 body[data-language^="fa"] .mentionMessageHeader li a { padding-right: 15px; padding-left: 0; }
 body[data-language^="fa"] .mentionMessages .row { margin-right: 0; }
 body[data-language^="fa"] #notification_center .more { margin-left: 35px; margin-right: 0; }
-body[data-language^="fa"] .tagContainer .tag-contents { padding-left: 8px; padding-right: 0; border-left: 1px solid #E2E8F0; border-right: none; }
+body[data-language^="fa"] .tagContainer .tag-contents { padding-left: 8px; padding-right: 0; border-left: 1px solid #DAD9CD; border-right: none; }
 body[data-language^="fa"] .tag { border-radius: 0px 20px 20px 0px; }
 body[data-language^="fa"] .tag .tagLabel { margin-left: 8px; margin-right: 5px; }
 body[data-language^="fa"] .tag i.deleteTag { margin-left: 5px; margin-right: 0; }
-body[data-language^="fa"] .detailShowAllModal .selectTagContainerborder { border-right: 3px solid #E2E8F0; border-left: none; }
+body[data-language^="fa"] .detailShowAllModal .selectTagContainerborder { border-right: 3px solid #DAD9CD; border-left: none; }
 body[data-language^="fa"] #s2id_memberList li > div,
 body[data-language^="fa"] .groupMembersColors li > div { margin-right: 10px; margin-left: 0; }
 body[data-language^="fa"] .liStyleNone { padding-right: 0; }
@@ -9351,7 +9685,7 @@ body[data-language^="fa"] .paddingLeftZero { padding-right: 0 !important; }
 body[data-language^="fa"] .layoutContent li.dummyRow .dragUiText { padding-right: 15%; padding-left: 0; }
 body[data-language^="fa"] #addRelationContainer .relationImages h5 { margin-right: 20px; margin-left: 0; }
 body[data-language^="fa"] .layoutContent .blockFieldsList ul { margin-right: 4%; margin-left: 0; float: right; }
-body[data-language^="fa"] .layoutContent .editFields { border-left: 1px solid #E2E8F0; border-right: none; }
+body[data-language^="fa"] .layoutContent .editFields { border-left: 1px solid #DAD9CD; border-right: none; }
 body[data-language^="fa"] .layoutContent .fieldLabelContainer { margin-left: 6px; margin-right: 0; text-align: left; }
 body[data-language^="fa"] .relatedTabModulesList .relationListInfo { border-right: 3px solid #6565D9; border-left: none; }
 body[data-language^="fa"] .relatedListContainer .ONE_TO_ONE { padding-right: 14px; padding-left: 0; }
@@ -9387,7 +9721,7 @@ body[data-language^="fa"] .mmMoveDropdownArrow { margin-right: -10px; margin-lef
 body[data-language^="fa"] .mmMoveDropdownCaret { padding-left: 1px; padding-right: 0; }
 body[data-language^="fa"] .mmSearchContainerOther { padding: 15px 5px 5px 0px; }
 body[data-language^="fa"] .mmDetailAction { border-left: 0; }
-body[data-language^="fa"] .portal-fields-container-wrapper { border-left: 1px solid #E2E8F0; border-right: none; }
+body[data-language^="fa"] .portal-fields-container-wrapper { border-left: 1px solid #DAD9CD; border-right: none; }
 body[data-language^="fa"] .addFieldsBlock { padding-right: 0px; }
 body[data-language^="fa"] .portal-fields-switch:before { right: 1px; left: auto; }
 body[data-language^="fa"] .portal-fields-switch:after { right: 1px; left: auto; }
@@ -9469,7 +9803,7 @@ body[data-language^="fa"] .floatThead-floatContainer { margin-right: 1px; margin
   body[data-language^="fa"] .floatThead-floatContainer { margin-right: 1px; margin-left: 0; }
 }
 body[data-language^="fa"] #vt-mask { right: 0; left: auto; }
-body[data-language^="fa"] .modules-menu ul li.active a { border-right: 3px solid #13606F; border-left: none; }
+body[data-language^="fa"] .modules-menu ul li.active a { border-right: 3px solid #124E5E; border-left: none; }
 body[data-language^="fa"] .caseHederField { padding: 4px 0 4px 4px !important; }
 body[data-language^="fa"] #showEditor { border-left: 0px !important; }
 body[data-language^="fa"] .caseReplyArea { padding: 4px 0px 0px 4px; }
@@ -9494,30 +9828,23 @@ body[data-language^="fa"] :is(.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12) { 
 body[data-language^="fa"] .text-left { text-align: right !important; }
 body[data-language^="fa"] .text-right { text-align: left !important; }
 
-/* ---------------------------------------------------------------- app menu (hamburger drawer)
+/* ---------------------------------------------------------------- app menu (drawer on phones, rail on desktop)
    Vtiger.js sets inline style="left:0" on .app-menu and style="left:<menu width>" on each
    .app-modules-dropdown, so only !important can move them to the right side. */
-body[data-language^="fa"] .app-menu {
-	left: auto !important;
-	right: 0 !important;
-	border-left: 1px solid rgb(255 255 255 / .08);
-}
-body[data-language^="fa"] .app-menu .app-modules-dropdown {
-	left: auto !important;
-	right: 222px !important;          /* menu max-width (230px) – 8px, as Vtiger does for LTR */
-	box-shadow: var(--ui-shadow-pop);
-}
-body[data-language^="fa"] .app-menu .fa-chevron-right { transform: scaleX(-1); }
+body[data-language^="fa"] .app-menu, body[data-language^="fa"] .app-menu.hide { left: auto !important; right: 0 !important; }
 body[data-language^="fa"] .app-menu :is(.app-item, .menu-item) { text-align: right; }
-body[data-language^="fa"] .app-menu .app-item .fa,
-body[data-language^="fa"] .app-menu .app-item [class*="vicon-"] { margin-left: 10px; margin-right: 0; }
-
-/* module rail on the right edge, content shifted away from it */
-body[data-language^="fa"] .main-container .module-nav { left: auto; right: 0; }
-body[data-language^="fa"] .module-nav .modules-menu ul li.active a {
-	border-left: 0 !important;
-	border-right: 3px solid var(--color-highlight) !important;
+@media (min-width: 992px) {
+	body[data-language^="fa"] .app-menu .app-modules-dropdown {
+		left: auto !important;
+		right: var(--rail-width) !important;
+		border-radius: 16px 0 0 16px;
+		box-shadow: -6px 2px 15px rgb(83 78 34 / .12) !important;
+	}
+	body[data-language^="fa"] .app-menu :is(.app-item, .menu-item) { text-align: center; }
 }
+
+/* the module strip keeps its place on the right edge (its width is the page gutter on desktop) */
+body[data-language^="fa"] .main-container .module-nav { left: auto; right: 0; }
 
 /* ---------------------------------------------------------------- dropdowns
    Bootstrap opens .dropdown-menu at left:0 – in RTL they must hang from the right edge of the
@@ -9566,7 +9893,8 @@ body[data-language^="fa"] .select2-search-choice-close { left: auto; right: 3px;
 
 /* list view: action icons column and horizontal scrollbar start on the right */
 body[data-language^="fa"] .table-actions { text-align: right; }
-body[data-language^="fa"] .listview-table td, body[data-language^="fa"] .listview-table th { text-align: right; }
+body[data-language^="fa"] .listview-table td, body[data-language^="fa"] .listview-table th { text-align: center; }
+body[data-language^="fa"] .listview-table td.listViewRecordActions, body[data-language^="fa"] .listview-table td:first-child { text-align: right; }
 
 /* qtip / popovers */
 body[data-language^="fa"] .qtip, body[data-language^="fa"] .popover { direction: rtl; text-align: right; }
@@ -9581,24 +9909,8 @@ body[data-language^="fa"] a[href^="tel:"], body[data-language^="fa"] .phoneField
 	text-align: right;
 }
 
-/* active/hover markers on the reading-start (right) edge */
-body[data-language^="fa"] .app-menu .app-item:hover, body[data-language^="fa"] .app-menu .active-app-item,
-body[data-language^="fa"] .app-menu .open > .app-item,
-body[data-language^="fa"] .module-nav .modules-menu ul li.active a,
-body[data-language^="fa"] .settingsgroup ul li a.settingsgroup-menu-color { box-shadow: inset -3px 0 0 var(--color-highlight) !important; }
 body[data-language^="fa"] .settingsgroup ul li a { text-align: right; }
 body[data-language^="fa"] .settingsgroup .settingsgroup-accordion a i { margin-right: 0; margin-left: 6px; }
-
-/* phones: the sub-menu sits beside the 222px drawer – let it use only the space left and wrap long names
-   ("مدیریت تلفن (PBX)" was cut at the screen edge) */
-@media (max-width: 767px) {
-	body[data-language^="fa"] .app-menu .app-modules-dropdown {
-		max-width: calc(100vw - 230px) !important;
-		min-width: 0 !important;
-	}
-	body[data-language^="fa"] .app-menu .app-modules-dropdown li a { white-space: normal !important; line-height: 1.5; }
-	body[data-language^="fa"] .app-menu .app-modules-dropdown li a span { overflow-wrap: anywhere; }
-}
 
 /* Full-width pages (no filter sidebar) kept Vtiger's 283px sidebar gutter on the right: the mirrored
    ".main-container .content-area { padding-right: 283px }" is more specific than ".full-width { padding-right: 0 }".

@@ -95,7 +95,7 @@ All three are standard Vtiger packages (Settings > Module Management can also im
 |---|---|---|
 | `Persian_fa_ir.zip` (language) | full fa_ir pack: 4,047 strings + labels of the custom student fields/picklists; default language | `i18n/` (`fa/*.txt` = translations, `build_langpack.py` validates placeholders/HTML) |
 | `PersianCalendar.zip` (extension) | Jalali dates everywhere in the UI, Jalali date picker on every date field, Shamsi FullCalendar (RTL, week starts Saturday). Dates stay Gregorian in the DB. | `modules/PersianCalendar/` (`tests/convert.test.js`) |
-| `SamenTheme.zip` (extension) | **Vtiger 8 custom skin `samen`** (`layouts/v7/custom_skins/samen`): Vtiger's own LESS recompiled with the samencloud.ir palette (teal `#13606F`, brown `#7D4F2E`, copper `#D99058`), design tokens, Shabnam font, complete RTL (mirrored automatically + hand fixes for the app menu/sub-menus and dropdowns). Brand login page (SamenCRM), favicon, company logo, high-contrast navigation (app menu, sub-menus, rail, settings), responsive phone layout. | `modules/SamenTheme/` |
+| `SamenTheme.zip` (extension) | **Vtiger 8 custom skin `samen`** (`layouts/v7/custom_skins/samen`): Vtiger's own LESS recompiled with the palette, then the SamenCRM design on top – the look of the Samen cloud panel: cream surfaces, brown text, one teal accent (`#124E5E`); a header with the logo, search and the user box; the app menu as a **permanent icon rail** (drawer on phones/tablets) whose **sub-menu** slides out beside it with the app's modules; "frame" cards, pill buttons, striped tables with a dark header rule, cream dialogs; Vazir font and Simple Line Icons; complete RTL. Brand login page, installer and first-login pages, favicon, company logo, footer, report print. | `modules/SamenTheme/` |
 
 Both extensions have no records, so they are **not in the app menus**; each has an admin page in
 **Settings > Extensions**: «پوسته SamenCRM» (status of skin / login page / logo, palette, *apply again*) and
@@ -106,7 +106,11 @@ Old links such as `index.php?module=SamenTheme&view=List` redirect there.
   page, so the installer adds one marked block to `layouts/v7/modules/Users/Login.tpl`; it is re-applied on update and removed
   when SamenTheme is disabled.
 * Rebuild the skin after changing colours/CSS: `npm i -g less@4`, then `modules/SamenTheme/build.sh`
-  (palette: `tools/source_less/samen/variables.less`; theme: `resources/theme.css`; RTL fixes: `resources/rtl.css`).
+  (palette of the compiled LESS: `tools/source_less/samen/variables.less`; design tokens, header, rail, sub-menu and
+  components: `resources/theme.css`; RTL fixes: `resources/rtl.css`; tablet/phone: `resources/responsive.css`;
+  menu highlighting and the dashboard width: `resources/theme.js`).
+* Navigation: the rail is Vtiger's own app menu (`.app-menu`), so Settings > Menu Editor still decides which modules
+  each app lists. On desktop the old 42px strip of module icons is hidden (its width is the page gutter).
   After a Vtiger upgrade refresh `tools/source_less` and `tools/source_css` from the server and rebuild.
 * `tools/sync_theme.sh` copies theme/calendar files straight to the server while developing;
   `tools/get_session.sh` + `tools/ui_shot.mjs` take headless screenshots (needs `ssh -D 19080 crm-server`).

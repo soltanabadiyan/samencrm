@@ -16,8 +16,8 @@ class SamenTheme_Settings_View extends Vtiger_Index_View {
 		$viewer = $this->getViewer($request);
 		$viewer->assign('ST', SamenTheme::status());
 		$viewer->assign('PALETTE', array(
-			array('#13606F', 'فیروزه‌ای ثامن'), array('#0B3943', 'فیروزه‌ای تیره'), array('#7D4F2E', 'قهوه‌ای'),
-			array('#D99058', 'مسی'), array('#A3C2E0', 'آسمانی'), array('#F4F7FB', 'زمینه'), array('#121721', 'متن'),
+			array('#124E5E', 'فیروزه‌ای ثامن'), array('#162B31', 'فیروزه‌ای تیره'), array('#714133', 'قهوه‌ای'),
+			array('#B0664F', 'مسی'), array('#8EBECC', 'آسمانی'), array('#FCFCF8', 'زمینه'), array('#3A231D', 'متن'),
 		));
 		$viewer->view('Settings.tpl', $request->getModule());
 	}

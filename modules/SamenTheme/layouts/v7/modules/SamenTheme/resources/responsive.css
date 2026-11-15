@@ -12,6 +12,13 @@
 	.app-fixed-navbar .global-nav > .row { display: flex; flex-wrap: nowrap; align-items: center; margin: 0; }
 	.app-fixed-navbar .global-nav > .row > [class*="col-"] { float: none; width: auto; flex: none; padding-inline: 4px; }
 	.app-fixed-navbar .global-nav > .row > .col-sm-3 { flex: 1 1 auto; min-width: 120px; }
+	/* [menu][logo] keep their own width (their % widths collapsed inside the auto-width column and the logo
+	   slid over the search box) */
+	.app-fixed-navbar .app-navigator-container > .row { display: flex; align-items: center; flex-wrap: nowrap; margin: 0; }
+	.app-fixed-navbar .app-navigator-container > .row > * { float: none !important; width: auto !important; flex: none; padding: 0 !important; }
+	.app-fixed-navbar .app-navigator-container .logo-container > .row { margin: 0; }
+	.app-fixed-navbar .app-navigator-container #appnavigator { width: 42px !important; }
+	.app-fixed-navbar .logo-container .company-logo img { margin: 0 6px; display: block; }
 	.app-fixed-navbar #search-links-container, .app-fixed-navbar .search-link { width: 100% !important; }
 	.app-fixed-navbar .search-link .keyword-input { width: calc(100% - 44px) !important; }
 	.app-fixed-navbar #navbar { width: auto !important; left: 0; margin: 0; }
@@ -40,7 +47,7 @@
 	   on a 100px row) */
 	.summary-table tr, .detailview-table tr {
 		display: grid; grid-template-columns: minmax(0, 32%) minmax(0, 1fr); align-items: baseline; column-gap: 12px;
-		padding: 8px 0; border-bottom: 1px solid var(--ui-border, #E2E8F0);
+		padding: 8px 0; border-bottom: 1px solid var(--ui-border, #DAD9CD);
 	}
 	.summary-table td, .detailview-table td {
 		display: block; width: auto !important; min-width: 0 !important; max-width: none !important;
