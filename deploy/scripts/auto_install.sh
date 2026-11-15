@@ -8,7 +8,7 @@ APP_DIR="${APP_DIR:-/opt/vtiger}"
 cd "$APP_DIR"
 set -a; . ./.env; set +a
 
-PUBLIC_HOST="${PUBLIC_HOST:-212.33.206.241:${WEB_PORT:-9081}}"   # becomes $site_URL in config.inc.php
+PUBLIC_HOST="${PUBLIC_HOST:-$(hostname -I 2>/dev/null | awk '{print $1}'):${WEB_PORT:-9081}}"   # becomes $site_URL in config.inc.php
 LOCAL=http://127.0.0.1:${WEB_PORT:-9081}
 CURRENCY="${CURRENCY:-Iran, Rials}"
 TZ_NAME="${TZ:-Asia/Tehran}"

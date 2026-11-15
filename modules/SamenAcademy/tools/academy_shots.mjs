@@ -4,16 +4,17 @@
 // (names, phones, e-mails, passports, notes – nothing of the real students leaves the server), draw numbered
 // red markers on the given elements, capture.  Shots are listed in tools/shots.json.
 //   SESSION=$(tools/get_session.sh) node modules/SamenAcademy/tools/academy_shots.mjs [filter]
-// Needs the SOCKS tunnel (ssh -D 19080 hashemz_crm), like tools/ui_audit.mjs.
+// Needs the SOCKS tunnel (ssh -D 19080 <server>), like tools/ui_audit.mjs.
 import { spawn } from 'node:child_process';
 import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { baseUrl } from '../../../tools/server_env.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = join(HERE, '../layouts/v7/modules/SamenAcademy/resources/content/img');
-const BASE = process.env.BASE || 'http://212.33.206.241:9081/';
+const BASE = baseUrl();
 const filter = process.argv[2];
 const shots = JSON.parse(readFileSync(join(HERE, 'shots.json'), 'utf8')).filter(s => !filter || s.id.includes(filter));
 mkdirSync(OUT, { recursive: true });

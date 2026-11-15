@@ -12,22 +12,27 @@
 #
 # Another company on the same server:  APP_DIR=/opt/gama WEB_PORT=9071 COMPANY=GAMA ./run_all.sh install|persian|widgets|academy
 #   then  APP_DIR=/opt/gama ./run_all.sh contacts /path/contacts.xlsx   (simple sheet: name, phone, title, organisation, city, gender)
-# Env overrides:  SSH_TARGET=root@212.33.206.241  SSH_PORT=9080  DIRECT_IF=auto|wlp5s0|none   XLS_DIR=...   VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz
+# Server address: server.env next to this file (copy server.env.example; not in git) or the environment.
+# Env overrides:  SSH_TARGET=root@<server>  SSH_PORT=22  DIRECT_IF=auto|wlp5s0|none   XLS_DIR=...   VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$HERE/tools/server_env.sh"
 XLS_DIR="${XLS_DIR:-$HERE/../xls}"
 OUT="$HERE/output"
-SSH_TARGET="${SSH_TARGET:-root@212.33.206.241}"
+SSH_TARGET="${SSH_TARGET:-}"
 REMOTE_KIT="${REMOTE_KIT:-/tmp/ss-kit}"
 APP="${APP_DIR:-/opt/vtiger}"             # instance folder on the server (one per company)
 SUDO=""; [[ "$SSH_TARGET" == root@* ]] || SUDO="sudo"
 cmd="${1:-help}"; shift || true
+case "$cmd" in build|help|-h|--help) ;; *)
+  [ -n "$SSH_TARGET" ] || { echo "SSH_TARGET is not set: copy server.env.example to server.env and fill it in"; exit 1; } ;;
+esac
 
 # If a full-tunnel VPN (tun*) carries traffic to the server, force SSH out of the LAN interface
 # (tools/direct_proxy.py, SO_BINDTODEVICE) – no route changes needed.  DIRECT_IF=none disables it.
 SSH_OPTS=(-o ServerAliveInterval=30)
 SRV_HOST="${SSH_TARGET#*@}"
-SSH_PORT="${SSH_PORT:-9080}"
+SSH_PORT="${SSH_PORT:-22}"
 SSH_OPTS+=(-o Port="$SSH_PORT")
 if [ "${DIRECT_IF:-auto}" = auto ]; then
   DIRECT_IF=""
@@ -61,7 +66,7 @@ case "$cmd" in
   build) build ;;
   install)
     push_kit
-    ssh "$SSH_TARGET" "$SUDO env APP_DIR=$APP WEB_PORT=${WEB_PORT:-9081} COMPANY='${COMPANY:-SamenStudent}' bash $REMOTE_KIT/deploy/scripts/install.sh" ;;
+    ssh "$SSH_TARGET" "$SUDO env APP_DIR=$APP WEB_PORT=${WEB_PORT:-9081} PUBLIC_HOST='${PUBLIC_HOST:-${SERVER_HOST:-$SRV_HOST}:${WEB_PORT:-9081}}' COMPANY='${COMPANY:-SamenStudent}' bash $REMOTE_KIT/deploy/scripts/install.sh" ;;
   import)
     [ -s "$OUT/dataset.json" ] || build
     ssh "$SSH_TARGET" "mkdir -p $REMOTE_KIT/ss"

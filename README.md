@@ -1,44 +1,92 @@
 # SamenCRM — سامانه مدیریت ارتباط با مشتری
 
-Vtiger CRM 8 for SamenStudent (admission & support of international students), Persian/RTL, Shamsi calendar, Samen theme.
+Vtiger CRM 8.4 turned into a Persian product: RTL, Shamsi calendar, SamenCRM theme and branding, Telegram messaging,
+dashboard widgets and an in-app academy — plus the kit that deploys it with Docker and loads a company's data.
+It started as the CRM of SamenStudent (admission & support of international students) and now serves several
+companies from one server, one instance per company. This repository holds no Vtiger source: everything is added on
+top as standard Vtiger packages (language pack + extension modules) and scripts.
 
-Everything is driven from your PC with `run_all.sh`. Server: `212.33.206.241`, installed in `/opt/vtiger` (Docker).
+Everything is driven from your PC with `run_all.sh`; each instance lives in its own folder on the server
+(`/opt/vtiger` by default) as a Docker stack.
 
-## Status: deployed 2026-11-10 – Vtiger 8.4.0 at http://212.33.206.241:9081/
-Login: `admin` / password stored on the server in `/opt/vtiger/.env` (`VT_ADMIN_PASSWORD`, root-only):
-`ssh hashemz_crm 'grep VT_ADMIN /opt/vtiger/.env'`. Change it after the first login (My Preferences).
+## Server address  (`server.env`)
+The server's address is **not in git**. Copy `server.env.example` to `server.env` and fill it in; `run_all.sh` and
+the tools in `tools/` read it (variables set in the environment win):
+
+| variable | meaning |
+|---|---|
+| `SSH_TARGET` | `user@host` for ssh/scp (`root@…`, or a user with passwordless sudo) |
+| `SSH_PORT` | ssh port (default 22) |
+| `SSH_ALIAS` | `Host` entry of `~/.ssh/config` used by `tools/get_session.sh` and `tools/sync_theme.sh` (default: `SSH_TARGET`) |
+| `SERVER_HOST` | address users open in the browser (default: host part of `SSH_TARGET`) |
+
+Below, `<server>` stands for that address and `crm-server` for the ssh alias.
+
+Admin login: `admin` / password generated on the server in `<instance>/.env` (`VT_ADMIN_PASSWORD`, root-only):
+`ssh crm-server 'grep VT_ADMIN /opt/vtiger/.env'`. Change it after the first login (My Preferences).
 
 ## Ports
-* external **9080** = SSH (NAT to the server's sshd on 22; `ssh hashemz_crm` in `~/.ssh/config`)
-* **9081** = Vtiger web
-* **9082** = Adminer (DB UI, optional), bound to `127.0.0.1` only. Use `ssh -L 9082:127.0.0.1:9082 hashemz_crm` and
+* **9081** = Vtiger web of the first instance (`WEB_PORT`; other instances take another port, e.g. 9071)
+* **9082** = Adminer (DB UI, optional), bound to `127.0.0.1` only. Use `ssh -L 9082:127.0.0.1:9082 crm-server` and
   `docker compose --profile tools up -d adminer`.
 
 ## VPN note
-With the PC's full-tunnel VPN (tun2) on, the server is unreachable (it drops foreign IPs). `run_all.sh` detects this and
+With the PC's full-tunnel VPN (tun*) on, a server that drops foreign IPs is unreachable. `run_all.sh` detects this and
 sends SSH out of the LAN interface through `tools/direct_proxy.py` (SO_BINDTODEVICE). Routes are not changed.
-For a manual shell: `ssh -o ProxyCommand='python3 tools/direct_proxy.py %h %p wlp5s0' hashemz_crm`.
-The browser behind the VPN can't open :9081 either; open it with the VPN off, or add 212.33.206.241 to the VPN's bypass list.
+For a manual shell: `ssh -o ProxyCommand='python3 tools/direct_proxy.py %h %p wlp5s0' crm-server`.
+The browser behind the VPN can't open the CRM either; open it with the VPN off, or add the server to the VPN's bypass list.
 
 ## Server-side fixes baked in
 * `deb.debian.org` is blocked from the server, so the image uses `http://mirror.iranserver.com` (`DEBIAN_MIRROR` build arg).
 * Base image is `php:8.2-apache-bookworm` (trixie has no `libc-client-dev`, which the IMAP extension needs).
 * The web installer is scripted (`deploy/scripts/auto_install.sh`), so no browser wizard is needed. Currency is IRR and the timezone Asia/Tehran.
-* An older, never-run attempt that was in `/opt/vtiger` was moved to `/opt/vtiger.old-attempt-20261109` (safe to delete).
 
 ## Steps
 ```bash
-cd /home/morteza/Desktop/projesct/hashemz/codes
-./run_all.sh build                      # 1. Excel -> output/ (check output/report.txt and students.csv)
+cp server.env.example server.env        # 0. once: the server's address
+./run_all.sh build                      # 1. Excel (../xls, or XLS_DIR=...) -> output/ (check output/report.txt and students.csv)
 ./run_all.sh install                    # 2. docker stack on the server + automated web installer
 ./run_all.sh import --limit 20          # 3a. optional test import of 20 contacts
 ./run_all.sh import                     # 3b. full import (resumable; re-running skips what exists)
+./run_all.sh details                    # derived contact details (see below)
+./run_all.sh persian                    # Persian language pack + PersianCalendar + SamenTheme
+./run_all.sh widgets                    # reminder bell + dashboard widgets
+./run_all.sh academy                    # help on every page + academy
 ./run_all.sh telegram                   # Telegram module (see below)
 ```
-If you SSH as `morteza`: `SSH_TARGET=morteza@212.33.206.241` (needs passwordless sudo, or log in as root).
 If the server cannot reach SourceForge, download `vtigercrm8.4.0.tar.gz` on your PC and run
 `VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz ./run_all.sh install`.
 Server needs `python3` (for the importer).
+
+## Several companies on one server
+Each company is its own instance: a folder, a port and a Docker Compose project of its own (database, files,
+passwords and backups are separate).
+```bash
+APP_DIR=/opt/gama WEB_PORT=9071 COMPANY=GAMA ./run_all.sh install
+APP_DIR=/opt/gama ./run_all.sh persian        # then widgets, academy
+APP_DIR=/opt/gama ./run_all.sh contacts /path/contacts.xlsx [tag]
+```
+* `APP_DIR` selects the instance for every command; `import` and `details` talk to that instance's own port
+  (`WEB_PORT` in its `.env`).
+* `contacts` loads a **simple contact sheet** (name, phone, title, organisation, city, gender) as Organizations +
+  Contacts (`vtiger/sheet_to_contacts.py`, `vtiger/import_contacts.php`), with a DB backup first. The student import
+  (`build` / `import` / `details`) is specific to the SamenStudent sheets.
+* `telegram` is set up for `/opt/vtiger` only (its host cron is per server).
+* **Domain behind a reverse proxy**: on the server run
+  `sudo bash /opt/gama/scripts/set_public_url.sh /opt/gama https://crm.example.com`. It sets Vtiger's `$site_URL`
+  (Vtiger redirects every other address to it, which otherwise breaks the login) and makes Apache honour the
+  proxy's `X-Forwarded-Proto`.
+
+## Duplicate contacts
+`vtiger/merge_duplicates.php` (run in the web container; copy it to `<instance>/ss/` first) lists duplicate contacts,
+and merges them with `--apply`:
+```bash
+docker compose exec -T web php /opt/ss/merge_duplicates.php            # dry run
+docker compose exec -T web php /opt/ss/merge_duplicates.php --apply
+```
+Keys are the passport number, then the phone (last 10 digits); names are not used, and contacts that share a phone
+but have different passports are never merged. The kept record takes the empty fields, related records and tags of
+the others, which go to the Recycle Bin. No workflow fires. Take a DB backup first.
 
 ## Persian UI, Shamsi calendar and the Samen theme  (`./run_all.sh persian`)
 All three are standard Vtiger packages (Settings > Module Management can also import the zips by hand):
@@ -61,7 +109,7 @@ Old links such as `index.php?module=SamenTheme&view=List` redirect there.
   (palette: `tools/source_less/samen/variables.less`; theme: `resources/theme.css`; RTL fixes: `resources/rtl.css`).
   After a Vtiger upgrade refresh `tools/source_less` and `tools/source_css` from the server and rebuild.
 * `tools/sync_theme.sh` copies theme/calendar files straight to the server while developing;
-  `tools/get_session.sh` + `tools/ui_shot.mjs` take headless screenshots (needs `ssh -D 19080 hashemz_crm`).
+  `tools/get_session.sh` + `tools/ui_shot.mjs` take headless screenshots (needs `ssh -D 19080 crm-server`).
 * Data labels are Persian too (groups `مقطع - …`, filters, tags, task/event subjects, list names) – see `data/fa_labels.py`.
 
 ## Contact details derived from the sheets  (`./run_all.sh details`)
@@ -85,7 +133,7 @@ be checked against `output/dataset.en_labels.json` before running `details`.
 ## UI checks (desktop + mobile)
 `tools/ui_audit.mjs` drives headless Chrome through `tools/ui_audit_steps.json` (all main pages, the app menu and every
 sub-menu, dropdowns, quick-create, date picker, calendar, settings…) on 1440px and 390px viewports;
-`tools/contact_sheet.py` turns the screenshots into review sheets. Needs `ssh -D 19080 hashemz_crm` and
+`tools/contact_sheet.py` turns the screenshots into review sheets. Needs `ssh -D 19080 crm-server` and
 `SESSION=$(tools/get_session.sh)`.
 
 `tools/ui_sweep.mjs out_dir tools/ui_sweep_pages.json` is the error sweep: it opens every app-menu and Settings link
@@ -147,7 +195,7 @@ Uses the Telegram **Bot API** (bot from @BotFather). `./run_all.sh telegram` bui
 * Tables: `vtiger_telegrambot_{bots,settings,links,deeplinks,messages,campaigns,templates}`; files in `storage/TelegramBot/{in,out}`.
   Emoji are stored as `&#x…;` entities because the Vtiger DB connection is utf8 (3-byte).
 
-## What gets imported
+## What gets imported (SamenStudent)
 * **Contacts: 5,995** (9,536 source rows from 23 files / 36 sheets; 8 byte-identical duplicate sheets dropped, rows for the
   same person merged by passport number, then full name (3+ words), then phone). Names stay Persian/Arabic.
 * **Every cell of every row is kept**: mapped to a field, and also written verbatim (file | sheet | row | column=value)
@@ -181,22 +229,44 @@ Uses the Telegram **Bot API** (bot from @BotFather). `./run_all.sh telegram` bui
 `./run_all.sh import` is resumable: whatever is in `/opt/vtiger/ss/import_state.json` is skipped. A DB backup is taken
 before every run (`/opt/vtiger/backups`). Failures never stop the run; see `/opt/vtiger/ss/import_errors.jsonl`.
 
+## Tests
+```bash
+python3 -m unittest discover -s tests -v              # data rules: normalisation, merge keys, derived details (pip install python-calamine)
+node modules/PersianCalendar/tests/convert.test.js    # Jalali conversion, every day 1950-2060
+python3 i18n/build_langpack.py --strict               # every string translated, placeholders/HTML intact
+bash tests/server_env.test.sh                         # script syntax, server.env loaders, no address in git
+./run_all.sh telegram test                            # on the server: Telegram end-to-end against a mock Bot API
+```
+GitHub Actions (`.github/workflows/tests.yml`) runs all but the last on every push, plus PHP/Python syntax checks.
+The UI is checked against a live instance with `tools/ui_sweep.mjs` / `tools/ui_audit.mjs` (above).
+
 ## Layout
 ```
 run_all.sh                    orchestrator (PC)
+server.env(.example)          the server's address (server.env is not in git)
 data/build_dataset.py         Excel -> dataset (parsing, merge, normalisation, tasks/events)
+data/fa_labels.py, location.py, enrich.py  Persian data labels; city/country; derived details
 vtiger/ss_schema.py           custom field definitions
 vtiger/make_schema.py         dataset -> schema.json (picklists, groups, filters)
 vtiger/setup_vtiger.php       runs in the container: fields, groups, filters
 vtiger/import_to_vtiger.py    REST importer (resumable)
 vtiger/tag_contacts.php       Level/Major tags on contacts
-data/fa_labels.py, location.py, enrich.py  Persian data labels; city/country; derived details
-i18n/                         fa_ir language pack + install_persian.php
+vtiger/apply_details.py, persianize_existing.py   SQL for derived details / Persian labels of an older import
+vtiger/sheet_to_contacts.py, import_contacts.php  simple contact sheet -> Organizations + Contacts
+vtiger/merge_duplicates.php   merge duplicate contacts (passport, phone)
+i18n/                         fa_ir language pack, install_persian.php, translate_workflows.php (workflows/templates in the DB)
 modules/PersianCalendar       Jalali calendar extension
-modules/SamenTheme            custom skin + brand (samencloud.ir)
+modules/SamenTheme            custom skin + brand (login, installer, first-login pages, footer, print)
+modules/SamenWidgets          reminder bell + dashboard widgets (Chart.js)
+modules/SamenAcademy          help on every page + academy (tools/lessons/*.py -> lessons, tools/academy_shots.mjs)
 modules/TelegramBot           Telegram Bot API messaging (build.sh, tools/install_telegram.php, tests/)
+tools/server_env.sh, .mjs     read server.env for the shell / node tools
 tools/direct_proxy.py         SSH ProxyCommand that bypasses the VPN
-deploy/                       docker-compose, Dockerfile (php-apache + MariaDB + cron), install.sh, auto_install.sh, post_install.sh
-output/                       generated dataset, students.csv, report.txt, raw_archive.json
+tools/get_session.sh, sync_theme.sh, ui_shot.mjs, ui_audit.mjs, ui_sweep.mjs, contact_sheet.py   UI development and checks
+deploy/                       docker-compose, Dockerfile (php-apache + MariaDB + cron), install.sh, auto_install.sh,
+                              post_install.sh, set_public_url.sh
+tests/                        data-pipeline tests, deploy script checks
+output/                       generated dataset, students.csv, report.txt, raw_archive.json (never in git)
 ```
-Secrets: DB passwords are generated on the server in `/opt/vtiger/.env` (mode 600).
+Secrets: DB and admin passwords are generated on the server in `<instance>/.env` (mode 600); Telegram tokens live
+only in the CRM database.

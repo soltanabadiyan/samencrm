@@ -7,6 +7,8 @@ KIT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"      # .../deploy
 APP_DIR="${APP_DIR:-/opt/vtiger}"
 WEB_PORT="${WEB_PORT:-9081}"
 COMPANY="${COMPANY:-SamenStudent}"
+# address users open (becomes $site_URL); run_all.sh passes it, else this machine's first address
+PUBLIC_HOST="${PUBLIC_HOST:-$(hostname -I 2>/dev/null | awk '{print $1}'):$WEB_PORT}"
 VTIGER_VERSION="${VTIGER_VERSION:-8.4.0}"
 SF_URL="https://sourceforge.net/projects/vtigercrm/files/vtiger%20CRM%20${VTIGER_VERSION}/Core%20Product/vtigercrm${VTIGER_VERSION}.tar.gz/download"
 
@@ -30,7 +32,7 @@ if [ ! -f "$APP_DIR/.env" ]; then
   rnd() { head -c 24 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 24; }
   sed -e "s/^DB_PASSWORD=.*/DB_PASSWORD=$(rnd)/" -e "s/^DB_ROOT_PASSWORD=.*/DB_ROOT_PASSWORD=$(rnd)/" \
       "$APP_DIR/.env.example" > "$APP_DIR/.env"
-  { echo "COMPOSE_PROJECT_NAME=$(basename "$APP_DIR")"; echo "WEB_PORT=$WEB_PORT"; echo "PUBLIC_HOST=212.33.206.241:$WEB_PORT"; echo "COMPANY=$COMPANY"; } >> "$APP_DIR/.env"
+  { echo "COMPOSE_PROJECT_NAME=$(basename "$APP_DIR")"; echo "WEB_PORT=$WEB_PORT"; echo "PUBLIC_HOST=$PUBLIC_HOST"; echo "COMPANY=$COMPANY"; } >> "$APP_DIR/.env"
   chmod 600 "$APP_DIR/.env"
   echo "generated $APP_DIR/.env (random DB passwords)"
 fi

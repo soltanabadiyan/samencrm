@@ -15,8 +15,9 @@ dist/
 node_modules/
 *.zip
 
-# secrets
+# secrets and the server's address
 .env
+server.env
 !deploy/.env.example
 location.sql
 details.sql

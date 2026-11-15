@@ -29,7 +29,7 @@ grep '^SS_GROUPS=' "$SS/setup.log" | tail -1 | sed 's/^SS_GROUPS=//' > "$SS/grou
 echo "== 3/3 import"
 ACCESSKEY=$(docker compose exec -T db mariadb -u"$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" -N -e "select accesskey from vtiger_users where user_name='admin'" | tr -d '\r\n')
 [ -n "$ACCESSKEY" ] || { echo "could not read admin accesskey"; exit 1; }
-python3 "$SS/import_to_vtiger.py" --url http://127.0.0.1:9081 --user admin --accesskey "$ACCESSKEY" \
+python3 "$SS/import_to_vtiger.py" --url "http://127.0.0.1:${WEB_PORT:-9081}" --user admin --accesskey "$ACCESSKEY" \
    --dataset "$SS/dataset.json" --groups "$SS/groups.json" --state "$SS/import_state.json" \
    --errors "$SS/import_errors.jsonl" "$@"
 

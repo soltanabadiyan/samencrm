@@ -5,14 +5,15 @@
 //   horizontal overflow, visible English words left in the Persian UI, any visible trace of Vtiger (text, title,
 //   image, tooltip, link to vtiger.com).
 //   SESSION=$(tools/get_session.sh) node tools/ui_sweep.mjs out_dir [extra_urls.json]
-// Needs the SOCKS tunnel (ssh -D 19080 hashemz_crm). Screenshots are saved only for pages with problems.
+// Needs the SOCKS tunnel (ssh -D 19080 <server>). Screenshots are saved only for pages with problems.
 import { spawn } from 'node:child_process';
 import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { baseUrl } from './server_env.mjs';
 
 const [out, extraFile] = process.argv.slice(2);
-const BASE = process.env.BASE || 'http://212.33.206.241:9081/';
+const BASE = baseUrl();
 const HOST = new URL(BASE).host;
 mkdirSync(out, { recursive: true });
 const VIEW = {

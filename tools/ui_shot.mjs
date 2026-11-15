@@ -2,15 +2,16 @@
 // Headless screenshots of the CRM for UI checks (RTL/Jalali). No npm deps: Chrome DevTools Protocol over
 // Node's built-in WebSocket.  Usage:
 //   SESSION=<PHPSESSID> node tools/ui_shot.mjs out_dir "index.php?module=Contacts&view=List" ...
-// Env: BASE (default http://212.33.206.241:9081/), PROXY (default socks5://127.0.0.1:19080), W/H viewport,
+// Env: BASE (default: SERVER_HOST and WEB_PORT of server.env), PROXY (default socks5://127.0.0.1:19080), W/H viewport,
 //      EVAL (optional JS to run after load, e.g. open a menu; result printed), POSTWAIT ms before the shot.
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { baseUrl } from './server_env.mjs';
 
 const [out, ...paths] = process.argv.slice(2);
-const BASE = process.env.BASE || 'http://212.33.206.241:9081/';
+const BASE = baseUrl();
 const W = +(process.env.W || 1440), H = +(process.env.H || 900);
 mkdirSync(out, { recursive: true });
 const port = 9300 + Math.floor(Math.random() * 500);

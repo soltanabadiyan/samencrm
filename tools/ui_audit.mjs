@@ -2,16 +2,17 @@
 // Visual audit of the CRM: runs a list of steps (page + optional interaction) on desktop and mobile viewports
 // and saves a screenshot per step. Chrome DevTools Protocol over Node's built-in WebSocket (no npm deps).
 //   SESSION=$(tools/get_session.sh) node tools/ui_audit.mjs out_dir tools/ui_audit_steps.json [filter]
-// Needs a SOCKS tunnel to the server:  ssh -D 19080 hashemz_crm  (through tools/direct_proxy.py when on VPN).
-// GAMA (/opt/gama, 9071) from outside the router: ssh -L 19071:127.0.0.1:9071 hashemz_crm, then
-//   (CHROME_ARGS: extra Chrome flags separated by ||)  BASE=http://212.33.206.241:9071/ PROXY=direct:// CHROME_ARGS="--host-resolver-rules=MAP 212.33.206.241:9071 127.0.0.1:19071"
+// Needs a SOCKS tunnel to the server:  ssh -D 19080 <server>  (through tools/direct_proxy.py when on VPN).
+// GAMA (/opt/gama, 9071) from outside the router: ssh -L 19071:127.0.0.1:9071 <server>, then
+//   (CHROME_ARGS: extra Chrome flags separated by ||)  BASE=http://<server>:9071/ PROXY=direct:// CHROME_ARGS="--host-resolver-rules=MAP <server>:9071 127.0.0.1:19071"
 import { spawn } from 'node:child_process';
 import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { baseUrl } from './server_env.mjs';
 
 const [out, stepsFile, filter] = process.argv.slice(2);
-const BASE = process.env.BASE || 'http://212.33.206.241:9081/';
+const BASE = baseUrl();
 const steps = JSON.parse(readFileSync(stepsFile, 'utf8')).filter(s => !filter || s.name.includes(filter));
 mkdirSync(out, { recursive: true });
 const VIEW = {
