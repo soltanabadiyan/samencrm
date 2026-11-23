@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Run ON THE SERVER (root): give an instance its public address, e.g. behind a reverse proxy with a domain.
-#   sudo bash set_public_url.sh /opt/gama https://crm.samencloud.ir
+#   sudo bash set_public_url.sh /opt/crm_gama https://crm.samencloud.ir
 # Vtiger redirects every request whose address differs from $site_URL to $site_URL (includes/main/WebUI.php),
 # so a proxied domain lands on the IP:port and the login breaks (cookie on one host, form on the other).
 # This sets $site_URL, records PUBLIC_URL in .env, and makes Apache honour the proxy's X-Forwarded-Proto

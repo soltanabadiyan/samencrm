@@ -2,7 +2,7 @@
 # SamenStudent – Vtiger rollout, driven from YOUR PC.
 #
 #   ./run_all.sh build      # 1) Excel -> output/dataset.json (+ csv, raw archive, report)
-#   ./run_all.sh install    # 2) copy kit to server, install docker stack in /opt/vtiger  (then finish web wizard)
+#   ./run_all.sh install    # 2) copy kit to server, install docker stack in /opt/crm_students  (then finish web wizard)
 #   ./run_all.sh import     # 3) after the wizard: push data, create fields/groups/filters, import everything
 #   ./run_all.sh import --limit 20   # test import of first 20 contacts
 #   ./run_all.sh details    # add derived details (city/country, WhatsApp, operator, title, completeness) to contacts
@@ -10,8 +10,8 @@
 #   ./run_all.sh widgets    # SamenWidgets: header bell (due tasks/events) + dashboard widgets (calendar, charts)
 #   ./run_all.sh academy    # SamenAcademy: "راهنما" button on every page + courses/wiki (modules/SamenAcademy)
 #
-# Another company on the same server:  APP_DIR=/opt/gama WEB_PORT=9071 COMPANY=GAMA ./run_all.sh install|persian|widgets|academy
-#   then  APP_DIR=/opt/gama ./run_all.sh contacts /path/contacts.xlsx   (simple sheet: name, phone, title, organisation, city, gender)
+# Another company on the same server:  APP_DIR=/opt/crm_gama WEB_PORT=9071 COMPANY=GAMA ./run_all.sh install|persian|widgets|academy
+#   then  APP_DIR=/opt/crm_gama ./run_all.sh contacts /path/contacts.xlsx   (simple sheet: name, phone, title, organisation, city, gender)
 # Server address: server.env next to this file (copy server.env.example; not in git) or the environment.
 # Env overrides:  SSH_TARGET=root@<server>  SSH_PORT=22  DIRECT_IF=auto|wlp5s0|none   XLS_DIR=...   VTIGER_TARBALL=/path/vtigercrm8.4.0.tar.gz
 set -euo pipefail
@@ -21,7 +21,7 @@ XLS_DIR="${XLS_DIR:-$HERE/../xls}"
 OUT="$HERE/output"
 SSH_TARGET="${SSH_TARGET:-}"
 REMOTE_KIT="${REMOTE_KIT:-/tmp/ss-kit}"
-APP="${APP_DIR:-/opt/vtiger}"             # instance folder on the server (one per company)
+APP="${APP_DIR:-/opt/crm_students}"             # instance folder on the server (one per company)
 SUDO=""; [[ "$SSH_TARGET" == root@* ]] || SUDO="sudo"
 cmd="${1:-help}"; shift || true
 case "$cmd" in build|help|-h|--help) ;; *)
@@ -109,7 +109,7 @@ case "$cmd" in
     ssh "$SSH_TARGET" "$SUDO mkdir -p $APP/ss/academy && $SUDO cp $REMOTE_KIT/academy/* $APP/ss/academy/ && cd $APP && \
       $SUDO docker compose exec -T web sh -c 'php /opt/ss/academy/install_academy.php /opt/ss/academy/SamenAcademy.zip && chown -R www-data:www-data /var/www/html/modules/SamenAcademy /var/www/html/layouts/v7/modules/SamenAcademy /var/www/html/languages user_privileges tabdata.php parent_tabdata.php'" ;;
   telegram)
-    [ "$APP" = /opt/vtiger ] || { echo "telegram: only set up for /opt/vtiger (host cron + cron_tick.sh are per server)"; exit 1; }
+    [ "$APP" = /opt/crm_students ] || { echo "telegram: only set up for /opt/crm_students (host cron + cron_tick.sh are per server)"; exit 1; }
     # TelegramBot module: build the vtlib zip, back up the DB, install/update it, minute cron on the host
     bash "$HERE/modules/TelegramBot/build.sh"
     TG="$HERE/modules/TelegramBot"

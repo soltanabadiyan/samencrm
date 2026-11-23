@@ -1,7 +1,7 @@
 #!/bin/sh
 # Run the TelegramBot end-to-end test on the server (inside the web container) against the mock Bot API.
-#   sh /opt/vtiger/ss/telegram/run_tests.sh
-cd /opt/vtiger || exit 1
+#   sh /opt/crm_students/ss/telegram/run_tests.sh
+cd /opt/crm_students || exit 1
 docker compose exec -T web sh -c '
   [ -f /tmp/tgmock.pid ] && kill $(cat /tmp/tgmock.pid) 2>/dev/null
   rm -rf /tmp/tgmock

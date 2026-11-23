@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Run ON THE SERVER (root) after install.sh started the stack.
 # Drives the Vtiger web installer (Step4 -> Step5 -> Step7) with curl, so no browser is needed.
-#   sudo APP_DIR=/opt/vtiger bash /opt/vtiger/scripts/auto_install.sh
+#   sudo APP_DIR=/opt/crm_students bash /opt/crm_students/scripts/auto_install.sh
 # Admin login is written to $APP_DIR/.env (VT_ADMIN_USER / VT_ADMIN_PASSWORD, mode 600).
 set -euo pipefail
-APP_DIR="${APP_DIR:-/opt/vtiger}"
+APP_DIR="${APP_DIR:-/opt/crm_students}"
 cd "$APP_DIR"
 set -a; . ./.env; set +a
 

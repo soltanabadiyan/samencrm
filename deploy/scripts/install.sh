@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Run ON THE SERVER (as root, or via sudo):  bash install.sh
-# Installs the Vtiger docker stack into $APP_DIR (default /opt/vtiger). Idempotent.
-# Another company on the same server:  APP_DIR=/opt/gama WEB_PORT=9071 COMPANY=GAMA bash install.sh
+# Installs the Vtiger docker stack into $APP_DIR (default /opt/crm_students). Idempotent.
+# Another company on the same server:  APP_DIR=/opt/crm_gama WEB_PORT=9071 COMPANY=GAMA bash install.sh
 set -euo pipefail
 KIT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"      # .../deploy
-APP_DIR="${APP_DIR:-/opt/vtiger}"
+APP_DIR="${APP_DIR:-/opt/crm_students}"
 WEB_PORT="${WEB_PORT:-9081}"
 COMPANY="${COMPANY:-SamenStudent}"
 # address users open (becomes $site_URL); run_all.sh passes it, else this machine's first address
@@ -40,7 +40,7 @@ fi
 echo "== 3/5 Vtiger ${VTIGER_VERSION} source"
 TARBALL="$APP_DIR/web/vtigercrm.tar.gz"
 if [ ! -s "$TARBALL" ]; then
-  for cand in "$KIT_DIR/vtigercrm.tar.gz" "$KIT_DIR/../vtigercrm.tar.gz" /root/vtigercrm.tar.gz /opt/vtiger/web/vtigercrm.tar.gz "$HOME/vtigercrm.tar.gz"; do
+  for cand in "$KIT_DIR/vtigercrm.tar.gz" "$KIT_DIR/../vtigercrm.tar.gz" /root/vtigercrm.tar.gz /opt/crm_students/web/vtigercrm.tar.gz "$HOME/vtigercrm.tar.gz"; do
     [ -s "$cand" ] && { cp "$cand" "$TARBALL"; echo "using supplied $cand"; break; }
   done
 fi

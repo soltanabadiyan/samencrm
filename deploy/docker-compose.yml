@@ -1,5 +1,5 @@
-# Vtiger CRM for SamenStudent – lives in /opt/vtiger
-# Public port: 9081 (web) – WEB_PORT in .env for another company (e.g. /opt/gama on 9071, COMPOSE_PROJECT_NAME=gama). 9082 = optional Adminer, bound to localhost only (use an SSH tunnel).
+# Vtiger CRM for SamenStudent – lives in /opt/crm_students
+# Public port: 9081 (web) – WEB_PORT in .env for another company (e.g. /opt/crm_gama on 9071, COMPOSE_PROJECT_NAME=gama). 9082 = optional Adminer, bound to localhost only (use an SSH tunnel).
 name: vtiger
 
 services:

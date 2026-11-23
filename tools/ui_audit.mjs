@@ -3,7 +3,7 @@
 // and saves a screenshot per step. Chrome DevTools Protocol over Node's built-in WebSocket (no npm deps).
 //   SESSION=$(tools/get_session.sh) node tools/ui_audit.mjs out_dir tools/ui_audit_steps.json [filter]
 // Needs a SOCKS tunnel to the server:  ssh -D 19080 <server>  (through tools/direct_proxy.py when on VPN).
-// GAMA (/opt/gama, 9071) from outside the router: ssh -L 19071:127.0.0.1:9071 <server>, then
+// GAMA (/opt/crm_gama, 9071) from outside the router: ssh -L 19071:127.0.0.1:9071 <server>, then
 //   (CHROME_ARGS: extra Chrome flags separated by ||)  BASE=http://<server>:9071/ PROXY=direct:// CHROME_ARGS="--host-resolver-rules=MAP <server>:9071 127.0.0.1:19071"
 import { spawn } from 'node:child_process';
 import { rmSync, mkdirSync, writeFileSync, mkdtempSync, readFileSync } from 'node:fs';
