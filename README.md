@@ -71,13 +71,14 @@ APP_DIR=/opt/crm_gama ./run_all.sh contacts /path/contacts.xlsx [tag]
   were renamed later; a project's name is what its containers and network are named after).
 * **Renaming an instance's folder**: the containers mount `data/` by absolute path, so stop it first –
   `docker compose stop`, `mv`, then `docker compose up -d` in the new folder (it recreates the containers on the new
-  paths), and fix `/etc/cron.d/samencrm-telegram` + `ss/telegram/*.sh` if it is the Telegram instance.
+  paths), and point its Telegram cron file (`/etc/cron.d/samencrm-telegram-<folder>`) at the new folder.
 * `APP_DIR` selects the instance for every command; `import` and `details` talk to that instance's own port
   (`WEB_PORT` in its `.env`).
 * `contacts` loads a **simple contact sheet** (name, phone, title, organisation, city, gender) as Organizations +
   Contacts (`vtiger/sheet_to_contacts.py`, `vtiger/import_contacts.php`), with a DB backup first. The student import
   (`build` / `import` / `details`) is specific to the SamenStudent sheets.
-* `telegram` is set up for `/opt/crm_students` only (its host cron is per server).
+* `telegram` works per instance too (`APP_DIR=/opt/crm_gama ./run_all.sh telegram`): each instance has its own bots,
+  settings, queue and host cron file (`/etc/cron.d/samencrm-telegram-<folder>`).
 * **Domain behind a reverse proxy**: on the server run
   `sudo bash /opt/crm_gama/scripts/set_public_url.sh /opt/crm_gama https://crm.example.com`. It sets Vtiger's `$site_URL`
   (Vtiger redirects every other address to it, which otherwise breaks the login) and makes Apache honour the
@@ -183,7 +184,7 @@ Module `modules/SamenAcademy` (vtlib extension, menu **Marketing / Sales / Tools
 ## Telegram messaging  (`./run_all.sh telegram`)
 Module `modules/TelegramBot` (vtlib extension, menu **Marketing > تلگرام**, settings in **Settings > Extensions > ربات تلگرام**).
 Uses the Telegram **Bot API** (bot from @BotFather). `./run_all.sh telegram` builds `dist/TelegramBot.zip`, backs up the DB to
-`/opt/crm_students/backups/pre_telegram_*.sql.gz`, installs/updates the module and adds the host cron `/etc/cron.d/samencrm-telegram`;
+`/opt/crm_students/backups/pre_telegram_*.sql.gz`, installs/updates the module and adds the host cron `/etc/cron.d/samencrm-telegram-<instance folder>`;
 `./run_all.sh telegram test` also runs the end-to-end test against a mock Bot API (62 checks, cleans up after itself).
 
 * **Bots**: one or more tokens, stored only in the CRM DB (`vtiger_telegrambot_bots`), shown masked. Never put tokens in git.

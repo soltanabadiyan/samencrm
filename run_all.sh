@@ -109,8 +109,9 @@ case "$cmd" in
     ssh "$SSH_TARGET" "$SUDO mkdir -p $APP/ss/academy && $SUDO cp $REMOTE_KIT/academy/* $APP/ss/academy/ && cd $APP && \
       $SUDO docker compose exec -T web sh -c 'php /opt/ss/academy/install_academy.php /opt/ss/academy/SamenAcademy.zip && chown -R www-data:www-data /var/www/html/modules/SamenAcademy /var/www/html/layouts/v7/modules/SamenAcademy /var/www/html/languages user_privileges tabdata.php parent_tabdata.php'" ;;
   telegram)
-    [ "$APP" = /opt/crm_students ] || { echo "telegram: only set up for /opt/crm_students (host cron + cron_tick.sh are per server)"; exit 1; }
     # TelegramBot module: build the vtlib zip, back up the DB, install/update it, minute cron on the host
+    # (one cron file per instance; the file of the time when only one instance had Telegram is removed)
+    TGCRON="/etc/cron.d/samencrm-telegram-$(basename "$APP" | tr -c 'A-Za-z0-9_\n-' '_')"
     bash "$HERE/modules/TelegramBot/build.sh"
     TG="$HERE/modules/TelegramBot"
     ssh "$SSH_TARGET" "rm -rf $REMOTE_KIT/telegram && mkdir -p $REMOTE_KIT/telegram"
@@ -119,7 +120,8 @@ case "$cmd" in
     ssh "$SSH_TARGET" "$SUDO mkdir -p $APP/ss/telegram && $SUDO cp $REMOTE_KIT/telegram/* $APP/ss/telegram/ && $SUDO chmod +x $APP/ss/telegram/*.sh && cd $APP && set -a && . ./.env && set +a && \
       $SUDO docker compose exec -T db mariadb-dump -uroot -p\$DB_ROOT_PASSWORD --single-transaction \$DB_NAME | gzip > backups/pre_telegram_\$(date +%F_%H%M).sql.gz && echo 'DB backup done' && \
       $SUDO docker compose exec -T web sh -c 'cd /var/www/html && php /opt/ss/telegram/install_telegram.php /opt/ss/telegram/TelegramBot.zip && mkdir -p storage/TelegramBot && chown -R www-data:www-data modules/TelegramBot layouts/v7/modules/TelegramBot languages cron/modules/TelegramBot storage/TelegramBot user_privileges tabdata.php parent_tabdata.php' && \
-      echo '* * * * * root $APP/ss/telegram/cron_tick.sh' | $SUDO tee /etc/cron.d/samencrm-telegram > /dev/null && $SUDO chmod 644 /etc/cron.d/samencrm-telegram && echo 'host cron: /etc/cron.d/samencrm-telegram'"
+      echo '* * * * * root $APP/ss/telegram/cron_tick.sh' | $SUDO tee $TGCRON > /dev/null && $SUDO chmod 644 $TGCRON && \
+      { ! $SUDO grep -qs ' $APP/ss/telegram/' /etc/cron.d/samencrm-telegram || $SUDO rm -f /etc/cron.d/samencrm-telegram; } && echo 'host cron: $TGCRON'"
     if [ "${1:-}" = test ]; then ssh "$SSH_TARGET" "$SUDO sh $APP/ss/telegram/run_tests.sh"; fi ;;
   migrate-fa)
     # one-time: rename English labels of the 2026-11-10 import to Persian (needs output/dataset.en_labels.json)
