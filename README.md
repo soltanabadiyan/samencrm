@@ -84,6 +84,58 @@ APP_DIR=/opt/crm_gama ./run_all.sh contacts /path/contacts.xlsx [tag]
   (Vtiger redirects every other address to it, which otherwise breaks the login) and makes Apache honour the
   proxy's `X-Forwarded-Proto`.
 
+## Student documents import  (`docs_import/`)
+The office's folders of student documents (scans of passports, certificates, transcripts, photos, CVs; Word / Excel
+application forms; list workbooks; admission PDFs; zipped student folders) become CRM data: one contact per student,
+every document attached to it. Run on the PC, except the last step.
+
+```bash
+python3 docs_import/unpack_archives.py DOCS output/docs     # .rar/.zip -> output/docs/unpacked (7z, unrar)
+python3 docs_import/prep_flat.py DOCS output/docs           # one small JPEG per scan / scanned PDF page, pdftotext
+python3 docs_import/prep_flat.py output/docs/unpacked output/docs
+python3 docs_import/ocr_flat.py output/docs/flat output/docs 0 1      # OCR (RapidOCR, CPU). On a many-core machine:
+                                                            #   copy flat/ there, one process per 2 cores (see the file's header)
+python3 docs_import/extract.py DOCS output/docs             # folder context, forms, lists, PDFs  -> files.json, lists.json
+python3 docs_import/build_students.py output/docs crm_contacts.tsv    # one record per student -> students.json, report.txt
+python3 docs_import/make_import.py output/docs              # -> import.json, review.csv, stage/files/<md5>.<ext>
+# copy import.json, crm_docs_import.php and stage/files/ to <instance>/ss/docs/, back up the DB, then in the instance:
+docker compose exec -T -u www-data web php /opt/ss/docs/crm_docs_import.php setup  /opt/ss/docs/import.json
+docker compose exec -T -u www-data web php /opt/ss/docs/crm_docs_import.php import /opt/ss/docs/import.json [--only ID,ID] [--no-files]
+```
+`crm_contacts.tsv` = the contacts' identity columns exported from the CRM (see `build_students.py match_crm`).
+Needs `pip install python-calamine python-docx rapidocr-onnxruntime pillow` (a venv), `pdftotext`/`pdftoppm`, `7z`, `unrar`.
+
+* **Folder = context.** `<university> <مهر|بهمن> <year>/[<level>/[<major>/]]<student>/…` gives university, intake, level,
+  major and the student's name (`common.py`: the list of universities, `+` and `ناقصی` marks, `-مازندران` suffixes).
+* **What is read**: passports through their machine-readable lines (number with its check digit, birth date, sex,
+  expiry, nationality, Latin name); CV pages (phone, e-mail, address, work); English certificates / transcripts (degree
+  level, university, average, year); the Word application form and the per-student Excel form (parents, birth, marital
+  status, previous education with GPA, level and major applied for, questions); list workbooks (tracking code, agent,
+  admission status, student number, payments – header names of `data/build_dataset.py`); admission / registration PDFs.
+  Arabic and Persian scans cannot be read by the OCR: they are attached as "مدرک (عربی/فارسی)" or typed by their file name.
+* **No duplicates**: a student is one passport (old and renewed passports are both kept); else a byte-identical file
+  in two folders; else the same full name (3+ words; 2 words only inside one university). Against the CRM: passport,
+  passport digits (lists typed without the letter), a phone that belongs to one contact, a full name. A number whose
+  check digit fails is never a key. Phones / e-mails shared by 3+ people are the agent's (`cf_ss_agent_contact`).
+* **Level** when the folder does not state it: the application form, the lists, else one above the highest degree
+  among the documents ("از روی مدارک" in `cf_ss_level_source`) – a folder "ارومیه 1405" with a master's certificate is a
+  PhD applicant.
+* **New fields** (3 blocks on Contacts, 37 fields): وضعیت فعلی دانشجو ("دانشجوی دکتری ورودی مهر 1405 – دانشگاه ارومیه"),
+  دانشگاه فعلی, ترم/سال ورود, مرحله پرونده, وضعیت مدارک / مدارک ناموجود / انواع مدارک, سوابق درخواست‌ها; نام مادر, محل تولد,
+  تاریخ صدور و انقضای گذرنامه, وضعیت گذرنامه; آخرین مدرک, رشته, دانشگاه, معدل و سال; وضعیت شغلی, شغل, منبع تأمین هزینه …
+  `vtiger_contactscf` is at MySQL's row-size limit, so columns that cannot be added as VARCHAR are added as TEXT.
+* **Update rules**: identity and contact fields are only filled when empty; the import's own fields are always set;
+  university / level / major / entry term are replaced when a folder states the intake (the old values go to
+  سوابق درخواست‌ها). Existing contacts are written with SQL (no workflow fires); new ones the Vtiger way.
+* **Documents**: one Documents record per file, in a folder per type (گذرنامه, عکس پرسنلی, مدارک تحصیلی, رزومه و فرم‌ها,
+  پذیرش و ثبت‌نام, ویزا, مالی, پژوهشی, سایر مدارک دانشجو), tagged with type / university / intake, linked to the contact.
+  Attachments are written directly: Vtiger's upload check refuses any image whose bytes contain `<?` (most scans).
+* **Tags** on contacts for reports: `مقطع:` `رشته:` `دانشگاه:` `ورودی:` `مرحله:` `مدارک: کامل|ناقص` `ندارد: <مدرک>`
+  `گذرنامه: معتبر|منقضی|رو به انقضا` `مدرک قبلی:` `وضعیت شغلی:` `ملیت:` `چند دانشگاه` `منبع:`.
+* Resumable: table `samen_docs_import` maps student id -> contact and file -> document; re-running updates fields and
+  adds only missing files. `report.txt` lists merges, conflicts and the loose files no person could be given.
+* Everything under `output/` is personal data and is never committed.
+
 ## Duplicate contacts
 `vtiger/merge_duplicates.php` (run in the web container; copy it to `<instance>/ss/` first) lists duplicate contacts,
 and merges them with `--apply`:
@@ -276,7 +328,8 @@ tools/direct_proxy.py         SSH ProxyCommand that bypasses the VPN
 tools/get_session.sh, sync_theme.sh, ui_shot.mjs, ui_audit.mjs, ui_sweep.mjs, contact_sheet.py   UI development and checks
 deploy/                       docker-compose, Dockerfile (php-apache + MariaDB + cron), install.sh, auto_install.sh,
                               post_install.sh, set_public_url.sh
-tests/                        data-pipeline tests, deploy script checks
+docs_import/                  student documents -> contacts + attached documents (OCR, forms, lists; see above)
+tests/                        data-pipeline tests, documents-import rules, deploy script checks
 output/                       generated dataset, students.csv, report.txt, raw_archive.json (never in git)
 ```
 Secrets: DB and admin passwords are generated on the server in `<instance>/.env` (mode 600); Telegram tokens live

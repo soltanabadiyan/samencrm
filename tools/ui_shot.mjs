@@ -21,7 +21,7 @@ const chrome = spawn('google-chrome', ['--headless=new', `--remote-debugging-por
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let ws, id = 0; const pending = new Map(), waiters = [];
 async function connect() {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 300; i++) {
     try {
       const list = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
       const page = list.find(t => t.type === 'page');
