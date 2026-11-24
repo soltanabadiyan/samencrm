@@ -19,9 +19,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as c
 import build_dataset as bd
 
-OUT = sys.argv[1]
+OUT = sys.argv[1] if __name__ == "__main__" else ""
 GROUPS = {"PhD": 9, "MSc": 7, "BSc": 6, "Associate": 5, "Other": 8, "": 10}
-if "--groups" in sys.argv:
+if __name__ == "__main__" and "--groups" in sys.argv:
     GROUPS = json.loads(sys.argv[sys.argv.index("--groups") + 1])
 MARK = "[مدارک دانشجو"            # start of the notes block (plain letters only: Vtiger HTML-encodes dashes and ZWNJ)
 MARK_LINE = "[مدارک دانشجو - درون ریزی اسناد]"

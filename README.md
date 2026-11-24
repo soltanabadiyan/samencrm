@@ -134,6 +134,15 @@ Needs `pip install python-calamine python-docx rapidocr-onnxruntime pillow` (a v
   `گذرنامه: معتبر|منقضی|رو به انقضا` `مدرک قبلی:` `وضعیت شغلی:` `ملیت:` `چند دانشگاه` `منبع:`.
 * Resumable: table `samen_docs_import` maps student id -> contact and file -> document; re-running updates fields and
   adds only missing files. `report.txt` lists merges, conflicts and the loose files no person could be given.
+* **Loose files** (no student folder, no name the scripts can read – mostly the `UNI3` root): each was read by eye by
+  an agent (Arabic and Latin text, passport machine-readable lines, the face on a passport) into
+  `output/docs/vision_read.json`, then `docs_import/assign_unassigned.py output/docs output/docs/unassigned_files.json`
+  groups them into people (passport, full name, "same person" links, download batch), matches the CRM
+  (`crm_contacts_now.tsv`), applies two independent reviewers' verdicts (`verify_unassigned.json`) and manual
+  corrections (`unassigned_overrides.json`), and writes `import_unassigned.json` for `crm_docs_import.php import`.
+  Bank slips and low-confidence readings never create a contact; a new contact whose passport number already belongs to
+  another contact gets the number only in its notes and the tag `بازبینی: گذرنامه مشترک با مخاطب دیگر`. Its notes block
+  starts with `[مدارک تکمیلی`, so the first import's block is kept.
 * Everything under `output/` is personal data and is never committed.
 
 ## Duplicate contacts
